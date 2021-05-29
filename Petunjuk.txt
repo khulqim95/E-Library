@@ -1,0 +1,14 @@
+Petunjuk
+
+1. restore db terlebih dahulu menggunkana file db2TierTemplate bisa dengan .bak/.sql
+2. buka folder portal PMO kemudian cari file appsetting.json lalu go to line 82 rubah Server=(LocalDb)\\MSSQLLocalDB dengan nama server 
+   db local di pc anda.
+3. disarankan menggunakan vs studio 2019 karena support .net 3.0
+4. clean and build terlebih dahulu lalu run project
+5. Admin (untuk menambah user dan koleksi buku)
+   username : Admin
+   password : 123
+
+   Member (untuk peminjaman dan pengembalian buku)
+   username : khulqi
+   password : 123
