@@ -1,0 +1,313 @@
+﻿
+@{
+    ViewData["Title"] = "Home";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section styles{
+    <link href="@Url.Content("~/plugin/DataTables-1.10.20/media/css/datatables.min.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/plugin/DataTables-1.10.20/media/css/responsive.dataTables.min.css")" rel="stylesheet" />
+    <link href="~/plugin/select2/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="~/plugin/daterangepicker/daterangepicker.css" rel="stylesheet" />
+    <style>
+        .fab {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            clip-path: circle();
+            height: 40px;
+            width: 40px;
+            z-index: 999;
+            box-shadow: 0 0.46875rem 2.1875rem rgba(4,9,20,0.03), 0 0.9375rem 1.40625rem rgba(4,9,20,0.03), 0 0.25rem 0.53125rem rgba(4,9,20,0.05), 0 0.125rem 0.1875rem rgba(4,9,20,0.03);
+        }
+
+        .addButton {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+        }
+
+        .select2 {
+            height: 30px;
+        }
+
+        .pie {
+            margin: auto;
+            margin-top: 20px;
+            box-shadow: inset 0px 0px 10px 10px rgba(100, 30, 99, 0.1)
+        }
+        .dataTables_wrapper {
+            max-width:1050px;
+            zoom: 0.9 !important;
+        }
+
+    </style>
+
+}
+<div class="app-main__outer">
+    <div class="app-main__inner">
+        <div class="row">
+            <h5><b>Dashboard</b></h5>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="main-card mb-3 card" id="cardParameterSearch">
+                    <div class="card-body">
+                        <form class="">
+                            <div class="form-row">
+                                <div class="col-md-12">
+                                    <div class="position-relative form-group">
+                                        <label class="">Periode</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend datepicker-trigger" id="TanggalSearch" data-date-format="dd/mm/yyyy">
+                                                <div class="input-group-text">
+                                                    <i class="fa fa-calendar-alt"></i>
+                                                </div>
+                                            </div>
+                                            <input id="PeriodeParamSearch" name="PeriodeParamSearch" class="datepicker-here form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="position-relative form-group">
+                                        <label class="">Nama Unit</label>
+                                        <input class="form-control" id="UnitNameLogin" value="@ViewBag.UnitIdPegawai.Name" style="display:none" readonly />
+                                        <input class="form-control" id="UnitIDLogin" value="@ViewBag.UnitIdPegawai.Id" style="display:none" readonly />
+
+                                        <select class="js-example-placeholder-multiple js-states form-control" id="UnitIdSearchParam" name="UnitIdSearchParam[]" multiple style="width:100%;"></select>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="javascript:void(0)" class="mt-2 btn btn-success pull-right" style="margin-left:10px;" id="BtnSearch" onclick="LoadDataDashboard()">Cari</a>
+                            <a href="../Dashboard/Index" class="mt-2 btn btn-danger pull-right" id="BtnClearSearch">Reload</a>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" id="ListTotalProject">
+            @*<div class="col-md-6 col-xl-4">
+                <div class="card mb-3 widget-content">
+                    <div class="widget-content-wrapper">
+                        <div class="widget-content-left">
+                            <div class="widget-heading">Total Project</div>
+                            <div class="widget-subheading">Total keseluruhan project</div>
+                        </div>
+                        <div class="widget-content-right">
+                            <div class="widget-numbers"><span>302</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-xl-4">
+                <div class="card mb-3 widget-content">
+                    <div class="widget-content-wrapper">
+                        <div class="widget-content-left">
+                            <div class="widget-heading">Project Open</div>
+                            <div class="widget-subheading">Project yang masih openn</div>
+                        </div>
+                        <div class="widget-content-right">
+                            <div class="widget-numbers"><span>208</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-xl-4">
+                <div class="card mb-3 widget-content">
+                    <div class="widget-content-wrapper">
+                        <div class="widget-content-left">
+                            <div class="widget-heading">Project Closed</div>
+                            <div class="widget-subheading">Project yang sudah done</div>
+                        </div>
+                        <div class="widget-content-right">
+                            <div class="widget-numbers"><span>112</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-xl-4">
+                <div class="card mb-3 widget-content" style="height:100px;">
+                    <div class="widget-content-wrapper">
+                        <div class="widget-content-left">
+                            <div class="widget-heading">% Project Closed</div>
+                            <div class="widget-subheading">Presentase project terselesaikan</div>
+                        </div>
+                        <div class="widget-content-right">
+                            <div class="widget-numbers"><text id="txtProjectClosed">-</text></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-xl-4">
+                <div class="card mb-3 widget-content" style="height:100px;">
+                    <div class="widget-content-wrapper">
+                        <div class="widget-content-left">
+                            <div class="widget-heading">% Upcoming Project</div>
+                            <div class="widget-subheading">Presentase project dalam proses sesuai timeline</div>
+                        </div>
+                        <div class="widget-content-right">
+                            <div class="widget-numbers"><text id="txtUpcomingProject" >-</text></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-xl-4">
+                <div class="card mb-3 widget-content" style="height:100px;">
+                    <div class="widget-content-wrapper">
+                        <div class="widget-content-left">
+                            <div class="widget-heading">% Overdue Project</div>
+                            <div class="widget-subheading">Presentase keterlambatan project</div>
+                        </div>
+                        <div class="widget-content-right">
+                            <div class="widget-numbers"><text id="txtOverdueProject">-</text></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <ul>
+                <li>
+                    <h5><u><b>Project Status</b></u></h5>
+                </li>
+            </ul>
+            <div class="container-fluid" style="overflow-x:auto; width:1020px !important;">
+                <div class="row flex-row flex-nowrap" id="ListProjectStatusElement">
+
+                </div>
+            </div>
+        </div>
+        <div class="row" style="padding-top:15px;">
+            <div class="col-lg-12">
+                <div class="main-card mb-3 card">
+                    <div class="card-header-tab card-header">
+                        <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+                            <i class="header-icon lnr-database icon-gradient bg-malibu-beach"> </i><b>top 10 Project</b>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <table id="TableTopProject" class="display nowrap" style="width:100%; padding-top:20px;">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th></th>
+                                    <th></th>
+                                    <th>No Project</th>
+                                    <th>Nama Project</th>
+                                    <th>Timeline</th>
+                                    <th>Deadline (Hari)</th>
+                                    <th>Status Project</th>
+                                    <th>Tanggal Penyelesaian</th>
+                                    <th>SLA (Hari)</th>
+                                    <th>Unit</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="padding-top:20px;">
+            <div class="col-lg-5">
+                <div class="main-card mb-3 card">
+                    <div class="card-body">
+                        <div id="chartColumn" style="height: 300px; width: 100%;">
+                        </div>
+                    </div>
+                </div>
+                <div class="main-card mb-3 card">
+                    <div class="card-body">
+                        <div id="chartColumn2" style="height: 300px; width: 100%;">
+                        </div>
+                    </div>
+                </div>
+                <div class="main-card mb-3 card" style="display:none">
+                    <div class="card-body">
+                        <div id="chartContainer" style="height: 300px; width: 100%;">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-lg-7">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="main-card mb-3 card">
+                            <div class="card-header-tab card-header">
+                                <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+                                    <i class="header-icon lnr-database icon-gradient bg-malibu-beach"> </i><b>Upcoming Project</b>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <table id="TableUpcomingProject" class="display nowrap" style="width:100%; padding-top:20px;">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th></th>
+                                            <th>No Project</th>
+                                            <th>Nama Project</th>
+                                            <th>Timeline</th>
+                                            <th>Deadline</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="main-card mb-3 card">
+                            <div class="card-header-tab card-header">
+                                <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+                                    <i class="header-icon lnr-database icon-gradient bg-malibu-beach"> </i><b>Overdue Project</b>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <table id="TableOverdueProject" class="display nowrap" style="width:100%; padding-top:20px;">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th></th>
+                                            <th>No Project</th>
+                                            <th>Nama Project</th>
+                                            <th>Timeline</th>
+                                            <th>Deadline</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+@section scripts{
+    <script src="@Url.Content("~/plugin/DataTables-1.10.20/media/js/jquery.dataTables.min.js")"></script>
+    <script src="@Url.Content("~/plugin/DataTables-1.10.20/media/js/dataTables.responsive.min.js")"></script>
+    <script src="~/plugin/circular-progress-bar-master/docs/circularProgressBar.min.js"></script>
+    <script src="@Url.Content("~/plugin/canvasjs/canvasjs.min.js")"></script>
+    <script src="~/plugin/select2/dist/js/select2.min.js"></script>
+    <script src="~/plugin/daterangepicker/moment.min.js"></script>
+    <script src="~/plugin/daterangepicker/daterangepicker.min.js"></script>
+    @Html.Partial("_Script")
+
+}
+

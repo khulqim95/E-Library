@@ -1,0 +1,31 @@
+﻿
+
+@{
+    ViewData["Title"] = "Home";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="app-main__outer">
+    <div class="app-main__inner">
+        <div style="margin-top:10%">
+            <center>
+                <img src=@ViewBag.Img style="height: auto;max-width: 400px;" />
+                <h4 style="margin-top:30px;color:lightslategrey"><b>@ViewBag.ErrorMessage</b></h4>
+                <a href="#" onclick=" UndoPage()" class="mb-3 mr-3 btn btn-primary btn-sm btn-block" style="align-content: center;margin-left: 3%;margin-top:20px;
+                    width:95%">
+                    Kembali
+                </a>
+                <a href="../Login/Logout" class="mb-3 mr-3 btn btn-danger btn-sm btn-block" style="align-content: center;margin-left: 3%;margin-top:20px;
+                    width:95%">
+                    Keluar
+                </a>
+            </center>
+        </div>
+    </div>
+    
+</div>
+<script>
+    function UndoPage() {
+        window.history.back();
+    }
+</script>

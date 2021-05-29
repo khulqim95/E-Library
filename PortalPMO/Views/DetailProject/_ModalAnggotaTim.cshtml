@@ -1,0 +1,69 @@
+﻿@model PortalPMO.ViewModels.DataProjectAnggotaTim_ViewModels
+<style>
+    .modal-dialog {
+        min-width: 90%;
+    }
+</style>
+<div class="modal-header">
+    <h5 class="modal-title">Form Data</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+</div>
+<div class="modal-body" id="id-body">
+    <form id="FormDataAnggotaTim" style="padding-top:20px;">
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.Id)
+        @Html.HiddenFor(m => m.ProjectId)
+
+        <div class="form-group row m-b-15">
+            <label class="col-md-3 col-form-label">Job Position <span class="labelMandatory">*</span></label>
+            <div class="col-md-9">
+                <div class="input-group">
+                    @Html.DropDownListFor(m => m.JobPositionId, (IEnumerable<SelectListItem>)ViewBag.JobPosition, "-Silahkan pilih-", new { @class = "js-example-placeholder-multiple js-states form-control", @style = "width:100%" })
+                </div>
+            </div>
+        </div>
+        <div class="form-group row m-b-15">
+            <label class="col-md-3 col-form-label">Pegawai <span class="labelMandatory">*</span></label>
+            <div class="col-md-9">
+                <div class="input-group">
+                    @Html.DropDownListFor(m => m.PegawaiId, (IEnumerable<SelectListItem>)ViewBag.Pegawai, "-Silahkan pilih-", new { @class = "js-example-placeholder-multiple js-states form-control", @style = "width:100%" })
+                </div>
+            </div>
+        </div>
+        <div class="form-group row m-b-15">
+            <label class="col-md-3 col-form-label">Target Penyelesaian <span class="labelMandatory">*</span></label>
+            <div class="col-md-9">
+                <div class="input-group">
+                    <div class="input-group-prepend datepicker-trigger" id="TanggalSearch" data-date-format="dd/mm/yyyy">
+                        <div class="input-group-text">
+                            <i class="fa fa-calendar-alt"></i>
+                        </div>
+                    </div>
+                    @Html.TextBoxFor(m => m.TanggalTargetPenyelesaianAnggotaTim, new { @class = "datepicker-here form-control", @value = "", @autocomplete = "off" })
+                </div>
+            </div>
+        </div>
+        <div class="form-group row m-b-15">
+            <label class="col-md-3 col-form-label">Send as Task? <span class="labelMandatory">*</span></label>
+            <div class="col-md-9">
+                <div class="input-group">
+                    @Html.RadioButtonFor(model => model.SendAsTask, 1, new { })&nbsp; Ya &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    @Html.RadioButtonFor(model => model.SendAsTask, 0, new { })&nbsp; Tidak &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </div>
+                <p>Jika <b>"Ya"</b> akan masuk ke dalam task anggota tim</p>
+            </div>
+        </div>
+        <div class="form-group row m-b-15">
+            <label class="col-md-3 col-form-label">Job Desc <span class="labelMandatory">*</span></label>
+            <div class="col-md-9">
+                <div>
+                    @Html.TextAreaFor(m => m.Keterangan, new { @class = "form-control", @value = "", @autocomplete = "off", @rows = "5", @style = "width:100%" })
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <a href="javascript:;" class="btn btn-sm btn-white" data-dismiss="modal">Tutup</a>
+    <a href="javascript:;" class="btn btn-sm btn-primary" id="BtnSubmitAnggotaTim">Simpan</a>
+</div>

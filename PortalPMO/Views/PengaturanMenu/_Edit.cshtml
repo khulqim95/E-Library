@@ -1,0 +1,93 @@
+﻿@model PortalPMO.ViewModels.PengaturanMenu_ViewModels
+
+<div class="row" style="padding-top:20px;">
+    <div class="col-lg-12">
+        <div class="main-card mb-3 card">
+            <div class="card-body">
+                <form id="FormData" style="padding-top:20px;">
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(m => m.Id)
+                    <div class="form-group row m-b-15">
+                        <label class="col-md-3 col-form-label">Tipe <span class="labelMandatory">*</span></label>
+                        <div class="col-md-9">
+                            <div class="input-group">
+                                @Html.DropDownListFor(m => m.TipeId, (IEnumerable<SelectListItem>)ViewBag.TypeMenu, "-Silahkan pilih-", new { @class = "js-example-placeholder-multiple js-states form-control", @style = "width:100%" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row m-b-15">
+                        <label class="col-md-3 col-form-label">Nama <span class="labelMandatory">*</span></label>
+                        <div class="col-md-9">
+                            <div class="input-group">
+                                @Html.TextBoxFor(m => m.Nama, new { @class = "form-control", @value = "", @autocomplete = "off", @placeholder = "Masukkan Nama", @autofocus = "autofocus" })
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row m-b-15">
+                        <label class="col-md-3 col-form-label">Induk Menu <span class="labelMandatory">*</span></label>
+                        <div class="col-md-9">
+                            <div class="input-group">
+                                <div class="input-group">
+                                    @Html.DropDownListFor(m => m.ParentId, (IEnumerable<SelectListItem>)ViewBag.ParentMenu, "-Silahkan pilih-", new { @class = "js-example-placeholder-multiple js-states form-control", @style = "width:100%" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row m-b-15">
+                        <label class="col-md-3 col-form-label">Url <span class="labelMandatory">*</span></label>
+                        <div class="col-md-9">
+                            <div class="input-group">
+                                @Html.TextBoxFor(m => m.Route, new { @class = "form-control", @value = "", @autocomplete = "off", @placeholder = "Masukkan Alamat Url", @autofocus = "autofocus" })
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row m-b-15">
+                        <label class="col-md-3 col-form-label">Role <span class="labelMandatory">*</span></label>
+                        <div class="col-md-9">
+                            <div class="input-group">
+                                <input class="form-control" id="RolesValue" value="@ViewBag.NavigationAssignment" style="display:none" readonly />
+
+                                @Html.DropDownListFor(m => m.Role, (IEnumerable<SelectListItem>)ViewBag.RolePegawai, "-Silahkan pilih-", new { @class = "js-example-placeholder-multiple js-states form-control", @name = "Roles[]", @style = "width:100%", @multiple = "multiple" })
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row m-b-15">
+                        <label class="col-md-3 col-form-label">Urutan <span class="labelMandatory">*</span></label>
+                        <div class="col-md-9">
+                            <div class="input-group">
+                                @Html.TextBoxFor(m => m.OrderBy, new { @type = "number", @class = "form-control", @value = "", @autocomplete = "off", @placeholder = "Masukkan urutan menu", @autofocus = "autofocus" })
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row m-b-15">
+                        <label class="col-md-3 col-form-label">Initial </label>
+                        <div class="col-md-9">
+                            <div class="input-group">
+                                @Html.TextBoxFor(m => m.Icon, new { @class = "form-control", @value = "", @autocomplete = "off", @placeholder = "Masukkan Icon Menu", @autofocus = "autofocus" })
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row m-b-15">
+                        <label class="col-md-3 col-form-label">Aktif? <span class="labelMandatory">*</span></label>
+                        <div class="col-md-9">
+                            <div class="input-group">
+                                @Html.RadioButtonFor(model => model.Visible, 1, new { })&nbsp; Ya &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                @Html.RadioButtonFor(model => model.Visible, 0, new { })&nbsp; Tidak &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <a href="javascript:;" class="btn btn-sm btn-white" onclick="BackDraft()">Tutup</a>
+                <a href="javascript:;" class="btn btn-sm btn-primary" id="BtnSubmit">Simpan</a>
+            </div>
+        </div>
+    </div>
+</div>
+

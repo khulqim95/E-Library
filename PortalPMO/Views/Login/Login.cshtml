@@ -1,0 +1,99 @@
+﻿
+@{
+    ViewData["Title"] = "Home Page";
+    Layout = null;
+}
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <title>E-Library - Digital Library</title>
+    <!-- Meta tags -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="Gadget Sign Up Form Responsive Widget, Audio and Video players, Login Form Web Template, Flat Pricing Tables, Flat Drop-Downs, Sign-Up Web Templates, Flat Web Templates, Login Sign-up Responsive Web Template, Smartphone Compatible Web Template, Free Web Designs for Nokia, Samsung, LG, Sony Ericsson, Motorola Web Design" />
+    <script>
+        addEventListener("load", function () { setTimeout(hideURLbar, 0); }, false); function hideURLbar() { window.scrollTo(0, 1); }
+    </script>
+    <!-- Meta tags -->
+    <!-- font-awesome icons -->
+    <link href="~/plugin/plugin-login/css/font-awesome.min.css" rel="stylesheet" />
+    <!-- //font-awesome icons -->
+    <!--stylesheets-->
+    <link href="~/plugin/plugin-login/css/style.css" rel="stylesheet" />
+    <!--//style sheet end here-->
+    <link href="~/plugin/plugin-login/css/Montserrat.google.font.css" rel="stylesheet" />
+    <link href="~/plugin/plugin-login/css/OpenSans.Google.Fonts.css" rel="stylesheet" />
+    <style>
+        button[type=submit] {
+            background: teal;
+            outline: none;
+            color: #fff;
+            font-weight: 600;
+            border: none;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            width: 100%;
+            border-radius: 10px;
+            transition: 0.5s all;
+            -webkit-transition: 0.5s all;
+            -o-transition: 0.5s all;
+            -moz-transition: 0.5s all;
+            -ms-transition: 0.5s all;
+            box-shadow: 0px 0px 8px 0px #60f574;
+        }
+    </style>
+</head>
+<body style="background-image: url('https://www.printawallpaper.com/wp-content/uploads/2013/08/Blue_White_Polygonal_Mosaic_d.jpg');   background-repeat: no-repeat;
+background-position: center;
+  background-size: cover;">
+    <!---728x90--->
+    <div class="w3layouts-two-grids">
+        <!---728x90--->
+        <div class="mid-class">
+            <div class="img-right-side">
+                <img src="~/img/asd.png" />
+            </div>
+            <div class="txt-left-side">
+                @*<img src="~/img/LogoBNI.png" style="width:50%;padding-bottom:20px;" />*@
+                <p style="font-size: 30px; color: darkslateblue"><span>E-Library - Digital Library</span></p>
+                @using (Html.BeginForm("SubmitLogin", "Login", FormMethod.Post, new { @class = "smart-form", role = "form", @style = "padding-top:50px;" }))
+                {
+                    <div class="form-left-to-w3l">
+                        <span class="fa fa-user-o" aria-hidden="true"></span>
+                        <input type="text" name="Username" id="Username" placeholder="Enter username" />
+                        <div class="clear"></div>
+                    </div>
+                    <div class="form-left-to-w3l ">
+                        <span class="fa fa-lock" aria-hidden="true"></span>
+                        <input type="password" name="Password" id="Password" placeholder="Enter Password" />
+                        <div class="clear"></div>
+                    </div>
+                    <div class="btnn" style="padding-top:-10px !important">
+                        <button style="padding:10px !important; background: darkslateblue" type="submit">Masuk</button>
+                    </div>
+                }
+                <div class="w3layouts_more-buttn">
+                    <h3 style="color:red">
+                        @ViewBag.ErrorMessage
+                    </h3>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+  
+</body>
+
+</html>
+
+<script>
+    $(document).ready(function () {
+        var IsLogout =  @Html.Raw(Json.Serialize(ViewBag.Islogout));
+        if (IsLogout) {
+            alert("Maaf session anda telah habis, silahkan login kembali!");
+        }
+    });
+</script>

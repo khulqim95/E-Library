@@ -1,0 +1,198 @@
+﻿
+@{
+    ViewData["Title"] = "Data Project";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section styles{
+    <link href="@Url.Content("~/plugin/DataTables-1.10.20/media/css/datatables.min.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/plugin/DataTables-1.10.20/media/css/responsive.dataTables.min.css")" rel="stylesheet" />
+    @*<link href="@Url.Content("~/plugin/bootstrap-datepicker/css/bootstrap-datepicker.min.css")" rel="stylesheet" />*@
+    <link href="~/plugin/select2/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="~/plugin/air-datepicker-master/dist/css/datepicker.css" rel="stylesheet" />
+    <link href="~/plugin/summernote/summernote-lite.min.css" rel="stylesheet" />
+    <style>
+        .fab {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            clip-path: circle();
+            height: 40px;
+            width: 40px;
+            z-index: 999;
+            box-shadow: 0 0.46875rem 2.1875rem rgba(4,9,20,0.03), 0 0.9375rem 1.40625rem rgba(4,9,20,0.03), 0 0.25rem 0.53125rem rgba(4,9,20,0.05), 0 0.125rem 0.1875rem rgba(4,9,20,0.03);
+        }
+
+        .addButton {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+        }
+
+        .select2 {
+            height: 30px;
+        }
+
+        .dataTables_wrapper {
+            max-width:1050px;
+            zoom: 0.9 !important;
+        }
+
+        table.dataTable.dtr-inline.collapsed > tbody > tr[role="row"] > td:first-child:before, table.dataTable.dtr-inline.collapsed > tbody > tr[role="row"] > th:first-child:before {
+            background-color: #3f6ad8;
+        }
+
+
+        .select2-container .select2-selection--single {
+            height: 35px;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            padding-top: 5px;
+            color: #495057;
+            /*border: 1px solid #ced4da;*/
+        }
+
+        .input-group {
+            margin-bottom: 5px;
+        }
+
+        select[name=Table_length] {
+            height: 35px;
+        }
+
+        .select2-container--default .select2-selection--multiple .select2-selection__choice {
+            background-color: white;
+            border: 1px solid teal;
+            border-radius: 4px;
+            cursor: default;
+            float: left;
+            margin-right: 5px;
+            margin-top: 5px;
+            padding: 0 5px;
+            height: 22px;
+        }
+
+        .sw > .tab-content {
+            position: relative;
+            overflow: hidden;
+            height: auto !important;
+        }
+
+        .select2-container--default.select2-container--focus .select2-selection--multiple {
+            border: solid gray 0.7px;
+            outline: 0;
+        }
+        .red {
+            background-color: rgba(255,0,0,0.1);
+        }
+
+        .blue {
+            background-color: rgba(0,0,255,0.1);
+        }
+        .table.dataTable.display tbody tr.odd > .sorting_1, table.dataTable.order-column.stripe tbody tr.odd > .sorting_1 {
+            background-color:transparent !important;
+        }
+    </style>
+}
+<div class="app-main__outer">
+    <div class="app-main__inner">
+        <div class="row">
+            <h5><b>Data Project</b></h5>
+        </div>
+        <hr />
+        <div id="DivContentBody">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="main-card mb-3 card" id="cardParameterSearch">
+
+                        <div class="card-body">
+
+                            <form class="">
+                                <div class="form-row">
+                                    <div class="col-md-6">
+                                        <div class="position-relative form-group">
+                                            <label class="">No Project</label>
+                                            <input id="txtNoProjectSearchParam" type="text" class="form-control" placeholder="Masukkan No Project">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="position-relative form-group">
+                                            <label class="">Nama Project</label>
+                                            <input id="txtNamaSearchParam" type="text" class="form-control" placeholder="Masukkan Nama Project">
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <a href="javascript:void(0)" class="mt-2 btn btn-success pull-right" style="margin-left:10px;" id="BtnSearch">Cari</a>
+                                <a href="javascript:void(0)" class="mt-2 btn btn-danger pull-right" id="BtnClearSearch">Bersihkan</a>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" style="padding-top:20px;">
+                <div class="col-lg-12">
+                    <div class="main-card mb-3 card">
+                        <div class="headerSearch">
+                            Data Project
+                        </div>
+                        <div class="card-body">
+                            <table id="Table" class="display nowrap" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th style="max-width:30px;">No</th>
+                                        <th style="max-width:70px;"></th>
+                                        <th>No Project</th>
+                                        <th>Nama Project</th>
+                                        <th>Kategori Project</th>
+                                        <th>Sub Kategori Project</th>
+                                        <th>Skor Project</th>
+                                        <th>Kompleksitas Project</th>
+                                        <th>Klasifikasi Project</th>
+                                        <th>Mandatory Project</th>
+                                        <th>Periode Project</th>
+                                        <th>Status Project</th>
+                                        <th>No Memo</th>
+                                        <th>Tanggal Memo</th>
+                                        <th>Timeline</th>
+                                        <th>Deadline</th>
+                                        <th>Tanggal Penyelesaian</th>
+                                        <th>SLA</th>
+                                        <th>Status</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="DivFormBody">
+        </div>
+    </div>
+</div>
+
+
+
+
+@section scripts{
+
+    <script src="@Url.Content("~/plugin/DataTables-1.10.20/media/js/jquery.dataTables.min.js")"></script>
+    <script src="@Url.Content("~/plugin/DataTables-1.10.20/media/js/dataTables.responsive.min.js")"></script>
+    @*<script src="@Url.Content("~/plugin/bootstrap-datepicker/js/bootstrap-datepicker.min.js")"></script>*@
+    <script src="~/plugin/select2/dist/js/select2.min.js"></script>
+    <script src="~/plugin/air-datepicker-master/dist/js/datepicker.min.js"></script>
+    <script src="~/plugin/summernote/summernote-lite.min.js"></script>
+
+    @Html.Partial("_Script")
+
+}
+

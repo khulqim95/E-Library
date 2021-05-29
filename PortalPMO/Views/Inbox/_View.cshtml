@@ -1,0 +1,555 @@
+﻿@model PortalPMO.ViewModels.DetailPipeline_ViewModels
+<div class="row" style="padding-top:20px;">
+    <div class="col-lg-12">
+        <div class="main-card mb-3 card">
+            <div class="card-body">
+                @*<form id="FormData" style="padding-top:20px;">*@
+                @Html.AntiForgeryToken()
+                <div class="main-card mb-3 card">
+                    <div class="headerSearch">
+                        Info Debitur
+                    </div>
+
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <center>
+                                    <p style="font-weight:bold">Foto Key Person</p>
+                                    <img src="~/img/default.png" />
+                                </center>
+                            </div>
+                            <div class="col-md-9" style="padding-top:30px;">
+                                <div class="form-group row m-b-15">
+                                    <label class="col-md-3 col-form-label">Nama Debitur</label>
+                                    <div class="col-md-9">
+                                        <div class="input-group">
+                                            @Html.TextBoxFor(m => m.NamaDebitur, new { @readonly = true, @class = "form-control", @value = "", @autocomplete = "off" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row m-b-15">
+                                    <label class="col-md-3 col-form-label">PIC</label>
+                                    <div class="col-md-9">
+                                        <div class="input-group">
+                                            @Html.TextBoxFor(m => m.NamaKeyPerson, new { @readonly = true, @class = "form-control", @value = "", @autocomplete = "off" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row m-b-15">
+                                    <label class="col-md-3 col-form-label">No Telepon</label>
+                                    <div class="col-md-9">
+                                        <div class="input-group">
+                                            @Html.TextBoxFor(m => m.NoTelp, new { @readonly = true, @class = "form-control", @value = "", @autocomplete = "off" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row m-b-15">
+                            <label class="col-md-3 col-form-label">Status Debitur</label>
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    @Html.TextBoxFor(m => m.SektorEkonomi20_Name, new { @readonly = true, @class = "form-control", @value = "", @autocomplete = "off" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row m-b-15">
+                            <label class="col-md-3 col-form-label">Badan Usaha</label>
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    @Html.TextBoxFor(m => m.BidangUsaha, new { @readonly = true, @class = "form-control", @value = "", @autocomplete = "off" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row m-b-15">
+                            <label class="col-md-3 col-form-label">Bidang/ Jenis Usaha</label>
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    @Html.TextBoxFor(m => m.BidangJenisUsaha, new { @readonly = true, @class = "form-control", @value = "", @autocomplete = "off" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row m-b-15">
+                            <label class="col-md-3 col-form-label">Nama Group Usaha</label>
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    @Html.TextBoxFor(m => m.NamaGroupUsaha, new { @readonly = true, @class = "form-control", @value = "", @autocomplete = "off" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row m-b-15">
+                            <label class="col-md-3 col-form-label">Sektor Ekonomi </label>
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    @Html.TextBoxFor(m => m.SektorEkonomi10_Name, new { @readonly = true, @class = "form-control", @value = "", @autocomplete = "off" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group row m-b-15">
+                            <label class="col-md-3 col-form-label">Sektor Unggulan/ Prioritas</label>
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    @Html.TextBoxFor(m => m.SektorEkonomi20_Name, new { @readonly = true, @class = "form-control", @value = "", @autocomplete = "off" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group row m-b-15" style="display:none">
+                            <label class="col-md-3 col-form-label">No Handphone</label>
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    @Html.TextBoxFor(m => m.NoHp, new { @readonly = true, @class = "form-control", @value = "", @autocomplete = "off" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row m-b-15">
+                            <label class="col-md-3 col-form-label">CIF</label>
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    @Html.TextBoxFor(m => m.Cif, new { @readonly = true, @class = "form-control", @value = "", @autocomplete = "off" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row m-b-15">
+                            <label class="col-md-3 col-form-label">Kota / Kabupaten</label>
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    @Html.TextBoxFor(m => m.Kabupaten, new { @readonly = true, @class = "form-control", @value = "", @autocomplete = "off" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row m-b-15">
+                            <label class="col-md-3 col-form-label">Alamat</label>
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    @Html.TextAreaFor(m => m.Alamat, new { @readonly = true, @class = "form-control", @value = "", @autocomplete = "off" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row m-b-15">
+                            <label class="col-md-3 col-form-label">Unit Pengusul</label>
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    @Html.TextBoxFor(m => m.SektorEkonomi20_Name, new { @readonly = true, @class = "form-control", @value = "", @autocomplete = "off" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row m-b-15">
+                            <label class="col-md-3 col-form-label">Npp Pengusul</label>
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    @Html.TextBoxFor(m => m.SektorEkonomi20_Name, new { @readonly = true, @class = "form-control", @value = "", @autocomplete = "off" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="main-card mb-3 card">
+                    <div class="headerSearch">
+                        Info Fasilitas Kredit
+                    </div>
+                    <div class="card-body">
+                        <table id="TableFasilitasKredit" class="display nowrap table table-bordered table-hover" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th style="width: 1px">No</th>
+                                    <th style="width: 1px">Aksi</th>
+                                    <th>
+                                        Jenis Fasilitas
+                                    </th>
+                                    <th>
+                                        Valuta
+                                    </th>
+                                    <th>
+                                        Maksimum Kredit
+                                    </th>
+                                    <th>
+                                        Tujuan
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="main-card mb-3 card">
+                    <div class="headerSearch">
+                        Informasi Prescreening
+                    </div>
+                    <div class="card-body">
+                        <ol>
+                            <li>
+                                Perusahaan sudah beroperasi selama minimal 3 (tiga) tahun untuk pembiayaan segmen korporasi & menengah, atau 2 (dua) tahun untuk pembiayaan segmen kecil, dan/atau bagian dari group perusahaan yang telah beroperasi selama minimal 3 (tiga) tahun.  <b>(@Model.Prescreening.TrperusahaanBeroperasi)</b>
+                            </li>
+                            <li>
+                                Track record perusahaan dalam pemenuhan semua kewajibannya dalam 2 (dua) tahun terakhir, kredit yang dimiliki tidak dalam golongan NPL (3-5) dan/atau, bila memiliki surat hutang yang diterbitkan (obligasi, MTN atau PN), surat hutang tersebut tidak sedang dinyatakan default oleh perusahaan pemeringkat efek atau counterpart, serta tidak masuk dalam Daftar Hitam BI. <b>(@Model.Prescreening.Trperusahaan)</b>
+                            </li>
+                            <li>
+                                Track record key person, pemegang saham dan manajemen perusahaan dalam pemenuhan kewajibannya dalam 2 (dua) tahun terakhir, kredit (termasuk kartu kredit) yang dimiliki tidak dalam golongan NPL (3-5), serta tidak masuk dalam Daftar Hitam BI. (mandatory). <b>(@Model.Prescreening.TrkeyPerson)</b>
+                            </li>
+                            <li>
+                                Tersedia informasi mengenai struktur kepemilikan secara jelas dan transparan. <b>(@Model.Prescreening.TrstrukturKepemilikan)</b>
+                            </li>
+                            <li>
+                                Key person perusahaan telah bekerja lebih dari 2 (dua) tahun di perusahaan atau telah memiliki pengalaman lebih dari 2 (dua) tahun di industri yang menjadi bidang usahanya. <b>(@Model.Prescreening.TrpengalamanKeyPerson)</b>
+                            </li>
+                            <li>
+                                60% dari anggota Manajemen level kedua (pimpinan divisi maupun staf ahli) terdiri dari orang-orang yang memiliki kompetensi dan track record dibidangnya lebih dari 3 (tiga) tahun. <b>(@Model.Prescreening.TrkompetensiManajemen)</b>
+                            </li>
+                            <li>Industri bidang usaha perusahaan bukan merupakan industri dengan rating industri “1” (sangat berisiko tinggi), atau “2” (berisiko tinggi) cf.ERM. <b>(@Model.Prescreening.OprIndustri)</b></li>
+                            <li>Legalitas usaha yang dimiliki sesuai dengan bidang usaha yang dijalankan. <b>(@Model.Prescreening.OprLegalitasUsaha)</b></li>
+                            <li>Bersedia menyampaikan laporan keuangan tiga tahun terakhir yang diaudit oleh auditor independen (rekanan maupun tidak rekanan BNI) dan/atau laporan keuangan in-house, dengan periode laporan keuangan terakhir yang disampaikan adalah paling lama 3 bulan sebelum pengajuan kredit (untuk project financing menggunakan laporan keuangan holding / guarantor). <b>(@Model.Prescreening.OprLaporanKeuangan)</b></li>
+                            <li>Hingga penyusunan FPS ini, Perusahaan tidak sedang menghadapi tuntutan hukum dari pihak ketiga/ pemogokan karyawan/ permasalahan dengan masyarakat sekitar (permasalahan batas lahan/isu lingkungan dll.), yang dapat berdampak signifikan kepada operasional/kinerja keuangan perusahaan. <b>(@Model.Prescreening.OprTuntutanHukum)</b></li>
+                            <li>
+                                Perusahaan memahami risiko bisnis yang dihadapinya (risiko-risiko utama), dan bersedia memberikan informasi strategi umum dalam memitigasi risiko bisnis yang dihadapinya, misalnya risiko volatilitas harga, risiko kurs, risiko permintaan yang fluktuatif, risiko kebakaran, risiko operasional dll. <b>(@Model.Prescreening.OprRisikoBisnis)</b>
+                            </li>
+                            <li>Perusahaan bersedia memberikan strategi pemasaran dan/atau strategi ekspansi bisnis ke depan dan/atau proyeksi keuangan secara jelas dan tertulis. <b>(@Model.Prescreening.OprStrategiPerusahaan)</b></li>
+                            <li>Perusahaan bersedia memberikan informasi daftar pelanggan utamanya serta kontribusi pelanggan utamanya tersebut terhadap penjualannya. <b>(@Model.Prescreening.OprDaftarPelanggan)</b></li>
+                            <li>Perusahaan bersedia memberikan informasi daftar pemasok utamanya, serta kontribusi pemasok utamanya tersebut terhadap produksinya. <b>(@Model.Prescreening.OprDaftarPemasok)</b></li>
+                            <li>Memiliki fasilitas pengelolaan limbah dan standard operating procedure yang jelas serta tertulis untuk manajemen limbah yang dihasilkan. Khusus untuk perusahaan jasa yang tidak menghasilkan limbah, maka pilihan jawaban adalah kolom “Ya”. <b>(@Model.Prescreening.OprPengelolaanLimbah)</b></li>
+                            <li>Perusahaan memiliki dokumen AMDAL. Khusus untuk perusahaan jasa yang tidak menghasilkan limbah, maka pilihan jawaban adalah kolom “Ya”. <b>(@Model.Prescreening.OprAmdal)</b></li>
+                            <li>Di luar setoran modal awal pada saat berdirinya perusahaan, pemegang saham pernah melakukan penambahan setoran modal kepada perusahaan/IPO/Right Issue (terutama bila perusahaan pernah mengalami financial distress atau tuntutan tambahan modal dari regulasi), atau bila tidak ada penambahan modal, maka pertumbuhan total ekuitas dalam tiga tahun terakhir selalu positif. <b>(@Model.Prescreening.PkmodalAwal)</b></li>
+                            <li>Pertumbuhan penjualan dalam 3 (tiga) tahun terakhir selalu positif. <b>(@Model.Prescreening.Pkpertumbuhan)</b></li>
+                            <li>Debt to Equity Ratio (DER) dalam 2 (dua) tahun terakhir selalu memenuhi DER Referensi BNI. <b>(@Model.Prescreening.Pkder)</b></li>
+                            <li>Laba bersih yang selalu positif dalam 3 (tiga) tahun terakhir. <b>(@Model.Prescreening.PklabaBersih)</b></li>
+
+                        </ol>
+                    </div>
+                </div>
+                <div class="main-card mb-3 card">
+                    <div class="headerSearch">
+                        Informasi Prescreening Tambahan
+                    </div>
+                    <div class="card-body">
+                        <ol>
+                            <li>
+                                Apakah Debitur pernah tercatat dalam kredit perhatian khusus (Non Performing Loan)? <b>(@if (@Model.PrescreeningTambahan.IsNonPerformingLoan == true){<text>Ya</text>}else{ <text>Tidak</text>})</b>
+                            </li>
+                            <li>Apakah Debitur pernah melakukan restrukturisasi ? <b>(@if (@Model.PrescreeningTambahan.IsRetrukturisasi == true)
+{<text>Ya</text>}
+else
+{ <text>Tidak</text>})</b></li>
+                            <li>Apakah ada Bidang/Jenis Usaha yang sama di sekitar lokasi Debitur? <b>
+    (@if (@Model.PrescreeningTambahan.JenisUsahaDisekitar == true)
+    {<text>Ya</text>}
+else
+{ <text>Tidak</text>})
+</b></li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="main-card mb-3 card">
+                    <div class="headerSearch">
+                        Foto Lokasi Usaha
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <center>
+                                    <img src="~/img/empty_data.png" style="width:200px;" />
+                                </center>
+                            </div>
+                            <div class="col-md-3">
+                                <center>
+                                    <img src="~/img/empty_data.png" style="width:200px;" />
+                                </center>
+                            </div>
+                            <div class="col-md-3">
+                                <center>
+                                    <img src="~/img/empty_data.png" style="width:200px;" />
+                                </center>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="main-card mb-3 card">
+                    <div class="headerSearch">
+                        Maps Lokasi Usaha
+                    </div>
+                    <div class="card-body">
+                        <div class="mapouter">
+                            <div class="gmap_canvas">
+                                <iframe width="600" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q='+@Model.Latitude+','+@Model.Longitude+'&hl=es&z=14&amp;output=embed"" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a href="https://embedgooglemap.net/maps/13"></a><br>
+                            </div>
+                        </div>
+                <div class="main-card mb-3 card">
+                    <div class="headerSearch">
+                        Foto Jaminan
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <label class="col-md-3 col-form-label">Deskripsi</label>
+                            <div class="col-md-12">
+                                <div class="input-group">
+                                    @Html.TextAreaFor(m => m.SektorEkonomi20_Name, new { @readonly = true, @class = "form-control", @value = "", @autocomplete = "off", @rows = "7" })
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <center>
+                                    <img src="~/img/empty_data.png" style="width:200px;" />
+                                </center>
+                            </div>
+                            <div class="col-md-3">
+                                <center>
+                                    <img src="~/img/empty_data.png" style="width:200px;" />
+                                </center>
+                            </div>
+                            <div class="col-md-3">
+                                <center>
+                                    <img src="~/img/empty_data.png" style="width:200px;" />
+                                </center>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="padding-left:50px; padding-bottom:75px;">
+                <a href="javascript:void(0)" id="btnShowDetailInbox" onclick="ShowDetailDataInbox('btnHideDetailInbox','btnShowDetailInbox','DivDetail')"><h5>Tampilkan Detail Informasi</h5></a>
+                <a href="javascript:void(0)" id="btnHideDetailInbox" onclick="HideDetailDataInbox('btnShowDetailInbox','btnHideDetailInbox','DivDetail')" style="display:none"><h5>Sembunyikan Informasi Detail</h5></a>
+            </div>
+
+            <div id="DivDetail" style="display:none">
+                <div class="main-card mb-3 card">
+                    <div class="headerSearch">
+                        Informasi Tambahan
+                    </div>
+                    <div class="card-body">
+
+                        <div class="form-group row m-b-15">
+                            <label class="col-md-3 col-form-label">Sektor Ekonomi 20</label>
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    @Html.TextBoxFor(m => m.SektorEkonomi20_Name, new { @readonly = true, @class = "form-control", @value = "", @autocomplete = "off" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row m-b-15">
+                            <label class="col-md-3 col-form-label">Sub Sektor Ekonomi</label>
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    @Html.TextBoxFor(m => m.SubSektorEkonomi_Name, new { @readonly = true, @class = "form-control", @value = "", @autocomplete = "off" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row m-b-15">
+                            <label class="col-md-3 col-form-label">Sektor Industri</label>
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    @Html.TextBoxFor(m => m.SektorIndustri, new { @readonly = true, @class = "form-control", @value = "", @autocomplete = "off" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row m-b-15">
+                            <label class="col-md-3 col-form-label">Email</label>
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    @Html.TextBoxFor(m => m.Email, new { @readonly = true, @class = "form-control", @value = "", @autocomplete = "off" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row m-b-15">
+                            <label class="col-md-3 col-form-label">NPWP</label>
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    @Html.TextBoxFor(m => m.Npwp, new { @readonly = true, @class = "form-control", @value = "", @autocomplete = "off" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row m-b-15">
+                            <label class="col-md-3 col-form-label">Provinsi</label>
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    @Html.TextBoxFor(m => m.Provinsi, new { @readonly = true, @class = "form-control", @value = "", @autocomplete = "off" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group row m-b-15">
+                            <label class="col-md-3 col-form-label">Kecamatan</label>
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    @Html.TextBoxFor(m => m.Kecamatan, new { @readonly = true, @class = "form-control", @value = "", @autocomplete = "off" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row m-b-15">
+                            <label class="col-md-3 col-form-label">Kelurahan</label>
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    @Html.TextBoxFor(m => m.Kelurahan, new { @readonly = true, @class = "form-control", @value = "", @autocomplete = "off" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row m-b-15">
+                            <label class="col-md-3 col-form-label">Kode Pos</label>
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    @Html.TextBoxFor(m => m.KodePos, new { @readonly = true, @class = "form-control", @value = "", @autocomplete = "off" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row m-b-15">
+                            <label class="col-md-3 col-form-label">Keterangan</label>
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    @Html.TextAreaFor(m => m.Keterangan, new { @readonly = true, @class = "form-control", @value = "", @autocomplete = "off" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row m-b-15">
+                            <label class="col-md-3 col-form-label">No Faksimilli</label>
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    @Html.TextBoxFor(m => m.NoFax, new { @readonly = true, @class = "form-control", @value = "", @autocomplete = "off" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row m-b-15">
+                            <label class="col-md-3 col-form-label">Website</label>
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    @Html.TextBoxFor(m => m.Website, new { @readonly = true, @class = "form-control", @value = "", @autocomplete = "off" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row m-b-15">
+                            <label class="col-md-3 col-form-label">Nama Unit</label>
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    @Html.TextBoxFor(m => m.NamaUnit, new { @readonly = true, @class = "form-control", @value = "", @autocomplete = "off" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="main-card mb-3 card">
+                    <div class="headerSearch">
+                        Info Checking Document
+                    </div>
+                    <div class="card-body">
+                        <table id="TableCheckingDocument" class="display nowrap table table-bordered table-hover" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th style="width: 1px">No</th>
+                                    <th>
+                                        Dukcapil
+                                    </th>
+                                    <th>
+                                        NPWP
+                                    </th>
+                                    <th>
+                                        SLIK
+                                    </th>
+                                    <th>
+                                        DHN
+                                    </th>
+                                    <th>
+                                        OSS
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="main-card mb-3 card">
+                    <div class="headerSearch">
+                        Info Disclaimer
+                    </div>
+                    <div class="card-body">
+                        <table id="TableDisclaimer" class="display nowrap table table-bordered table-hover" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th style="width: 1px">No</th>
+                                    <th style="width: 1px">Aksi</th>
+                                    <th>
+                                        Deskripsi
+                                    </th>
+                                    <th>
+                                        Soal
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="main-card mb-3 card">
+                    <div class="headerSearch">
+                        Catatan
+                    </div>
+                    <div class="card-body">
+                        <div class="panel-body" style="margin-right:25px !important;">
+                            <form id="FormData">
+                                <div>@Html.HiddenFor(m => m.Id)</div>
+                                @*<textarea id="catatan" class="form-control"></textarea>*@
+                                @Html.TextAreaFor(m => m.catatan, new { @class = "form-control", @value = "", @autocomplete = "off" })
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="main-card mb-3 card">
+                    <div class="headerSearch">
+                        Info Riwayat Komentar
+                    </div>
+                    <div class="card-body">
+                        <table id="TableRiwayatKomentar" class="display nowrap table table-bordered table-hover" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th style="width: 1px">No</th>
+                                    <th>
+                                        Status
+                                    </th>
+                                    <th>
+                                        Komentar
+                                    </th>
+                                    <th>
+                                        Role
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="main-card mb-3 card">
+                    <div class="headerSearch">
+                        Tracking
+                    </div>
+                    <div class="card-body">
+                        <table id="TableTracking" class="display nowrap table table-bordered table-hover" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Status
+                                    </th>
+                                    <th>
+                                        Tanggal Mulai
+                                    </th>
+                                    <th>
+                                        Tanggal Selesai
+                                    </th>
+                                    <th>
+                                        Oleh
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+                @*</form>*@
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="mt-2 btn btn-danger pull-right" style="margin-left:10px;" id="BtnReject">Reject</a>
+                <a href="#" class="mt-2 btn btn-secondary pull-right" style="margin-left:10px;" id="BtnPending">Pending</a>
+                <a href="#" class="mt-2 btn btn-success pull-right" id="BtnApprove">Approve</a>
+                <a href="javascript:;" class="btn btn-sm btn-info" onclick="BackDraft()">Tutup</a>
+            </div>
+        </div>
+    </div>
+</div>

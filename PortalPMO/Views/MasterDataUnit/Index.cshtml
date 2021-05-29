@@ -1,0 +1,161 @@
+﻿
+@{
+    ViewData["Title"] = "Master Data Unit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section styles{
+    <link href="@Url.Content("~/plugin/DataTables-1.10.20/media/css/datatables.min.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/plugin/DataTables-1.10.20/media/css/responsive.dataTables.min.css")" rel="stylesheet" />
+    <link href="~/plugin/select2/dist/css/select2.min.css" rel="stylesheet" />
+    <style>
+        .fab {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            clip-path: circle();
+            height: 40px;
+            width: 40px;
+            z-index: 999;
+            box-shadow: 0 0.46875rem 2.1875rem rgba(4,9,20,0.03), 0 0.9375rem 1.40625rem rgba(4,9,20,0.03), 0 0.25rem 0.53125rem rgba(4,9,20,0.05), 0 0.125rem 0.1875rem rgba(4,9,20,0.03);
+        }
+
+
+
+        .addButton {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+        }
+
+        .select2 {
+            height: 30px;
+        }
+
+        .dataTables_wrapper {
+            zoom: 0.9 !important;
+        }
+
+        table.dataTable.dtr-inline.collapsed > tbody > tr[role="row"] > td:first-child:before, table.dataTable.dtr-inline.collapsed > tbody > tr[role="row"] > th:first-child:before {
+            background-color: #3f6ad8;
+        }
+
+        .select2-container .select2-selection--single {
+            height: 35px;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            padding-top: 5px;
+            color: #495057;
+            /*border: 1px solid #ced4da;*/
+        }
+
+        .input-group {
+            margin-bottom: 5px;
+        }
+
+        select[name=Table_length] {
+            height: 35px;
+        }
+    </style>
+}
+<div class="app-main__outer">
+    <div class="app-main__inner">
+        <div class="row">
+            <h5><b>Master Data Unit</b></h5>
+        </div>
+        <hr />
+        <div id="DivContentBody">
+            <div class="row">
+
+                <div class="col-lg-12">
+                    <div class="main-card mb-3 card" id="cardParameterSearch">
+
+                        <div class="card-body">
+                            <p class="LabelSearchParam">Parameter Search</p>
+                            <hr />
+                            <form class="">
+                                <div class="form-row">
+                                    <div class="col-md-6">
+                                        <div class="position-relative form-group">
+                                            <label class="">Kode</label>
+                                            <input id="txtKodeSearchParam" type="text" class="form-control" placeholder="Masukkan Kode Unit">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="position-relative form-group">
+                                            <label class="">Nama</label>
+                                            <input id="txtNamaSearchParam" type="text" class="form-control" placeholder="Masukkan Nama Unit">
+                                        </div>
+                                    </div>
+                                </div>
+                                @*<div class="col-lg-12">
+                                        <a href="javascript:void(0)" style="align-content: center;
+            z-index: 1;width:95%" id="btnShowParameterSearch" onclick="ShowParameterSearch('btnShowParameterSearch','btnHideParameterSearch','DivFullParamSearch')">
+                                            Tampilkan Parameter Pencarian
+                                        </a>
+                                        <a href="javascript:void(0)" style="align-content: center;
+            z-index: 1;display:none;width:95%;" id="btnHideParameterSearch" onclick="HideParameterSearch('btnShowParameterSearch','btnHideParameterSearch','DivFullParamSearch')">
+                                            Sembunyikan Parameter Pencarian
+                                        </a>
+                                </div>*@
+                                <a href="javascript:void(0)" class="mt-2 btn btn-success pull-right" style="margin-left:10px;" id="BtnSearch">Cari</a>
+                                <a href="javascript:void(0)" class="mt-2 btn btn-danger pull-right" id="BtnClearSearch">Bersihkan</a>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" style="padding-top:20px;">
+                <div class="col-lg-12">
+                    <div class="main-card mb-3 card">
+                        <div class="card-body">
+                            <a href="javascript:void(0)" class="mt-2 btn btn-success" style="margin-left:10px;" onclick="Create()">Tambah Data</a>
+                            <table id="Table" class="display" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th style="max-width:25px">No</th>
+                                        <th style="max-width:13%">Aksi</th>
+                                        <th>Tipe</th>
+                                        <th>Kode</th>
+                                        <th>Nama</th>
+                                        <th>Nama Singkat</th>
+                                        <th>Induk Unit</th>
+                                        <th>Aktif?</th>
+                                        <th>Wilayah/Divisi</th>
+                                        <th>Alamat</th>
+                                        <th>Dibuat Oleh</th>
+                                        <th>Waktu Dibuat</th>
+                                        <th>Diubah Oleh</th>
+                                        <th>Waktu Diubah</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="DivFormBody">
+        </div>
+    </div>
+</div>
+
+
+
+
+@section scripts{
+    <script src="@Url.Content("~/plugin/DataTables-1.10.20/media/js/jquery.dataTables.min.js")"></script>
+    <script src="@Url.Content("~/plugin/DataTables-1.10.20/media/js/dataTables.responsive.min.js")"></script>
+    <script src="~/plugin/select2/dist/js/select2.min.js"></script>
+    @Html.Partial("_Script")
+
+}
+

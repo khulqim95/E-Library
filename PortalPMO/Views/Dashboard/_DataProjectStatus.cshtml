@@ -1,0 +1,14 @@
+﻿@model PortalPMO.ViewModels.Dashboard_ViewModels
+
+@foreach (var item in Model.data)
+{
+
+    <div class="col-md-6 col-xl-3">
+        <div class="card mb-3">
+            <center>
+                <div class="pie" data-pie='{ "percent": @item.Presentase, "colorSlice": "#16a085", "time": 30, "fontWeight": 400 }'></div>
+                <p style="padding-top:15px;">@item.Nama</p>
+            </center>
+        </div>
+    </div>
+}

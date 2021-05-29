@@ -1,0 +1,108 @@
+﻿@using PortalPMO.Component;
+@using PortalPMO.ViewModels;
+@using Microsoft.AspNetCore.Http;
+
+@{
+    var y = (List<NavigationVM>)Context.Session.GetObject<List<NavigationVM>>("AllMenu");
+    var Path = ".." + ViewBag.CurrentPath;
+    var Nama_Pegawai = Context.Session.GetString(SessionConstan.Session_Nama_Pegawai);
+    var Pegawai_Id = Context.Session.GetString(SessionConstan.Session_Pegawai_Id);
+    var Nama_Role = Context.Session.GetString(SessionConstan.Session_Nama_Role);
+    var Role_Id = Context.Session.GetString(SessionConstan.Session_Role_Id);
+    var Nama_Unit = Context.Session.GetString(SessionConstan.Session_Nama_Unit);
+    var Npp = Context.Session.GetString(SessionConstan.Session_NPP_Pegawai);
+    var Role_Nama_Unit = Context.Session.GetString(SessionConstan.Session_Role_Nama_Unit);
+    var Status_Role = Context.Session.GetString(SessionConstan.Session_Status_Role);
+    var Images_User = Context.Session.GetString(SessionConstan.Session_Images_User);
+    var User_Role_Id = Context.Session.GetString(SessionConstan.Session_User_Role_Id);
+}
+<style>
+    .MenuHeader {
+        margin-left: -40px;
+    }
+    .vertical-nav-menu li a.mm-active {
+        background-color: #f9b07c;
+    }
+</style>
+<div class="scrollbar-sidebar ps ">
+    <center>
+        <img width="80" id="ImagesHeaderMenu" class="rounded-circle" src=@Images_User style="margin-top:20px;margin-bottom:20px;" alt="">
+        <h6>Hai, @Nama_Pegawai - @Npp</h6>
+        <p>@Nama_Role - @Nama_Unit</p>
+    </center>
+    <hr/>
+    <div class="app-sidebar__inner">
+        <ul class="vertical-nav-menu metismenu">
+            @if (y != null)
+            {
+                @foreach (var mainmenu in y.Where(s => s.Type == 1).OrderBy(omn => omn.Order).ToList())
+                {
+                    <li class="app-sidebar__heading">@mainmenu.Name</li>
+                    @foreach (var menu in y.Where(s => s.Type == 2 && s.ParentNavigationId == mainmenu.Id).OrderBy(omn => omn.Order).ToList())
+                    {
+                        if (y.Count(m => m.ParentNavigationId == menu.Id) == 0) //Jika menu tidak mempunyai child
+                        {
+                            if (menu.Route == Path)
+                            {
+                                <li class="MenuHeader">
+                                    <a href=@menu.Route aria-expanded="false" class="mm-active">
+                                        @menu.IconClass &nbsp;&nbsp;
+                                        @menu.Name
+                                    </a>
+                                </li>
+                            }
+                            else
+                            {
+                                if (menu.Route == "../PendingTask/Index")
+                                {
+                                    <li class="MenuHeader">
+                                        <a href=@menu.Route aria-expanded="false">
+                                            @menu.IconClass &nbsp;&nbsp;
+                                            @menu.Name
+                                            @*<div class="ml-auto badge badge-danger">2 New</div>*@
+                                        </a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="MenuHeader">
+                                        <a href=@menu.Route aria-expanded="false">
+                                            @menu.IconClass &nbsp;&nbsp;
+                                            @menu.Name
+                                        </a>
+                                    </li>
+                                }
+
+                            }
+                        }
+                        else //Jika menu mempunyai child
+                        {
+                            <li class="MenuHeader">
+                                <a href="#" aria-expanded="false">
+                                    @menu.IconClass &nbsp;&nbsp;
+                                    @menu.Name
+                                    <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                </a>
+                                <ul class="mm-collapse">
+                                    @foreach (var submenu in y.Where(s => s.Type == 3 && s.ParentNavigationId == menu.Id).OrderBy(omn => omn.Order).ToList())
+                                    {
+                                        <li>
+                                            <a href=@submenu.Route>
+                                                <i class="metismenu-icon">
+                                                </i>@submenu.Name
+                                            </a>
+                                        </li>
+                                    }
+
+                                </ul>
+                            </li>
+                        }
+
+
+                    }
+                }
+            }
+        </ul>
+    </div>
+    <div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; height: 597px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 373px;"></div></div>
+</div>

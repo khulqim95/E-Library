@@ -1,0 +1,409 @@
+﻿@model PortalPMO.ViewModels.Print_ViewModels
+
+@{
+    Layout = null;
+}
+
+<STYLE TYPE="text/css">
+    .breakhere {
+        page-break-after: always
+    }
+</STYLE>
+
+<style>
+    thead {
+        display: table-header-group;
+    }
+
+    tfoot {
+        display: table-row-group;
+    }
+
+    tr {
+        page-break-inside: avoid;
+    }
+
+    .RincianBelanjaText {
+        padding-left: 30px;
+        position: relative;
+    }
+</style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Print</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="@Url.Content("~/plugin/DataTables-1.10.20/media/css/datatables.min.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/assets/css/custom/fonts.googleapis.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/plugin/bootstrap/4.0.0/css/bootstrap.min.css")" rel="stylesheet" />
+    <script src="@Url.Content("~/plugin/bootstrap/4.0.0/js/bootstrap.bundle.min.js")"></script>
+    <style type="text/css">
+        #background {
+            position: fixed;
+            display: block;
+            min-width: 100%;
+            opacity: 0.2;
+            text-align: center;
+            background-color: transparent;
+            background-repeat: repeat-y;
+            padding-top: 20%;
+        }
+
+        #bg-text {
+            color: lightgrey;
+            font-size: 120px;
+            transform: rotate(300deg);
+            -webkit-transform: rotate(300deg);
+            opacity: 0.9;
+            filter: alpha(opacity=50);
+            background-color: transparent;
+            background-repeat: repeat-y;
+        }
+
+        /*.watermark {
+            background-repeat: repeat;
+            background-image: url(~/img/Draft.png);
+        }*/
+
+        .watermark {
+            /*height: 95%;
+            width: 90%;*/
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            background-repeat: repeat-y;
+            z-index: 9999;
+            opacity: 0.2;
+            background-size: 10px;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="container">
+        <table style="width:100%">
+            <tr>
+                <td style="width:90%"></td>
+                <td>
+                    <p><img src="~/img/LogoBNI.png" style="width:150px;" /></p>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="container">
+        <div style="padding:10px;padding-bottom:30px !important">
+            <center>
+                <h7>
+                    <b>
+                        LAPORAN DETAIL PROJECT <br />
+
+                    </b>
+                </h7>
+            </center>
+        </div>
+
+    </div>
+    <div class="container">
+        <table class="table border" style="padding:10px;margin-top:20px;font-size:12px !important;">
+            <tr>
+                <td style="width:300px;">No Project</td>
+                <td style="width:10px;">:</td>
+                <td>@Model.data.NoProject</td>
+            </tr>
+            <tr>
+                <td style="width:300px;">Nama</td>
+                <td style="width:10px;">:</td>
+                <td>@Model.data.Nama</td>
+            </tr>
+            <tr>
+                <td style="width:300px;">Target Penyelesaian</td>
+                <td style="width:10px;">:</td>
+                <td>@Model.data.TanggalEstimasiDone</td>
+            </tr>
+            <tr>
+                <td style="width:300px;">Tanggal Estimasi Development</td>
+                <td style="width:10px;">:</td>
+                <td>@Model.data.TanggalEstimasiDevelopment</td>
+            </tr>
+            <tr>
+                <td style="width:300px;">Tanggal Estimasi Testing</td>
+                <td style="width:10px;">:</td>
+                <td>@Model.data.TanggalEstimasiTesting</td>
+            </tr>
+            <tr>
+                <td style="width:300px;">Tanggal Estimasi Piloting</td>
+                <td style="width:10px;">:</td>
+                <td>@Model.data.TanggalEstimasiPiloting</td>
+            </tr>
+            <tr>
+                <td style="width:300px;">Tanggal Estimasi PIR</td>
+                <td style="width:10px;">:</td>
+                <td>@Model.data.TanggalEstimasiPir</td>
+            </tr>
+            <tr>
+                <td style="width:300px;">Tanggal Estimasi Production</td>
+                <td style="width:10px;">:</td>
+                <td>@Model.data.TanggalEstimasiProduction</td>
+            </tr>
+            <tr>
+                <td style="width:300px;">No Memo Requirment / Tanggal Memo</td>
+                <td style="width:10px;">:</td>
+                <td>@Model.data.NoMemo / @Model.data.TanggalMemo</td>
+            </tr>
+            <tr>
+                <td style="width:300px;">Tanggal Klarifikasi</td>
+                <td style="width:10px;">:</td>
+                <td>@Model.data.TanggalKlarifikasi</td>
+            </tr>
+            <tr>
+                <td style="width:300px;">Tanggal Disposisi</td>
+                <td style="width:10px;">:</td>
+                <td>@Model.data.TanggalDisposisi</td>
+            </tr>
+            <tr>
+                <td style="width:300px;">No DRF / Tanggal DRF</td>
+                <td style="width:10px;">:</td>
+                <td>@Model.data.NoDrf / @Model.data.TanggalDrf</td>
+            </tr>
+            <tr>
+                <td style="width:300px;">Kompleksitas Project</td>
+                <td style="width:10px;">:</td>
+                <td>@Model.data.KompleksitasProject</td>
+            </tr>
+            <tr>
+                <td style="width:300px;">Klasifikasi Project</td>
+                <td style="width:10px;">:</td>
+                <td>@Model.data.KlasifikasiProject</td>
+            </tr>
+            <tr>
+                <td style="width:300px;">Periode Project</td>
+                <td style="width:10px;">:</td>
+                <td>@Model.data.PeriodeProject</td>
+            </tr>
+            <tr>
+                <td style="width:300px;">Kategori Project</td>
+                <td style="width:10px;">:</td>
+                <td>@Model.data.KategoriProject</td>
+            </tr>
+            <tr>
+                <td style="width:300px;">Sub Kategori Project</td>
+                <td style="width:10px;">:</td>
+                <td>@Model.data.SubKategoriProject</td>
+            </tr>
+            <tr>
+                <td style="width:300px;">Skor Project</td>
+                <td style="width:10px;">:</td>
+                <td>@Model.data.SubKategoriProject</td>
+            </tr>
+            <tr>
+                <td style="width:300px;">Mandatroy</td>
+                <td style="width:10px;">:</td>
+                <td>@Model.data.Mandatory</td>
+            </tr>
+            <tr>
+                <td style="width:300px;">PIR</td>
+                <td style="width:10px;">:</td>
+                <td>@Model.data.PIR</td>
+            </tr>
+            <tr>
+                <td style="width:300px;">Status</td>
+                <td style="width:10px;">:</td>
+                <td><b>@Model.data.ProjectStatus</b></td>
+            </tr>
+        </table>
+        <div>
+            <P CLASS="breakhere">
+                <br />
+            <p>Details Project</p>
+            <table class="table border" style="padding:10px;margin-top:20px;font-size:12px !important;">
+                <tr>
+                    <td>
+                        @Html.Raw(Model.data.DetailRequirment)
+                    </td>
+                </tr>
+            </table>
+            <br />
+            <p>Depedency Project</p>
+            <table class="table border" style="padding:10px;margin-top:20px;font-size:12px !important;">
+                <tr style="background-color:whitesmoke" class="border">
+                    <td style="width:20px;" class="border">
+                        <center><p>No</p></center>
+                    </td>
+                    <td style="width:150px;" class="border">
+                        <center><p>No Project</p></center>
+                    </td>
+                    <td style="width:150px;" class="border">
+                        <center><p>Nama</p></center>
+                    </td>
+                    <td class="border">
+                        <center><p>Keterangan</p></center>
+                    </td>
+                </tr>
+                @if (Model.listDataProject.Count == 0)
+                {
+                    <tr>
+                        <td style="width:20px;" class="border" colspan="6">
+                            <center><p>Tidak ada data</p></center>
+                        </td>
+
+                    </tr>
+                }
+                else
+                {
+                    @foreach (var itemProject in Model.listDataProject)
+                    {
+                        <tr style="background-color:whitesmoke" class="border">
+                            <td style="width:20px;" class="border">
+                                <p>@itemProject.Nomor</p>
+                            </td>
+                            <td style="width:150px;" class="border">
+                                <p>@itemProject.ProjectNo</p>
+                            </td>
+                            <td style="width:150px;" class="border">
+                                <p>@itemProject.NamaProject</p>
+                            </td>
+                            <td class="border">
+                                <p>@Html.Raw(itemProject.Keterangan)</p>
+                            </td>
+                        </tr>
+                    }
+                }
+
+            </table>
+            <br />
+            <p>Daftar User</p>
+            <table class="table border" style="padding:10px;margin-top:20px;font-size:12px !important;">
+                <tr style="background-color:whitesmoke" class="border">
+                    <td style="width:20px;" class="border">
+                        <center><p>No</p></center>
+                    </td>
+                    <td class="border">
+                        <center><p>Npp</p></center>
+                    </td>
+                    <td class="border">
+                        <center><p>Nama</p></center>
+                    </td>
+                    <td class="border">
+                        <center><p>Client</p></center>
+                    </td>
+                    <td class="border">
+                        <center><p>Email</p></center>
+                    </td>
+                    <td class="border">
+                        <center><p>No HP</p></center>
+                    </td>
+                </tr>
+                @if (Model.listUser.Count == 0)
+                {
+                    <tr>
+                        <td style="width:20px;" class="border" colspan="6">
+                            <center><p>Tidak ada data</p></center>
+                        </td>
+
+                    </tr>
+                }
+                else
+                {
+                    @foreach (var itemUser in Model.listUser)
+                    {
+                        <tr>
+                            <td style="width:20px;" class="border">
+                                <p>@itemUser.Nomor</p>
+                            </td>
+                            <td class="border">
+                                <p>@itemUser.NppPic</p>
+                            </td>
+                            <td class="border">
+                                <p>@itemUser.NamaPic</p>
+                            </td>
+                            <td class="border">
+                                <p>@itemUser.Client</p>
+                            </td>
+                            <td class="border">
+                                <p>@itemUser.Email</p>
+                            </td>
+                            <td class="border">
+                                <p>@itemUser.NoHp</p>
+                            </td>
+                        </tr>
+                    }
+                }
+
+            </table>
+
+            <br />
+            <p>Daftar Anggota Tim</p>
+            <table class="table border" style="padding:10px;margin-top:20px;font-size:12px !important;">
+                <tr style="background-color:whitesmoke" class="border">
+                    <td style="width:20px;" class="border">
+                        <center><p>No</p></center>
+                    </td>
+                    <td class="border">
+                        <center><p>Npp</p></center>
+                    </td>
+                    <td class="border">
+                        <center><p>Nama</p></center>
+                    </td>
+                    <td class="border">
+                        <center><p>Job Position</p></center>
+                    </td>
+                    <td class="border">
+                        <center><p>Unit</p></center>
+                    </td>
+                    <td class="border">
+                        <center><p>Email</p></center>
+                    </td>
+                    <td class="border">
+                        <center><p>Status</p></center>
+                    </td>
+                </tr>
+                @if (Model.listAnggotaTim.Count == 0)
+                {
+                    <tr>
+                        <td style="width:20px;" class="border" colspan="6">
+                            <center><p>Tidak ada data</p></center>
+                        </td>
+
+                    </tr>
+                }
+                else
+                {
+                    @foreach (var itemAnggotaTim in Model.listAnggotaTim)
+                    {
+                        <tr>
+                            <td style="width:20px;" class="border">
+                                <p>@itemAnggotaTim.Nomor</p>
+                            </td>
+                            <td class="border">
+                                <p>@itemAnggotaTim.Npp</p>
+                            </td>
+                            <td class="border">
+                                <p>@itemAnggotaTim.Nama</p>
+                            </td>
+                            <td class="border">
+                                <p>@itemAnggotaTim.JobPosisi</p>
+                            </td>
+                            <td class="border">
+                                <p>@itemAnggotaTim.Unit</p>
+                            </td>
+                            <td class="border">
+                                <p>@itemAnggotaTim.Email</p>
+                            </td>
+
+                            <td class="border">
+                                <center><p>@itemAnggotaTim.Status</p></center>
+                            </td>
+                        </tr>
+                    }
+                }
+
+            </table>
+        </div>
+        
+
+    </div>
+</body>
+</html>

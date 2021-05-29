@@ -1,0 +1,145 @@
+﻿
+@{
+    ViewData["Title"] = "Progress Task";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section styles{
+    <link href="@Url.Content("~/plugin/DataTables-1.10.20/media/css/datatables.min.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/plugin/DataTables-1.10.20/media/css/responsive.dataTables.min.css")" rel="stylesheet" />
+    <link href="~/plugin/air-datepicker-master/dist/css/datepicker.css" rel="stylesheet" />
+    <link href="~/plugin/summernote/summernote-lite.min.css" rel="stylesheet" />
+    <link href="~/plugin/daterangepicker/daterangepicker.css" rel="stylesheet" />
+
+    <style>
+        .dataTables_wrapper {
+            zoom: 0.9 !important;
+        }
+
+        table.dataTable.dtr-inline.collapsed > tbody > tr[role="row"] > td:first-child:before, table.dataTable.dtr-inline.collapsed > tbody > tr[role="row"] > th:first-child:before {
+            background-color: #3f6ad8;
+        }
+
+        .select2-container .select2-selection--single {
+            height: 35px;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            padding-top: 5px;
+            color: #495057;
+            /*border: 1px solid #ced4da;*/
+        }
+
+        .input-group {
+            margin-bottom: 5px;
+        }
+
+        select[name=Table_length] {
+            height: 35px;
+        }
+
+        .select2-container--default .select2-selection--multiple .select2-selection__choice {
+            background-color: white;
+            border: 1px solid teal;
+            border-radius: 4px;
+            cursor: default;
+            float: left;
+            margin-right: 5px;
+            margin-top: 5px;
+            padding: 0 5px;
+            height: 22px;
+        }
+        .datepicker {
+            z-index: 1151 !important;
+        }
+        .dataTables_wrapper {
+            max-width: 1050px;
+        }
+    </style>
+}
+<div class="app-main__outer">
+    <div class="app-main__inner">
+        <div class="row">
+            <h5><b>Progress Task</b></h5>
+        </div>
+        <hr />
+        <div id="DivContentBody">
+            <div class="row">
+              <div class="col-lg-12">
+                    <div class="main-card mb-3 card" id="cardParameterSearch">
+
+                        <div class="card-body">
+
+                            <form class="">
+                                <div class="form-row">
+                                    <div class="col-md-6">
+                                        <div class="position-relative form-group">
+                                            <label class="">No Project</label>
+                                            <input id="txtNoProjectSearchParam" type="text" class="form-control" placeholder="Masukkan No Project">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="position-relative form-group">
+                                            <label class="">Nama Project</label>
+                                            <input id="txtNamaSearchParam" type="text" class="form-control" placeholder="Masukkan Nama Project">
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <a href="javascript:void(0)" class="mt-2 btn btn-success pull-right" style="margin-left:10px;" id="BtnSearch">Cari</a>
+                                <a href="javascript:void(0)" class="mt-2 btn btn-danger pull-right" id="BtnClearSearch">Bersihkan</a>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" style="padding-top:20px;">
+                <div class="col-lg-12">
+                    <div class="main-card mb-3 card">
+                        <div class="headerSearch">
+                            Data Progress Task
+                        </div>
+                        <div class="card-body">
+                            <table id="Table" class="display nowrap" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th style="max-width:30px;">No</th>
+                                        <th style="max-width:70px;"></th>
+                                        <th>No Project</th>
+                                        <th>Nama Project</th>
+                                        <th>Timeline</th>
+                                        <th>Deadline</th>
+                                        <th>Tanggal Penyelesaian</th>
+                                        <th>SLA</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="DivFormBody">
+        </div>
+    </div>
+</div>
+
+
+
+
+@section scripts{
+
+    <script src="@Url.Content("~/plugin/DataTables-1.10.20/media/js/jquery.dataTables.min.js")"></script>
+    <script src="@Url.Content("~/plugin/DataTables-1.10.20/media/js/dataTables.responsive.min.js")"></script>
+    <script src="~/plugin/air-datepicker-master/dist/js/datepicker.min.js"></script>
+    <script src="~/plugin/summernote/summernote-lite.min.js"></script>
+    <script src="~/plugin/daterangepicker/moment.min.js"></script>
+    <script src="~/plugin/daterangepicker/daterangepicker.min.js"></script>
+    @Html.Partial("_Script")
+
+}
+

@@ -1,0 +1,422 @@
+﻿@model PortalPMO.Models.dbPortalPMO.TblMasterSistem
+
+<div class="row" style="padding-top:20px;">
+    <div class="col-lg-12">
+        <div class="main-card mb-3 card">
+            <div class="card-body">
+                <ul class="body-tabs body-tabs-layout tabs-animated body-tabs-animated nav">
+                    <li class="nav-item">
+                        <a role="tab" class="nav-link active show" id="tab-0" data-toggle="tab" href="#tab-content-0" aria-selected="true">
+                            <span>Informasi Project</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a role="tab" class="nav-link show" id="tab-1" data-toggle="tab" href="#tab-content-1" aria-selected="false">
+                            <span>Daftar Client</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a role="tab" class="nav-link" id="tab-2" data-toggle="tab" href="#tab-content-2">
+                            <span>Relasi Project</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a role="tab" class="nav-link" id="tab-2" data-toggle="tab" href="#tab-content-2">
+                            <span>Member</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a role="tab" class="nav-link" id="tab-2" data-toggle="tab" href="#tab-content-2">
+                            <span>File Repository</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a role="tab" class="nav-link" id="tab-2" data-toggle="tab" href="#tab-content-2">
+                            <span>Notes</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a role="tab" class="nav-link" id="tab-2" data-toggle="tab" href="#tab-content-2">
+                            <span>Channel</span>
+                        </a>
+                    </li>
+                </ul>
+                <hr />
+                <div class="tab-content">
+                    <div class="tab-pane tabs-animation fade active show" id="tab-content-0" role="tabpanel">
+                        <form id="FormData" style="padding-top:20px;">
+                            @Html.AntiForgeryToken()
+                            <div class="form-group row m-b-15">
+                                <label class="col-md-3 col-form-label">Nama Project <span class="labelMandatory">*</span></label>
+                                <div class="col-md-9">
+                                    <div class="input-group">
+                                        @Html.TextBoxFor(m => m.Kode, new { @class = "form-control", @value = "", @autocomplete = "off" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row m-b-15">
+                                <label class="col-md-3 col-form-label">Deskripsi Singkat <span class="labelMandatory">*</span></label>
+                                <div class="col-md-9">
+                                    <div class="input-group">
+                                        @Html.TextBoxFor(m => m.Keterangan, new { @class = "form-control", @value = "", @autocomplete = "off" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row m-b-15">
+                                <label class="col-md-3 col-form-label">Memo Requirment <span class="labelMandatory">*</span></label>
+                                <div class="col-md-9">
+                                    <div class="input-group">
+                                        @Html.TextBoxFor(m => m.Kode, new { @class = "form-control", @value = "", @autocomplete = "off" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row m-b-15">
+                                <label class="col-md-3 col-form-label">Tanggal Memo <span class="labelMandatory">*</span></label>
+                                <div class="col-md-9">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend datepicker-trigger" id="TanggalSearch" data-date-format="dd/mm/yyyy">
+                                            <div class="input-group-text">
+                                                <i class="fa fa-calendar-alt"></i>
+                                            </div>
+                                        </div>
+                                        <input type="text" id="TanggalMemo" class="datepicker-here form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row m-b-15">
+                                <label class="col-md-3 col-form-label">Tanggal Klarifikasi <span class="labelMandatory">*</span></label>
+                                <div class="col-md-9">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend datepicker-trigger" id="TanggalSearch" data-date-format="dd/mm/yyyy">
+                                            <div class="input-group-text">
+                                                <i class="fa fa-calendar-alt"></i>
+                                            </div>
+                                        </div>
+                                        <input type="text" id="TanggalKlarifikasi" class="datepicker-here form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row m-b-15">
+                                <label class="col-md-3 col-form-label">Tanggal Disposisi <span class="labelMandatory">*</span></label>
+                                <div class="col-md-9">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend datepicker-trigger" id="TanggalSearch" data-date-format="dd/mm/yyyy">
+                                            <div class="input-group-text">
+                                                <i class="fa fa-calendar-alt"></i>
+                                            </div>
+                                        </div>
+                                        <input type="text" id="TanggalDisposisi" class="datepicker-here form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row m-b-15">
+                                <label class="col-md-3 col-form-label">No DRF <span class="labelMandatory">*</span></label>
+                                <div class="col-md-9">
+                                    <div class="input-group">
+                                        @Html.TextBoxFor(m => m.Keterangan, new { @class = "form-control", @value = "", @autocomplete = "off" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row m-b-15">
+                                <label class="col-md-3 col-form-label">Tanggal DRF <span class="labelMandatory">*</span></label>
+                                <div class="col-md-9">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend datepicker-trigger" id="TanggalSearch" data-date-format="dd/mm/yyyy">
+                                            <div class="input-group-text">
+                                                <i class="fa fa-calendar-alt"></i>
+                                            </div>
+                                        </div>
+                                        <input type="text" id="TanggalDisposisi" class="datepicker-here form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                            <h5 style="padding-top:20px;">Informasi User</h5>
+                            <a href="javascript:void(0)" class="mt-2 btn btn-success" style="margin-left:10px;padding-bottom:10px;" onclick="Create()">Tambah Data User</a>
+                            <table id="TableProjectUser" class="display nowrap" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th style="max-width:25px">No</th>
+                                        <th style="max-width:13%">Aksi</th>
+                                        <th>Unit</th>
+                                        <th>Npp</th>
+                                        <th>Nama</th>
+                                        <th>Keterangan</th>
+                                        <th>Dibuat Oleh</th>
+                                        <th>Waktu Dibuat</th>
+                                        <th>Diubah Oleh</th>
+                                        <th>Waktu Diubah</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </form>
+                    </div>
+                    <div class="tab-pane tabs-animation fade" id="tab-content-1" role="tabpanel">
+                        <div class="form-group row m-b-15">
+                            <label class="col-md-3 col-form-label">Kategori Project <span class="labelMandatory">*</span></label>
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    @Html.TextBoxFor(m => m.Keterangan, new { @class = "form-control", @value = "", @autocomplete = "off" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row m-b-15">
+                            <label class="col-md-3 col-form-label">Skor Prioritas <span class="labelMandatory">*</span></label>
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    @Html.TextBoxFor(m => m.Keterangan, new { @class = "form-control", @value = "", @autocomplete = "off" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row m-b-15">
+                            <label class="col-md-3 col-form-label">Link dengan Project </label>
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    @Html.TextBoxFor(m => m.Keterangan, new { @class = "form-control", @value = "", @autocomplete = "off" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row m-b-15">
+                            <label class="col-md-3 col-form-label">Notifikasi </label>
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    @Html.TextBoxFor(m => m.Keterangan, new { @class = "form-control", @value = "", @autocomplete = "off" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row m-b-15">
+                            <label class="col-md-3 col-form-label">Mandatory </label>
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    @Html.TextBoxFor(m => m.Keterangan, new { @class = "form-control", @value = "", @autocomplete = "off" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row m-b-15">
+                            <label class="col-md-3 col-form-label">PIR </label>
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    @Html.TextBoxFor(m => m.Keterangan, new { @class = "form-control", @value = "", @autocomplete = "off" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane tabs-animation fade" id="tab-content-2" role="tabpanel">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="main-card mb-3 card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Basic</h5>
+                                        <ul class="nav nav-tabs">
+                                            <li class="nav-item"><a data-toggle="tab" href="#tab-eg10-0" class="active nav-link">Tab 1</a></li>
+                                            <li class="nav-item"><a data-toggle="tab" href="#tab-eg10-1" class="nav-link">Tab 2</a></li>
+                                            <li class="nav-item"><a data-toggle="tab" href="#tab-eg10-2" class="nav-link">Tab 3</a></li>
+                                        </ul>
+                                        <div class="tab-content">
+                                            <div class="tab-pane active" id="tab-eg10-0" role="tabpanel">
+                                                <p>
+                                                    It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing
+                                                    software like Aldus PageMaker
+                                                    including versions of Lorem Ipsum.
+                                                </p>
+                                            </div>
+                                            <div class="tab-pane" id="tab-eg10-1" role="tabpanel">
+                                                <p>
+                                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                                                    when an unknown printer took a
+                                                    galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+                                                </p>
+                                            </div>
+                                            <div class="tab-pane" id="tab-eg10-2" role="tabpanel">
+                                                <p>
+                                                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a
+                                                    type specimen book. It has
+                                                    survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="main-card mb-3 card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Justified Alignment</h5>
+                                        <ul class="nav nav-tabs nav-justified">
+                                            <li class="nav-item"><a data-toggle="tab" href="#tab-eg11-0" class="active nav-link">Tab 1</a></li>
+                                            <li class="nav-item"><a data-toggle="tab" href="#tab-eg11-1" class="nav-link">Tab 2</a></li>
+                                            <li class="nav-item"><a data-toggle="tab" href="#tab-eg11-2" class="nav-link">Tab 3</a></li>
+                                        </ul>
+                                        <div class="tab-content">
+                                            <div class="tab-pane active" id="tab-eg11-0" role="tabpanel">
+                                                <p>
+                                                    It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing
+                                                    software like Aldus PageMaker
+                                                    including versions of Lorem Ipsum.
+                                                </p>
+                                            </div>
+                                            <div class="tab-pane" id="tab-eg11-1" role="tabpanel">
+                                                <p>
+                                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                                                    when an unknown printer took a
+                                                    galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+                                                </p>
+                                            </div>
+                                            <div class="tab-pane" id="tab-eg11-2" role="tabpanel">
+                                                <p>
+                                                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a
+                                                    type specimen book. It has
+                                                    survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="main-card mb-3 card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Tabs Variations</h5>
+                                        <div class="mb-3">
+                                            <div role="group" class="btn-group-sm nav btn-group">
+                                                <a data-toggle="tab" href="#tab-eg12-0" class="btn-pill pl-3 active btn btn-warning">Tab 1</a>
+                                                <a data-toggle="tab" href="#tab-eg12-1" class="btn btn-warning">Tab 2</a>
+                                                <a data-toggle="tab" href="#tab-eg12-2" class="btn-pill pr-3  btn btn-warning">Tab 3</a>
+                                            </div>
+                                        </div>
+                                        <div class="tab-content">
+                                            <div class="tab-pane active" id="tab-eg12-0" role="tabpanel">
+                                                <p>
+                                                    It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing
+                                                    software like Aldus PageMaker
+                                                    including versions of Lorem Ipsum.
+                                                </p>
+                                            </div>
+                                            <div class="tab-pane" id="tab-eg12-1" role="tabpanel">
+                                                <p>
+                                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                                                    when an unknown printer took a
+                                                    galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+                                                </p>
+                                            </div>
+                                            <div class="tab-pane" id="tab-eg12-2" role="tabpanel">
+                                                <p>
+                                                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a
+                                                    type specimen book. It has
+                                                    survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="main-card mb-3 card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Pills</h5>
+                                        <ul class="nav nav-pills">
+                                            <li class="nav-item"><a data-toggle="tab" href="#tab-eg13-0" class="active nav-link">Pill 1</a></li>
+                                            <li class="nav-item"><a data-toggle="tab" href="#tab-eg13-1" class="nav-link">Pill 2</a></li>
+                                            <li class="nav-item"><a data-toggle="tab" href="#tab-eg13-2" class="nav-link">Pill 3</a></li>
+                                        </ul>
+                                        <div class="tab-content">
+                                            <div class="tab-pane active" id="tab-eg13-0" role="tabpanel">
+                                                <p>
+                                                    It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing
+                                                    software like Aldus PageMaker
+                                                    including versions of Lorem Ipsum.
+                                                </p>
+                                            </div>
+                                            <div class="tab-pane" id="tab-eg13-1" role="tabpanel">
+                                                <p>
+                                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                                                    when an unknown printer took a
+                                                    galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+                                                </p>
+                                            </div>
+                                            <div class="tab-pane" id="tab-eg13-2" role="tabpanel">
+                                                <p>
+                                                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a
+                                                    type specimen book. It has
+                                                    survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="main-card mb-3 card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Pills</h5>
+                                        <ul class="nav nav-pills nav-fill">
+                                            <li class="nav-item"><a data-toggle="tab" href="#tab-eg14-0" class="active nav-link">Pill 1</a></li>
+                                            <li class="nav-item"><a data-toggle="tab" href="#tab-eg14-1" class="nav-link">Pill 2</a></li>
+                                            <li class="nav-item"><a data-toggle="tab" href="#tab-eg14-2" class="nav-link">Pill 3</a></li>
+                                        </ul>
+                                        <div class="tab-content">
+                                            <div class="tab-pane active" id="tab-eg14-0" role="tabpanel">
+                                                <p>
+                                                    It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing
+                                                    software like Aldus PageMaker
+                                                    including versions of Lorem Ipsum.
+                                                </p>
+                                            </div>
+                                            <div class="tab-pane" id="tab-eg14-1" role="tabpanel">
+                                                <p>
+                                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                                                    when an unknown printer took a
+                                                    galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+                                                </p>
+                                            </div>
+                                            <div class="tab-pane" id="tab-eg14-2" role="tabpanel">
+                                                <p>
+                                                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a
+                                                    type specimen book. It has
+                                                    survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="main-card mb-3 card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Button Group Tabs</h5>
+                                        <div class="mb-3 text-center">
+                                            <div role="group" class="btn-group-sm nav btn-group">
+                                                <a data-toggle="tab" href="#tab-eg15-0" class="btn-shadow active btn btn-primary">Tab 1</a>
+                                                <a data-toggle="tab" href="#tab-eg15-1" class="btn-shadow  btn btn-primary">Tab 2</a>
+                                                <a data-toggle="tab" href="#tab-eg15-2" class="btn-shadow  btn btn-primary">Tab 3</a>
+                                            </div>
+                                        </div>
+                                        <div class="tab-content">
+                                            <div class="tab-pane active" id="tab-eg15-0" role="tabpanel">
+                                                <p>
+                                                    It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing
+                                                    software like Aldus PageMaker
+                                                    including versions of Lorem Ipsum.
+                                                </p>
+                                            </div>
+                                            <div class="tab-pane" id="tab-eg15-1" role="tabpanel">
+                                                <p>
+                                                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a
+                                                    type specimen book. It has
+                                                    survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+                                                </p>
+                                            </div>
+                                            <div class="tab-pane" id="tab-eg15-2" role="tabpanel">
+                                                <p>
+                                                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a
+                                                    type specimen book. It has not only five centuries, but also the leap into not only five centuries, but also the leap into
+                                                    survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="javascript:;" class="btn btn-sm btn-white" onclick="BackDraft()">Tutup</a>
+                <a href="javascript:;" class="btn btn-sm btn-primary" id="BtnSubmit">Simpan</a>
+            </div>
+        </div>
+    </div>
+</div>

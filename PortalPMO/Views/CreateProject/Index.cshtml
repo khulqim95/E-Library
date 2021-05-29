@@ -1,0 +1,543 @@
+﻿@model PortalPMO.ViewModels.DataProject_ViewModels
+
+@{
+    ViewData["Title"] = "Create Project";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section styles{
+    <link href="~/plugin/air-datepicker-master/dist/css/datepicker.css" rel="stylesheet" />
+    <link href="~/plugin/summernote/summernote-lite.min.css" rel="stylesheet" />
+    <link href="~/plugin/dropify-master/dist/css/dropify.min.css" rel="stylesheet" />
+    <link href="@Url.Content("~/plugin/DataTables-1.10.20/media/css/datatables.min.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/plugin/DataTables-1.10.20/media/css/responsive.dataTables.min.css")" rel="stylesheet" />
+    <link href="~/plugin/select2/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="~/plugin/jquery-smartwizard-master/dist/css/smart_wizard_all.min.css" rel="stylesheet" />
+    <link href="~/plugin/daterangepicker/daterangepicker.css" rel="stylesheet" />
+
+    <style>
+        .fab {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            clip-path: circle();
+            height: 40px;
+            width: 40px;
+            z-index: 999;
+            box-shadow: 0 0.46875rem 2.1875rem rgba(4,9,20,0.03), 0 0.9375rem 1.40625rem rgba(4,9,20,0.03), 0 0.25rem 0.53125rem rgba(4,9,20,0.05), 0 0.125rem 0.1875rem rgba(4,9,20,0.03);
+        }
+
+        .addButton {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+        }
+
+        .select2 {
+            height: 30px;
+        }
+
+        .dataTables_wrapper {
+            zoom: 0.9 !important;
+        }
+
+        table.dataTable.dtr-inline.collapsed > tbody > tr[role="row"] > td:first-child:before, table.dataTable.dtr-inline.collapsed > tbody > tr[role="row"] > th:first-child:before {
+            background-color: #3f6ad8;
+        }
+
+
+        .select2-container .select2-selection--single {
+            height: 35px;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            padding-top: 5px;
+            color: #495057;
+            /*border: 1px solid #ced4da;*/
+        }
+
+        .input-group {
+            margin-bottom: 5px;
+        }
+
+        select[name=Table_length] {
+            height: 35px;
+        }
+
+        .select2-container--default .select2-selection--multiple .select2-selection__choice {
+            background-color: white;
+            border: 1px solid teal;
+            border-radius: 4px;
+            cursor: default;
+            float: left;
+            margin-right: 5px;
+            margin-top: 5px;
+            padding: 0 5px;
+            height: 22px;
+        }
+
+        .sw > .tab-content {
+            position: relative;
+            overflow: hidden;
+            height: auto !important;
+        }
+
+        .select2-container--default.select2-container--focus .select2-selection--multiple {
+            border: solid gray 0.7px;
+            outline: 0;
+        }
+        .select2-close-mask {
+            z-index: 2099;
+        }
+
+        .select2-dropdown {
+            z-index: 3051;
+        }
+
+        .select2-container--default.select2-container--focus .select2-selection--multiple {
+            border: solid gray 0.7px;
+            outline: 0;
+        }
+
+        .select2-close-mask {
+            z-index: 2099;
+        }
+
+        .select2-dropdown {
+            z-index: 3051;
+        }
+    </style>
+}
+<div class="app-main__outer">
+    <div class="app-main__inner">
+        <div class="row">
+            <h5><b>Create Project</b></h5>
+        </div>
+        <hr />
+
+        <div class="row" style="padding-top:20px;">
+            <div class="col-lg-12">
+                <div class="main-card mb-3 card">
+                    <div class="card-body">
+                        <div class="tab-content">
+                            <div class="tab-pane tabs-animation fade active show" id="tab-content-0" role="tabpanel">
+                                <form id="FormData">
+                                    <div id="smartwizard">
+                                        <ul class="nav">
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#step-1">
+                                                    <strong>Step 1</strong> <br>Informasi Project
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#step-2">
+                                                    <strong>Step 2</strong> <br>Scoring Project
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#step-3">
+                                                    <strong>Step 3</strong> <br> Daftar Anggota Team
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#step-4">
+                                                    <strong>Step 4</strong> <br> Assignment
+                                                </a>
+                                            </li>
+                                        </ul>
+                                        <div class="tab-content">
+                                            <div id="step-1" class="tab-pane" role="tabpanel" aria-labelledby="step-1">
+                                                @Html.AntiForgeryToken()
+                                                <p><b>Informasi Project</b></p>
+                                                <hr />
+                                                <div class="form-group row m-b-15">
+                                                    <label class="col-md-3 col-form-label">Nama Project <span class="labelMandatory">*</span></label>
+                                                    <div class="col-md-9">
+                                                        <div class="input-group">
+                                                            @Html.TextBoxFor(m => m.Nama, new { @class = "form-control", @value = "", @autocomplete = "off" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row m-b-15">
+                                                    <label class="col-md-3 col-form-label">Deskripsi Singkat <span class="labelMandatory">*</span></label>
+                                                    <div class="col-md-9">
+                                                        <div class="input-group">
+                                                            @Html.TextBoxFor(m => m.DetailRequirment, new { @class = "form-control", @autocomplete = "off" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row m-b-15">
+                                                    <label class="col-md-3 col-form-label">Target Penyelesaian <span class="labelMandatory">*</span></label>
+                                                    <div class="col-md-9">
+                                                        <div class="input-group">
+                                                            <div class="input-group-prepend datepicker-trigger" id="TanggalSearch" data-date-format="dd/mm/yyyy">
+                                                                <div class="input-group-text">
+                                                                    <i class="fa fa-calendar-alt"></i>
+                                                                </div>
+                                                            </div>
+                                                            @Html.TextBoxFor(m => m.TanggalEstimasiDone, new { @class = "datepicker-here form-control", @value = "", @autocomplete = "off" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row m-b-15">
+                                                    <label class="col-md-3 col-form-label">Tanggal Estimasi Development </label>
+                                                    <div class="col-md-9">
+                                                        <div class="input-group">
+                                                            <div class="input-group-prepend datepicker-trigger" id="TanggalSearch" data-date-format="dd/mm/yyyy">
+                                                                <div class="input-group-text">
+                                                                    <i class="fa fa-calendar-alt"></i>
+                                                                </div>
+                                                            </div>
+                                                            @Html.TextBoxFor(m => m.TanggalEstimasiDevelopment, new { @class = "datepicker-here form-control", @value = "", @autocomplete = "off" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row m-b-15">
+                                                    <label class="col-md-3 col-form-label">Tanggal Estimasi Testing </label>
+                                                    <div class="col-md-9">
+                                                        <div class="input-group">
+                                                            <div class="input-group-prepend datepicker-trigger" id="TanggalSearch" data-date-format="dd/mm/yyyy">
+                                                                <div class="input-group-text">
+                                                                    <i class="fa fa-calendar-alt"></i>
+                                                                </div>
+                                                            </div>
+                                                            @Html.TextBoxFor(m => m.TanggalEstimasiTesting, new { @class = "datepicker-here form-control", @value = "", @autocomplete = "off" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row m-b-15">
+                                                    <label class="col-md-3 col-form-label">Tanggal Estimasi Piloting </label>
+                                                    <div class="col-md-9">
+                                                        <div class="input-group">
+                                                            <div class="input-group-prepend datepicker-trigger" id="TanggalSearch" data-date-format="dd/mm/yyyy">
+                                                                <div class="input-group-text">
+                                                                    <i class="fa fa-calendar-alt"></i>
+                                                                </div>
+                                                            </div>
+                                                            @Html.TextBoxFor(m => m.TanggalEstimasiPiloting, new { @class = "datepicker-here form-control", @value = "", @autocomplete = "off" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row m-b-15">
+                                                    <label class="col-md-3 col-form-label">Tanggal Estimasi PIR </label>
+                                                    <div class="col-md-9">
+                                                        <div class="input-group">
+                                                            <div class="input-group-prepend datepicker-trigger" id="TanggalSearch" data-date-format="dd/mm/yyyy">
+                                                                <div class="input-group-text">
+                                                                    <i class="fa fa-calendar-alt"></i>
+                                                                </div>
+                                                            </div>
+                                                            @Html.TextBoxFor(m => m.TanggalEstimasiPir, new { @class = "datepicker-here form-control", @value = "", @autocomplete = "off" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row m-b-15">
+                                                    <label class="col-md-3 col-form-label">Tanggal Estimasi Production </label>
+                                                    <div class="col-md-9">
+                                                        <div class="input-group">
+                                                            <div class="input-group-prepend datepicker-trigger" id="TanggalSearch" data-date-format="dd/mm/yyyy">
+                                                                <div class="input-group-text">
+                                                                    <i class="fa fa-calendar-alt"></i>
+                                                                </div>
+                                                            </div>
+                                                            @Html.TextBoxFor(m => m.TanggalEstimasiProduction, new { @class = "datepicker-here form-control", @value = "", @autocomplete = "off" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row m-b-15">
+                                                    <label class="col-md-3 col-form-label">No Memo Requirment <span class="labelMandatory">*</span></label>
+                                                    <div class="col-md-9">
+                                                        <div class="input-group">
+                                                            @Html.TextBoxFor(m => m.NoMemo, new { @class = "form-control", @value = "", @autocomplete = "off" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row m-b-15">
+                                                    <label class="col-md-3 col-form-label">Tanggal Memo <span class="labelMandatory">*</span></label>
+                                                    <div class="col-md-9">
+                                                        <div class="input-group">
+                                                            <div class="input-group-prepend datepicker-trigger" id="TanggalSearch" data-date-format="dd/mm/yyyy">
+                                                                <div class="input-group-text">
+                                                                    <i class="fa fa-calendar-alt"></i>
+                                                                </div>
+                                                            </div>
+                                                            @Html.TextBoxFor(m => m.TanggalMemo, new { @class = "datepicker-here form-control", @value = "", @autocomplete = "off" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row m-b-15">
+                                                    <label class="col-md-3 col-form-label">File Memo <span class="labelMandatory">*</span></label>
+                                                    <div class="col-md-3">
+                                                        <div class="input-group">
+                                                            <input type="file" id="FileMemo" name="FileMemo" class="dropify" />
+                                                            @*<label>Max size 2 MB</label>*@
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="input-group">
+                                                            @Html.TextAreaFor(m => m.KeteranganMemo, new { @class = "form-control", @value = "", @autocomplete = "off", rows = "7", @placeholder = "Masukkan deskripsi singkat file Memo" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row m-b-15">
+                                                    <label class="col-md-3 col-form-label">Tanggal Klarifikasi <span class="labelMandatory">*</span></label>
+                                                    <div class="col-md-9">
+                                                        <div class="input-group">
+                                                            <div class="input-group-prepend datepicker-trigger" id="TanggalSearch" data-date-format="dd/mm/yyyy">
+                                                                <div class="input-group-text">
+                                                                    <i class="fa fa-calendar-alt"></i>
+                                                                </div>
+                                                            </div>
+                                                            @Html.TextBoxFor(m => m.TanggalKlarifikasi, new { @class = "datepicker-here form-control", @value = "", @autocomplete = "off" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row m-b-15">
+                                                    <label class="col-md-3 col-form-label">File Notulen <span class="labelMandatory">*</span></label>
+                                                    <div class="col-md-3">
+                                                        <div class="input-group">
+                                                            <input type="file" id="FileNotulen" name="FileNotulen" class="dropify" />
+                                                            @*<label>Max size 2 MB</label>*@
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="input-group">
+                                                            @Html.TextAreaFor(m => m.KeteranganNotulen, new { @class = "form-control", @value = "", @autocomplete = "off", rows = "7", @placeholder = "Masukkan deskripsi singkat file Notulen" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row m-b-15">
+                                                    <label class="col-md-3 col-form-label">Tanggal Disposisi <span class="labelMandatory">*</span></label>
+                                                    <div class="col-md-9">
+                                                        <div class="input-group">
+                                                            <div class="input-group-prepend datepicker-trigger" id="TanggalSearch" data-date-format="dd/mm/yyyy">
+                                                                <div class="input-group-text">
+                                                                    <i class="fa fa-calendar-alt"></i>
+                                                                </div>
+                                                            </div>
+                                                            @Html.TextBoxFor(m => m.TanggalDisposisi, new { @class = "datepicker-here form-control", @value = "", @autocomplete = "off" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row m-b-15">
+                                                    <label class="col-md-3 col-form-label">No DRF <span class="labelMandatory">*</span></label>
+                                                    <div class="col-md-9">
+                                                        <div class="input-group">
+                                                            @Html.TextBoxFor(m => m.NoDrf, new { @class = "form-control", @value = "", @autocomplete = "off" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row m-b-15">
+                                                    <label class="col-md-3 col-form-label">Tanggal DRF <span class="labelMandatory">*</span></label>
+                                                    <div class="col-md-9">
+                                                        <div class="input-group">
+                                                            <div class="input-group-prepend datepicker-trigger" id="TanggalSearch" data-date-format="dd/mm/yyyy">
+                                                                <div class="input-group-text">
+                                                                    <i class="fa fa-calendar-alt"></i>
+                                                                </div>
+                                                            </div>
+                                                            @Html.TextBoxFor(m => m.TanggalDrf, new { @class = "datepicker-here form-control", @value = "", @autocomplete = "off" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row m-b-15">
+                                                    <label class="col-md-3 col-form-label">File DRF <span class="labelMandatory">*</span></label>
+                                                    <div class="col-md-3">
+                                                        <div class="input-group">
+                                                            <input type="file" id="FileDRF" name="FileDRF" class="dropify" />
+                                                            @*<label>Max size 2 MB</label>*@
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="input-group">
+                                                            @Html.TextAreaFor(m => m.KeteranganDrf, new { @class = "form-control", @value = "", @autocomplete = "off", rows = "7", @placeholder = "Masukkan deskripsi singkat file DRF" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <p><b>Relasi Project</b></p>
+                                                <hr />
+                                                <a href="javascript:void(0)" class="mt-2 btn btn-success" style="margin-left:10px;margin-bottom:20px;" onclick="CreateRelasiProject()">Tambah Data</a>
+                                                <table id="TableRelasiProject" class="display " style="width:100%;">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="max-width:5%">No</th>
+                                                            <th style="max-width:13%">Aksi</th>
+                                                            <th>Project No</th>
+                                                            <th>Nama</th>
+                                                            <th style="min-width:400px;">Keterangan</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                                <br />
+                                                <p><b>Informasi Client</b></p>
+                                                <hr />
+                                                <a href="javascript:void(0)" class="mt-2 btn btn-success" style="margin-left:10px;margin-bottom:20px;" onclick="CreateClient()">Tambah Data Client</a>
+                                                <table id="TableClient" class="display" style="width:100%;">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="max-width:5%">No</th>
+                                                            <th style="max-width:13%">Aksi</th>
+                                                            <th style="min-width:200px;">Client</th>
+                                                            <th style="min-width:200px;">Nama</th>
+                                                            <th style="min-width:200px;">Npp</th>
+                                                            <th style="min-width:150px;">PIC</th>
+                                                            <th style="min-width:200px;">Email PIC</th>
+                                                            <th style="min-width:150px;">Telepon PIC</th>
+                                                            <th style="min-width:400px;">Keterangan</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                            <div id="step-2" class="tab-pane" role="tabpanel" aria-labelledby="step-2">
+                                                <p><b>Scoring Project</b></p>
+                                                <hr />
+                                                <div class="form-group row m-b-15">
+                                                    <label class="col-md-3 col-form-label">Kompleksitas Project <span class="labelMandatory">*</span></label>
+                                                    <div class="col-md-9">
+                                                        <div class="input-group">
+                                                            <select class="js-example-placeholder-multiple js-states form-control" id="KompleksitasProjectId" name="KompleksitasProjectId" style="width:100%;"></select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row m-b-15">
+                                                    <label class="col-md-3 col-form-label">Klasifikasi Project <span class="labelMandatory">*</span></label>
+                                                    <div class="col-md-9">
+                                                        <div class="input-group">
+                                                            <select class="js-example-placeholder-multiple js-states form-control" id="KlasifikasiProjectId" name="KlasifikasiProjectId" style="width:100%;"></select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row m-b-15">
+                                                    <label class="col-md-3 col-form-label">Periode Project <span class="labelMandatory">*</span></label>
+                                                    <div class="col-md-9">
+                                                        <div class="input-group">
+                                                            @Html.DropDownListFor(m => m.PeriodeProjectId, (IEnumerable<SelectListItem>)ViewBag.ProjectPeriode, "-Silahkan pilih-", new { @class = "js-example-placeholder-multiple js-states form-control", @style = "width:100%" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row m-b-15">
+                                                    <label class="col-md-3 col-form-label">Kategori Project <span class="labelMandatory">*</span></label>
+                                                    <div class="col-md-9">
+                                                        <div class="input-group">
+                                                            <select class="js-example-placeholder-multiple js-states form-control" id="KategoriProjectId" name="KategoriProjectId" style="width:100%;" onchange="GetSubKategoriProject();"></select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row m-b-15">
+                                                    <label class="col-md-3 col-form-label">Sub Kategori Project <span class="labelMandatory">*</span></label>
+                                                    <div class="col-md-9">
+                                                        <div class="input-group">
+                                                            <select class="js-example-placeholder-multiple js-states form-control" id="SubKategoriProjectId" name="SubKategoriProjectId" style="width:100%;"></select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row m-b-15">
+                                                    <label class="col-md-3 col-form-label">Skor Project <span class="labelMandatory">*</span></label>
+                                                    <div class="col-md-9">
+                                                        <div class="input-group">
+                                                            <select class="js-example-placeholder-multiple js-states form-control" id="SkorProjectId" name="SkorProjectId" style="width:100%;"></select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row m-b-15">
+                                                    <label class="col-md-3 col-form-label">Mandatory <span class="labelMandatory">*</span></label>
+                                                    <div class="col-md-9">
+                                                        <div class="input-group">
+                                                            @Html.DropDownListFor(m => m.MandatoryId, (IEnumerable<SelectListItem>)ViewBag.Mandatory, "-Silahkan pilih-", new { @class = "js-example-placeholder-multiple js-states form-control", @style = "width:100%" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row m-b-15">
+                                                    <label class="col-md-3 col-form-label">PIR <span class="labelMandatory">*</span></label>
+                                                    <div class="col-md-9">
+                                                        <div class="input-group">
+                                                            @Html.DropDownListFor(m => m.isPIR, (IEnumerable<SelectListItem>)ViewBag.isPIR, "-Silahkan pilih-", new { @class = "js-example-placeholder-multiple js-states form-control", @style = "width:100%" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="step-3" class="tab-pane" role="tabpanel" aria-labelledby="step-3">
+                                                <p><b>Anggota Team</b></p>
+                                                <hr />
+                                                <a href="javascript:void(0)" class="mt-2 btn btn-success" style="margin-left:10px;margin-bottom:20px;" onclick="CreateAnggotaTim()">Tambah Anggota</a>
+                                                <table id="TableAnggotaTim" class="display " style="width:100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="max-width:25px">No</th>
+                                                            <th style="max-width:13%">Aksi</th>
+                                                            <th style="min-width:100px;">Job Posisi</th>
+                                                            <th style="min-width:100px;">Npp</th>
+                                                            <th style="min-width:200px;">Nama</th>
+                                                            <th style="min-width:200px;">Unit</th>
+                                                            <th>As Task</th>
+                                                            <th>Email</th>
+                                                            <th>Telepon</th>
+                                                            <th style="min-width:400px;">Job Desc</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                                <br />
+                                                @*<p><b>Notes:</b> <br/>Data project yang di create akan langsung menjadi task dari member project</p>*@
+                                            </div>
+                                            <div id="step-4" class="tab-pane" role="tabpanel" aria-labelledby="step-4">
+                                                <p><b>Proses Assignment</b></p>
+                                                <hr />
+                                                <div class="form-group row m-b-15">
+                                                    <label class="col-md-3 col-form-label">Status Project <span class="labelMandatory">*</span></label>
+                                                    <div class="col-md-9">
+                                                        <div class="input-group">
+                                                            <select class="js-example-placeholder-multiple js-states form-control" id="ProjectStatusId" name="ProjectStatusId" style="width:100%;"></select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div class="form-group row m-b-15">
+                                                    <label class="col-md-3 col-form-label">Komentar <span class="labelMandatory">*</span></label>
+                                                    <div class="col-md-9">
+                                                        <div class="input-group">
+                                                            @Html.TextAreaFor(m => m.CatatanUser, new { @class = "form-control", @value = "", @autocomplete = "off", @rows = "5" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+@section scripts{
+    <script src="~/plugin/air-datepicker-master/dist/js/datepicker.min.js"></script>
+    <script src="~/plugin/summernote/summernote-lite.min.js"></script>
+    <script src="~/plugin/dropify-master/dist/js/dropify.min.js"></script>
+    <script src="@Url.Content("~/plugin/DataTables-1.10.20/media/js/jquery.dataTables.min.js")"></script>
+    <script src="@Url.Content("~/plugin/DataTables-1.10.20/media/js/dataTables.responsive.min.js")"></script>
+    <script src="~/plugin/select2/dist/js/select2.min.js"></script>
+    <script src="~/plugin/jquery-smartwizard-master/dist/js/jquery.smartWizard.min.js"></script>
+
+    <script src="~/plugin/daterangepicker/moment.min.js"></script>
+    <script src="~/plugin/daterangepicker/daterangepicker.min.js"></script>
+    @Html.Partial("_Script")
+
+}
+

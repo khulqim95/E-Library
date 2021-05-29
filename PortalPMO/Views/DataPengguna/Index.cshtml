@@ -1,0 +1,161 @@
+﻿
+@{
+    ViewData["Title"] = "Pengaturan Menu";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section styles{
+    <link href="@Url.Content("~/plugin/DataTables-1.10.20/media/css/datatables.min.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/plugin/DataTables-1.10.20/media/css/responsive.dataTables.min.css")" rel="stylesheet" />
+    <link href="~/plugin/select2/dist/css/select2.min.css" rel="stylesheet" />
+
+    <style>
+       
+        .select2 {
+            height: 30px;
+        }
+
+
+        .dataTables_wrapper {
+            zoom: 0.9 !important;
+        }
+
+        table.dataTable.dtr-inline.collapsed > tbody > tr[role="row"] > td:first-child:before, table.dataTable.dtr-inline.collapsed > tbody > tr[role="row"] > th:first-child:before {
+            background-color: #3f6ad8;
+        }
+
+        .select2-container .select2-selection--single {
+            height: 35px;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            padding-top: 5px;
+            color: #495057;
+            /*border: 1px solid #ced4da;*/
+        }
+
+        .input-group {
+            margin-bottom: 5px;
+        }
+
+        select[name=Table_length] {
+            height: 35px;
+        }
+
+        .select2-container--default .select2-selection--multiple .select2-selection__choice {
+            background-color: white;
+            border: 1px solid teal;
+            border-radius: 4px;
+            cursor: default;
+            float: left;
+            margin-right: 5px;
+            margin-top: 5px;
+            padding: 0 5px;
+            height: 22px;
+        }
+    </style>
+}
+<div class="app-main__outer">
+    <div class="app-main__inner">
+        <div class="row">
+            <h5><b>Master Data Pengguna</b></h5>
+        </div>
+        <hr />
+        <div id="DivContentBody">
+            <div class="row">
+                @*<div class="col-lg-3">
+                    <center>
+                        <button class="mb-3 mr-3 btn btn-success btn-sm btn-block" style="align-content: center;margin-left: 3%;
+                    z-index: 1;width:95%" id="btnShowParameterSearch" onclick="ShowParameterSearch('btnShowParameterSearch','btnHideParameterSearch','cardParameterSearch')">
+                            Tampilkan Parameter Pencarian
+                        </button>
+                        <button class="mb-3 mr-3 btn btn-success btn-sm btn-block" style="align-content: center;margin-left: 3%;
+                    z-index: 1;display:none;width:95%;" id="btnHideParameterSearch" onclick="HideParameterSearch('btnShowParameterSearch','btnHideParameterSearch','cardParameterSearch')">
+                            Sembunyikan Parameter Pencarian
+                        </button>
+                    </center>
+                </div>*@
+                <div class="col-lg-12">
+                    <div class="main-card mb-3 card" id="cardParameterSearch">
+
+                        <div class="card-body">
+                            <p class="LabelSearchParam">Parameter Search</p>
+                            <hr />
+                            <form class="">
+                                <div class="form-row">
+                                    <div class="col-md-6">
+                                        <div class="position-relative form-group">
+                                            <label class="">Npp</label>
+                                            <input  id="txtNppSearchParam" type="text" class="form-control" placeholder="Masukkan Npp Pegawai">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="position-relative form-group">
+                                            <label class="">Nama</label>
+                                            <input  id="txtNamaSearchParam" type="text" class="form-control" placeholder="Masukkan Nama Pegawai">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6" style="display:none">
+                                        <div class="position-relative form-group">
+                                            <label class="">Unit</label>
+                                            <input  id="txtUnitSearchParam" type="text" class="form-control" placeholder="Masukkan Nama Unit Pegawai">
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="javascript:void(0)" class="mt-2 btn btn-primary pull-right" style="margin-left:10px;" id="BtnSearch">Cari</a>
+                                <a href="javascript:void(0)" class="mt-2 btn btn-danger pull-right" id="BtnClearSearch">Bersihkan</a>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" style="padding-top:20px;">
+                <div class="col-lg-12">
+                    <div class="main-card mb-3 card">
+                        <div class="card-body">
+                            <a href="javascript:void(0)" class="mt-2 btn btn-success" style="margin-left:10px;" onclick="Create()">Tambah Data</a>
+                            <table id="Table" class="display" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th style="max-width:25px">No</th>
+                                        <th style="max-width:13%">Aksi</th>
+                                        <th>Npp</th>
+                                        <th style="max-width:20% !important">Nama</th>
+                                        <th style="min-width:20% !important">Unit</th>
+                                        <th style="min-width:20% !important">Jabatan</th>
+                                        @*<th style="min-width:30% !important;">Kewenangan</th>*@
+                                        <th>Email</th>
+                                        <th>Terakhir Login</th>
+                                        <th>Aktif?</th>
+                                        <th>Dibuat Oleh</th>
+                                        <th>Waktu Dibuat</th>
+                                        <th>Diubah Oleh</th>
+                                        <th>Waktu Diubah</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="DivFormBody">
+        </div>
+    </div>
+</div>
+
+
+
+
+@section scripts{
+    <script src="@Url.Content("~/plugin/DataTables-1.10.20/media/js/jquery.dataTables.min.js")"></script>
+    <script src="@Url.Content("~/plugin/DataTables-1.10.20/media/js/dataTables.responsive.min.js")"></script>
+    <script src="~/plugin/select2/dist/js/select2.min.js"></script>
+
+    @Html.Partial("_Script")
+
+}
+

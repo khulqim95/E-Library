@@ -1,0 +1,205 @@
+﻿@model PortalPMO.ViewModels.Profile_ViewModels
+
+@{
+    ViewData["Title"] = "Create Project";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section styles{
+    <link href="~/plugin/air-datepicker-master/dist/css/datepicker.css" rel="stylesheet" />
+    <link href="~/plugin/summernote/summernote-lite.min.css" rel="stylesheet" />
+    <style>
+        .fab {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            clip-path: circle();
+            height: 40px;
+            width: 40px;
+            z-index: 999;
+            box-shadow: 0 0.46875rem 2.1875rem rgba(4,9,20,0.03), 0 0.9375rem 1.40625rem rgba(4,9,20,0.03), 0 0.25rem 0.53125rem rgba(4,9,20,0.05), 0 0.125rem 0.1875rem rgba(4,9,20,0.03);
+        }
+
+        .addButton {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+        }
+
+        .select2 {
+            height: 30px;
+        }
+
+        .dataTables_wrapper {
+            zoom: 0.9 !important;
+        }
+
+        table.dataTable.dtr-inline.collapsed > tbody > tr[role="row"] > td:first-child:before, table.dataTable.dtr-inline.collapsed > tbody > tr[role="row"] > th:first-child:before {
+            background-color: #3f6ad8;
+        }
+    </style>
+}
+<div class="app-main__outer">
+    <div class="app-main__inner">
+        <div class="app-page-title">
+            <div class="page-title-wrapper">
+                <div class="page-title-heading">
+                    <div class="page-title-icon">
+                        <i class="pe-7s-id icon-gradient bg-night-fade">
+                        </i>
+                    </div>
+                    <div>
+                        Profile
+                        <div class="page-title-subheading">
+                            Detail informasi profile pengguna
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="row" style="padding-top:20px;">
+            <div class="col-lg-4">
+                <div class="card mb-12">
+                    <div class="widget-content-wrapper">
+                        <div class="widget-content">
+                            <form id="FormDataUploadFoto">
+                                <center>
+                                    <img width="220" id="PhotoViewEdit" class="rounded-circle" src=@Model.Images alt="">
+                                    <br />
+                                    <input id="file" name="file" type="file" class="form-control" style="margin-top:20px;">
+                                </center>
+                                <a href="javascript:void(0)" class="mt-2 btn btn-success btn-block" id="BtnSubmitUploadFoto">Ubah Photo</a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <div class="main-card mb-3 card">
+                    <div class="card-body">
+                        <ul class="body-tabs body-tabs-layout tabs-animated body-tabs-animated nav">
+                            <li class="nav-item">
+                                <a role="tab" class="nav-link active show" id="tab-0" data-toggle="tab" href="#tab-content-0" aria-selected="true">
+                                    <span>Profile</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a role="tab" class="nav-link" id="tab-1" data-toggle="tab" href="#tab-content-1" onclick="ClearFormUbahPassword()">
+                                    <span>Ubah Password</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <hr />
+                        <div class="tab-content">
+                            <div class="tab-pane tabs-animation fade active show" id="tab-content-0" role="tabpanel">
+                                <form id="FormData" style="padding-top:20px;">
+                                    @Html.AntiForgeryToken()
+                                    <div class="form-group row m-b-15">
+                                        <label class="col-md-3 col-form-label">Npp <span class="labelMandatory">*</span></label>
+                                        <div class="col-md-9">
+                                            <div class="input-group">
+                                                @Html.TextBoxFor(m => m.Npp, new { @class = "form-control", @value = "", @autocomplete = "off" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row m-b-15">
+                                        <label class="col-md-3 col-form-label">Nama <span class="labelMandatory">*</span></label>
+                                        <div class="col-md-9">
+                                            <div class="input-group">
+                                                @Html.TextBoxFor(m => m.Nama_Pegawai, new { @class = "form-control", @value = "", @autocomplete = "off" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row m-b-15">
+                                        <label class="col-md-3 col-form-label">Email <span class="labelMandatory">*</span></label>
+                                        <div class="col-md-9">
+                                            <div class="input-group">
+                                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @value = "", @autocomplete = "off" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row m-b-15">
+                                        <label class="col-md-3 col-form-label">Last Active </label>
+                                        <div class="col-md-9">
+                                            <div class="input-group">
+                                                @Html.TextBoxFor(m => m.Last_Active, new { @class = "form-control", @value = "", @autocomplete = "off", @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row m-b-15">
+                                        <label class="col-md-3 col-form-label">Unit </label>
+                                        <div class="col-md-9">
+                                            <div class="input-group">
+                                                @Html.TextBoxFor(m => m.Nama_Unit, new { @class = "form-control", @value = "", @autocomplete = "off", @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row m-b-15">
+                                        <label class="col-md-3 col-form-label">Kewenangan </label>
+                                        <div class="col-md-9">
+                                            <div class="input-group">
+                                                @Html.TextBoxFor(m => m.Nama_Role, new { @class = "form-control", @value = "", @autocomplete = "off", @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                                <div class="modal-footer">
+                                    <a href="javascript:;" class="btn btn-sm btn-primary" id="BtnSubmit">Simpan</a>
+                                </div>
+                            </div>
+                            <div class="tab-pane tabs-animation fade" id="tab-content-1" role="tabpanel">
+                                <div id="ContentTab1">
+                                    <form id="FormUbahPassword" style="padding-top:20px;">
+                                        <div class="form-group row m-b-15">
+                                            <label class="col-md-3 col-form-label">Password Lama <span class="labelMandatory">*</span></label>
+                                            <div class="col-md-9">
+                                                <div class="input-group">
+                                                    <input type="text" id="PasswordLama" name="PasswordLama" class="form-control" autocomplete="off" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row m-b-15">
+                                            <label class="col-md-3 col-form-label">Password Baru <span class="labelMandatory">*</span></label>
+                                            <div class="col-md-9">
+                                                <div class="input-group">
+                                                    <input type="password" id="PasswordBaru" name="PasswordBaru" class="form-control" autocomplete="off" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row m-b-15">
+                                            <label class="col-md-3 col-form-label">Ulangi Password Baru <span class="labelMandatory">*</span></label>
+                                            <div class="col-md-9">
+                                                <div class="input-group">
+                                                    <input type="password" id="ConfirmPasswordBaru" name="ConfirmPasswordBaru" class="form-control" autocomplete="off" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                    <div class="modal-footer">
+                                        <a href="javascript:;" class="btn btn-sm btn-primary" id="BtnSubmitUbahPassword">Ubah Password</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+@section scripts{
+    <script src="~/plugin/air-datepicker-master/dist/js/datepicker.min.js"></script>
+    <script src="~/plugin/summernote/summernote-lite.min.js"></script>
+    @Html.Partial("_Script")
+
+}
+

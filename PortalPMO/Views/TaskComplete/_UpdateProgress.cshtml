@@ -1,0 +1,30 @@
+﻿@model PortalPMO.Models.dbPortalPMO.TblProjectMember
+
+
+<div class="row" style="padding-top:20px;">
+    <div class="col-lg-12">
+        <div class="main-card mb-3 card">
+            <div class="card-body">
+                <br />
+                <h5><b>Detail Progres Pekerjaan</b></h5>
+                <hr/>
+                <table id="TableProgress" class="display nowrap" style="width:98%">
+                    <thead>
+                        <tr>
+                            <th style="max-width:25px">No</th>
+                            <th style="max-width:25px">Aksi</th>
+                            <th>Judul</th>
+                            <th>Deskripsi</th>
+                            <th style="max-width:20%">Tanggal</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                @*<a href="javascript:;" class="btn btn-sm btn-white" onclick="BackDraft()">Tutup</a>*@
+                <a href="javascript:;" class="btn btn-sm btn-white" onclick="ReloadTable()">Tutup </a>
+            </div>
+        </div>
+    </div>
+</div>

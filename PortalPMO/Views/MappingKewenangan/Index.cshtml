@@ -1,0 +1,138 @@
+﻿
+@{
+    ViewData["Title"] = "Pengaturan Mapping Kewenangan Jabatan";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section styles{
+    <link href="@Url.Content("~/plugin/DataTables-1.10.20/media/css/datatables.min.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/plugin/DataTables-1.10.20/media/css/responsive.dataTables.min.css")" rel="stylesheet" />
+    <link href="~/plugin/select2/dist/css/select2.min.css" rel="stylesheet" />
+    <style>
+        .dataTables_wrapper {
+            /*position: absolute !important;*/
+            /*clear: both;*/
+            zoom: 0.9;
+        }
+
+        table.dataTable.dtr-inline.collapsed > tbody > tr[role="row"] > td:first-child:before, table.dataTable.dtr-inline.collapsed > tbody > tr[role="row"] > th:first-child:before {
+            background-color: #3f6ad8;
+        }
+
+        table.dataTable tbody tr td {
+            word-wrap: break-word;
+            word-break: break-all;
+        }
+
+        .select2-container .select2-selection--single {
+            height: 35px;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            padding-top: 5px;
+            color: #495057;
+            /*border: 1px solid #ced4da;*/
+        }
+
+        .input-group {
+            margin-bottom: 5px;
+        }
+
+        select[name=Table_length] {
+            height: 35px;
+        }
+
+        .select2-container--default .select2-selection--multiple .select2-selection__choice {
+            background-color: white;
+            border: 1px solid teal;
+            border-radius: 4px;
+            cursor: default;
+            float: left;
+            margin-right: 5px;
+            margin-top: 5px;
+            padding: 0 5px;
+            height: 22px;
+        }
+    </style>
+}
+<div class="app-main__outer">
+    <div class="app-main__inner">
+        <div class="app-page-title">
+            <div class="page-title-wrapper">
+                <div class="page-title-heading">
+                    <div class="page-title-icon">
+                        <i class="pe-7s-menu icon-gradient bg-mean-fruit">
+                        </i>
+                    </div>
+                    <div>
+                        Menu Mapping Kewenangan Jabatan
+                        <div class="page-title-subheading">
+                            Manajemen Data Mapping Kewenangan Jabatan
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="DivContentBody">
+            <div class="row" style="padding-top:20px;">
+                <div class="col-lg-12">
+                    <div class="main-card mb-3 card">
+                        <div class="card-body">
+                            <div id="DivParameterSearch">
+                                <div class="form-row" id="FullParamSearchSingleRate" style="display:none">
+                                    <div class="col-md-6">
+                                        <div class="position-relative form-group">
+                                            <label class="">Jabatan</label>
+                                            <input name="city" id="txtJabatanSearchParam" type="text" class="form-control" placeholder="Masukkan Jabatan">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="position-relative form-group">
+                                            <label class="">Role</label>
+                                            <input name="city" id="txtRoleSearchParam" type="text" class="form-control" placeholder="Masukkan Role">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <a href="javascript:void(0)" class="" style="align-content: center; z-index: 1;width:95%" id="btnShow" onclick="ShowParameterSearch('btnShow','btnHide','FullParamSearchSingleRate')">
+                                        Tampilkan Parameter Pencarian
+                                    </a>
+                                    <a href="javascript:void(0)" class="" style="align-content: center; z-index: 1;display:none;width:95%;" id="btnHide" onclick="HideParameterSearch('btnShow','btnHide','FullParamSearchSingleRate')">
+                                        Sembunyikan Parameter Pencarian
+                                    </a>
+                                </div>
+                            </div>
+                            <a href="javascript:void(0)" class="mt-2 btn btn-success pull-right" style="margin-left:10px;" id="BtnSearch"><i class="fa fa-search"></i> Cari Data</a>
+                            <a href="javascript:void(0)" class="mt-2 btn btn-warning pull-right" id="BtnClearSearch"><i class="fa fa-times"></i> Reset Pencarian</a>
+                            <a href="javascript:void(0)" class="mt-2 btn btn-success" style="margin-left:10px;" onclick="Create()"><i class="fa fa-plus"></i> Tambah Data</a>
+                            <table id="Table" class="display nowrap" style="width:100%">
+                                <thead style="text-align:center">
+                                    <tr>
+                                        <th style="max-width:25px">No</th>
+                                        <th style="max-width:13%">Action</th>
+                                        <th>Jabatan</th>
+                                        <th>Role</th>
+                                        @*<th>Unit</th>*@
+                                        <th>Status
+                                        <th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="DivFormBody">
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="@Url.Content("~/plugin/DataTables-1.10.20/media/js/jquery.dataTables.min.js")"></script>
+    <script src="@Url.Content("~/plugin/DataTables-1.10.20/media/js/dataTables.responsive.min.js")"></script>
+    <script src="~/plugin/select2/dist/js/select2.min.js"></script>
+    @Html.Partial("_Script")
+
+}

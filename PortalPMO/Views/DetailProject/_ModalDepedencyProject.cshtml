@@ -1,0 +1,39 @@
+﻿@model PortalPMO.ViewModels.DataProjectRelasi_ViewModels
+<style>
+    .modal-dialog {
+        min-width: 90%;
+    }
+</style>
+<div class="modal-header">
+    <h5 class="modal-title">Form Data</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+</div>
+<div class="modal-body" id="id-body">
+    <form id="FormDataRelasiProject" style="padding-top:20px;">
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.Id)
+        @Html.HiddenFor(m => m.ProjectId)
+
+        <div class="form-group row m-b-15">
+            <label class="col-md-3 col-form-label">Project <span class="labelMandatory">*</span></label>
+            <div class="col-md-9">
+                <div class="input-group">
+                    @Html.DropDownListFor(m => m.RelasiProjectId, (IEnumerable<SelectListItem>)ViewBag.Project, "-Silahkan pilih-", new { @class = "js-example-placeholder-multiple js-states form-control", @style = "width:100%" })
+
+                </div>
+            </div>
+        </div>
+        <div class="form-group row m-b-15">
+            <label class="col-md-3 col-form-label">Keterangan <span class="labelMandatory">*</span></label>
+            <div class="col-md-9">
+                <div>
+                    @Html.TextAreaFor(m => m.Keterangan, new { @class = "form-control", @value = "", @autocomplete = "off", @rows = "5" })
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <a href="javascript:;" class="btn btn-sm btn-white" data-dismiss="modal">Tutup</a>
+    <a href="javascript:;" class="btn btn-sm btn-primary" id="BtnSubmitRelasiProject">Simpan</a>
+</div>

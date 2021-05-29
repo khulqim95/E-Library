@@ -1,0 +1,1052 @@
+﻿<script type="text/javascript">var State = '';
+    var TableFasilitasKredit;
+    var TableChecking;
+    var TableDisclaimer;
+    var TableRiwayatKomentar;
+    var Table;
+    var TableFile;
+    var TableTracking;
+    $(document).ready(function () {
+        LoadDataTable();
+    });
+
+    function LoadDataTable(data) {
+        if (Table != undefined) {
+            Table.DataTable.destroy();
+        }
+
+        $.ajax({
+            type: 'GET',
+            url: '../Login/CekSession',
+            success: function (hasil) {
+                if (hasil == true) {
+                    Table = $('#Table').DataTable({
+                        fixedHeader: {
+                            header: true
+                        },
+                        pageLength: 10,
+                        destroy: true,
+                        orderCellsTop: true,
+                        responsive: true,
+                        processing: true, // untuk menampilkan bar prosessing
+                        serverSide: true, // untuk proses server side datatable harus diset true
+                        orderMulti: false, // untuk disable multi order column
+                        retrieve: true,
+                        //autoWidth: true,
+                        dom: '<"top"i>rt<"bottom"lp><"clear">', // untuk menghilangkan search global
+                        //data: data,
+                        ajax: {
+                            "url": '../Inbox/LoadData',
+                            "type": "POST",
+                            "datatype": "json",
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                window.location.href = "../Error/HttpStatusErrorLayout?statusCode=500"
+                            }
+                        },
+                        language: {
+                            processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> ',
+                            info: "Menampilkan _START_ Sampai _END_ Dari _TOTAL_ Data",
+                            paginate: {
+                                first: "Halaman Awal",
+                                last: "Halaman Akhir",
+                                previous: "Halaman Sebelumnya",
+                                next: "Halaman Selanjutnya",
+                            },
+                            lengthMenu: "Menampilkan _MENU_ Data",
+                            emptyTable: "Data tidak ditemukan",
+                            infoEmpty: "Menampilkan 0 Sampai 0 Dari 0 Data",
+                            zeroRecords: "Data tidak ditemukan"
+                        },
+                        columns: [
+                            { responsivePriority: 1, "data": "Number", "name": "Number" },
+                            {
+                                responsivePriority: 2,
+                                "data": "Id", "name": "Id", "orderable": false, "visible": true, "render": function (data, type, full, meta) {
+                                    /********************************************************************************************************************************************************************************************************************************************************************************************************************************/
+                                    return '<div class="btn-group"><a href="javascript:void(0)" class="btn btn-small btn-facebook" id="button-view" onclick=View("' + full.LeadsId + '","' + full.KategoriLeadsId + '","' + full.ProspekId + '","' + full.Id + '","' + full.NoPengajuan +'")  data-toggle="tooltip" title="View Data"><i class="fa fa-eye btnView"></i></a>'
+                                }
+                            },
+                            { responsivePriority: 3, "data": "NamaRM", "name": "NamaRM" },
+                            { responsivePriority: 4, "data": "UnitPengusul", "name": "UnitPengusul" },
+                            { responsivePriority: 5, "data": "NamaDebitur", "name": "NamaDebitur" },
+                            { responsivePriority: 6, "data": "MaksimumKredit", "name": "MaksimumKredit" }
+                        ],
+                        "order": [[1, "desc"]]
+                    });
+
+                    //$.fn.dataTable.ext.errMode = 'throw';
+
+                    //--------------------------Function untuk melempar parameter search ---------------------//
+                    //Untuk melempar parameter search
+                    //oTable = $('#Table').DataTable();
+                    $('#BtnSearch').click(function () {
+                        Table.columns(2).search($('#txtNamaSearchParam').val().trim());
+                        Table.columns(3).search($('#txtKeteranganSearchParam').val().trim());
+
+
+                        //hit search ke server
+                        Table.draw();
+                    });
+
+
+                    //---------------------Function untuk reset data pencarian----------------//
+                    $('#BtnClearSearch').click(function () {
+                        $('#txtNamaSearchParam').val("");
+                        $('#txtKeteranganSearchParam').val("");
+
+                        Table.columns(2).search($('#txtNamaSearchParam').val().trim());
+                        Table.columns(3).search($('#txtKeteranganSearchParam').val().trim());
+                        //hit search ke server
+                        Table.draw();
+                    });
+
+                    Table.columns.adjust().responsive.recalc();
+                }
+                else {
+                    window.location.href = "../Login/Login?a=true";
+                }
+            }
+        });
+    }
+
+    function LoadDataTableFasilitasKredit(data) {
+        @*if (TableFasilitasKredit != undefined) {
+            TableFasilitasKredit.DataTable.destroy();
+        }*@
+        debugger;
+        $.ajax({
+            type: 'GET',
+            url: '../Login/CekSession',
+            success: function (hasil) {
+                if (hasil == true) {
+                    TableFasilitasKredit = $('#TableFasilitasKredit').DataTable({
+                        fixedHeader: {
+                            header: true
+                        },
+                        pageLength: 10,
+                        destroy: true,
+                        orderCellsTop: true,
+                        responsive: true,
+                        processing: true, // untuk menampilkan bar prosessing
+                        serverSide: true, // untuk proses server side datatable harus diset true
+                        orderMulti: false, // untuk disable multi order column
+                        retrieve: true,
+                        //autoWidth: true,
+                        dom: '<"top"i>rt<"bottom"lp><"clear">', // untuk menghilangkan search global
+                        //data: data,
+                        ajax: {
+                            "url": '../Inbox/LoadDataTableFasilitasKredit',
+                            "type": "POST",
+                            "datatype": "json",
+                            "data": { "Id": data },
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                window.location.href = "../Error/HttpStatusErrorLayout?statusCode=500"
+                            }
+                        },
+                        language: {
+                            processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> ',
+                            info: "Menampilkan _START_ Sampai _END_ Dari _TOTAL_ Data",
+                            paginate: {
+                                first: "Halaman Awal",
+                                last: "Halaman Akhir",
+                                previous: "Halaman Sebelumnya",
+                                next: "Halaman Selanjutnya",
+                            },
+                            lengthMenu: "Menampilkan _MENU_ Data",
+                            emptyTable: "Data tidak ditemukan",
+                            infoEmpty: "Menampilkan 0 Sampai 0 Dari 0 Data",
+                            zeroRecords: "Data tidak ditemukan"
+                        },
+                        columns: [
+                            { responsivePriority: 1, "data": "Number", "name": "Number" },
+                            {
+                                responsivePriority: 2,
+                                "data": "Id", "name": "Id", "orderable": false, "visible": true, "render": function (data, type, full, meta) {
+                                    return '<div class="btn-group"><a href="javascript:void(0)" class="btn btn-small btn-facebook" id="button-edit" onclick="Edit(' + full.Id + ')" style="margin-right:5px;" data-toggle="tooltip" title="Ubah Data"><i class="fa fa-edit btnEdit"></i></a>'
+                                        + '</div>'
+                                }
+                            },
+                            { responsivePriority: 3, "data": "JenisFasilitas", "name": "JenisFasilitas" },
+                            { responsivePriority: 4, "data": "Valuta", "name": "Valuta" },
+                            { responsivePriority: 5, "data": "MaksimumKredit", "name": "MaksimumKredit" },
+                            { responsivePriority: 6, "data": "Tujuan", "name": "Tujuan" }
+                        ],
+                        "order": [[1, "desc"]]
+                    });
+
+                    //$.fn.dataTable.ext.errMode = 'throw';
+
+                    //--------------------------Function untuk melempar parameter search ---------------------//
+                    //Untuk melempar parameter search
+                    //oTable = $('#Table').DataTable();
+                    $('#BtnSearch').click(function () {
+                        Table.columns(2).search($('#txtNamaSearchParam').val().trim());
+                        Table.columns(3).search($('#txtKeteranganSearchParam').val().trim());
+
+
+                        //hit search ke server
+                        Table.draw();
+                    });
+
+
+                    //---------------------Function untuk reset data pencarian----------------//
+                    $('#BtnClearSearch').click(function () {
+                        $('#txtNamaSearchParam').val("");
+                        $('#txtKeteranganSearchParam').val("");
+
+                        Table.columns(2).search($('#txtNamaSearchParam').val().trim());
+                        Table.columns(3).search($('#txtKeteranganSearchParam').val().trim());
+                        //hit search ke server
+                        Table.draw();
+                    });
+
+                    TableFasilitasKredit.columns.adjust().responsive.recalc();
+                }
+                else {
+                    window.location.href = "../Login/Login?a=true";
+                }
+            }
+        });
+
+    }
+
+    function LoadDataTableFile(data) {
+        @*if (TableFile != undefined) {
+            TableFile.DataTable.destroy();
+        }*@
+        debugger;
+        $.ajax({
+            type: 'GET',
+            url: '../Login/CekSession',
+            success: function (hasil) {
+                if (hasil == true) {
+                    TableFasilitasKredit = $('#TableFile').DataTable({
+                        fixedHeader: {
+                            header: true
+                        },
+                        pageLength: 10,
+                        destroy: true,
+                        orderCellsTop: true,
+                        responsive: true,
+                        processing: true, // untuk menampilkan bar prosessing
+                        serverSide: true, // untuk proses server side datatable harus diset true
+                        orderMulti: false, // untuk disable multi order column
+                        retrieve: true,
+                        //autoWidth: true,
+                        dom: '<"top"i>rt<"bottom"lp><"clear">', // untuk menghilangkan search global
+                        //data: data,
+                        ajax: {
+                            "url": '../Inbox/LoadDataTableFile',
+                            "type": "POST",
+                            "datatype": "json",
+                            "data": { "Id": data },
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                window.location.href = "../Error/HttpStatusErrorLayout?statusCode=500"
+                            }
+                        },
+                        language: {
+                            processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> ',
+                            info: "Menampilkan _START_ Sampai _END_ Dari _TOTAL_ Data",
+                            paginate: {
+                                first: "Halaman Awal",
+                                last: "Halaman Akhir",
+                                previous: "Halaman Sebelumnya",
+                                next: "Halaman Selanjutnya",
+                            },
+                            lengthMenu: "Menampilkan _MENU_ Data",
+                            emptyTable: "Data tidak ditemukan",
+                            infoEmpty: "Menampilkan 0 Sampai 0 Dari 0 Data",
+                            zeroRecords: "Data tidak ditemukan"
+                        },
+                        columns: [
+                            { responsivePriority: 1, "data": "Number", "name": "Number" },
+                            { responsivePriority: 2, "data": "FileName", "name": "FileName" },
+                            {
+                                responsivePriority: 3, "data": "DownloadPath", "name": "DownloadPath",
+                                "render": function (data, type, full, meta) {
+                                    return '<div class="btn-group"><a href="' + data + '" class="btn btn-small btn-facebook" id="button-download" style="margin-right:5px;" data-toggle="tooltip" title="Download"><i class="fa fa-download btnDownload"></i></a>'
+                                        + '</div>'
+                                }
+                            }
+                        ],
+                        "order": [[1, "desc"]]
+                    });
+
+                    //$.fn.dataTable.ext.errMode = 'throw';
+
+                    //--------------------------Function untuk melempar parameter search ---------------------//
+                    //Untuk melempar parameter search
+                    //oTable = $('#Table').DataTable();
+                    $('#BtnSearch').click(function () {
+                        Table.columns(2).search($('#txtNamaSearchParam').val().trim());
+                        Table.columns(3).search($('#txtKeteranganSearchParam').val().trim());
+
+
+                        //hit search ke server
+                        Table.draw();
+                    });
+
+
+                    //---------------------Function untuk reset data pencarian----------------//
+                    $('#BtnClearSearch').click(function () {
+                        $('#txtNamaSearchParam').val("");
+                        $('#txtKeteranganSearchParam').val("");
+
+                        Table.columns(2).search($('#txtNamaSearchParam').val().trim());
+                        Table.columns(3).search($('#txtKeteranganSearchParam').val().trim());
+                        //hit search ke server
+                        Table.draw();
+                    });
+
+                    TableFasilitasKredit.columns.adjust().responsive.recalc();
+                }
+                else {
+                    window.location.href = "../Login/Login?a=true";
+                }
+            }
+        });
+
+    }
+
+    function LoadDataChecking(data) {
+        @*if (TableChecking != undefined) {
+            TableChecking.DataTable.destroy();
+        }*@
+        debugger;
+        $.ajax({
+            type: 'GET',
+            url: '../Login/CekSession',
+            success: function (hasil) {
+                if (hasil == true) {
+                    TableChecking = $('#TableCheckingDocument').DataTable({
+                        fixedHeader: {
+                            header: true
+                        },
+                        pageLength: 10,
+                        destroy: true,
+                        orderCellsTop: true,
+                        responsive: true,
+                        processing: true, // untuk menampilkan bar prosessing
+                        serverSide: true, // untuk proses server side datatable harus diset true
+                        orderMulti: false, // untuk disable multi order column
+                        retrieve: true,
+                        //autoWidth: true,
+                        dom: '<"top"i>rt<"bottom"lp><"clear">', // untuk menghilangkan search global
+                        //data: data,
+                        ajax: {
+                            "url": '../Inbox/LoadDataChecking',
+                            "type": "POST",
+                            "datatype": "json",
+                            "data": { "Id": data },
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                window.location.href = "../Error/HttpStatusErrorLayout?statusCode=500"
+                            }
+                        },
+                        language: {
+                            processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> ',
+                            info: "Menampilkan _START_ Sampai _END_ Dari _TOTAL_ Data",
+                            paginate: {
+                                first: "Halaman Awal",
+                                last: "Halaman Akhir",
+                                previous: "Halaman Sebelumnya",
+                                next: "Halaman Selanjutnya",
+                            },
+                            lengthMenu: "Menampilkan _MENU_ Data",
+                            emptyTable: "Data tidak ditemukan",
+                            infoEmpty: "Menampilkan 0 Sampai 0 Dari 0 Data",
+                            zeroRecords: "Data tidak ditemukan"
+                        },
+                        columns: [
+                            { responsivePriority: 1, "data": "Number", "name": "Number" },
+                            {
+                                responsivePriority: 2, "data": "ChecklistDukcapil", "name": "ChecklistDukcapil",
+                                "render": function (data, type, full, meta) {
+                                    if (data == true) {
+                                        return '<center>Ya</center>'
+                                    }
+                                    else {
+                                        return '<center>Tidak</center>'
+                                    }
+                                }
+                            },
+                            {
+                                responsivePriority: 3, "data": "ChecklistNPWP", "name": "ChecklistNPWP",
+                                "render": function (data, type, full, meta) {
+                                    if (data == true) {
+                                        return '<center>Ya</center>'
+                                    }
+                                    else {
+                                        return '<center>Tidak</center>'
+                                    }
+                                }
+                            },
+                            {
+                                responsivePriority: 4, "data": "ChecklistSLIK", "name": "ChecklistSLIK",
+                                "render": function (data, type, full, meta) {
+                                    if (data == true) {
+                                        return '<center>Ya</center>'
+                                    }
+                                    else {
+                                        return '<center>Tidak</center>'
+                                    }
+                                }
+                            },
+                            {
+                                responsivePriority: 5, "data": "ChecklistDHN", "name": "ChecklistDHN",
+                                "render": function (data, type, full, meta) {
+                                    if (data == true) {
+                                        return '<center>Ya</center>'
+                                    }
+                                    else {
+                                        return '<center>Tidak</center>'
+                                    }
+                                }
+                            },
+                            {
+                                responsivePriority: 6, "data": "ChecklistOSS", "name": "ChecklistOSS",
+                                "render": function (data, type, full, meta) {
+                                    if (data == true) {
+                                        return '<center>Ya</center>'
+                                    }
+                                    else {
+                                        return '<center>Tidak</center>'
+                                    }
+                                }
+                            }
+                        ],
+                        "order": [[1, "desc"]]
+                    });
+
+
+
+                    TableChecking.columns.adjust().responsive.recalc();
+                }
+                else {
+                    window.location.href = "../Login/Login?a=true";
+                }
+            }
+        });
+    }
+
+    function LoadDataDisclaimer(data) {
+        @*if (TableDisclaimer != undefined) {
+            TableDisclaimer.DataTable.destroy();
+        }*@
+        debugger;
+        $.ajax({
+            type: 'GET',
+            url: '../Login/CekSession',
+            success: function (hasil) {
+                if (hasil == true) {
+                    TableDisclaimer = $('#TableDisclaimer').DataTable({
+                        fixedHeader: {
+                            header: true
+                        },
+                        pageLength: 10,
+                        destroy: true,
+                        orderCellsTop: true,
+                        responsive: true,
+                        processing: true, // untuk menampilkan bar prosessing
+                        serverSide: true, // untuk proses server side datatable harus diset true
+                        orderMulti: false, // untuk disable multi order column
+                        retrieve: true,
+                        //autoWidth: true,
+                        dom: '<"top"i>rt<"bottom"lp><"clear">', // untuk menghilangkan search global
+                        //data: data,
+                        ajax: {
+                            "url": '../Inbox/LoadDataDisclaimer',
+                            "type": "POST",
+                            "datatype": "json",
+                            "data": { "Id": data },
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                window.location.href = "../Error/HttpStatusErrorLayout?statusCode=500"
+                            }
+                        },
+                        language: {
+                            processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> ',
+                            info: "Menampilkan _START_ Sampai _END_ Dari _TOTAL_ Data",
+                            paginate: {
+                                first: "Halaman Awal",
+                                last: "Halaman Akhir",
+                                previous: "Halaman Sebelumnya",
+                                next: "Halaman Selanjutnya",
+                            },
+                            lengthMenu: "Menampilkan _MENU_ Data",
+                            emptyTable: "Data tidak ditemukan",
+                            infoEmpty: "Menampilkan 0 Sampai 0 Dari 0 Data",
+                            zeroRecords: "Data tidak ditemukan"
+                        },
+                        columns: [
+                            { responsivePriority: 1, "data": "Number", "name": "Number" },
+                            {
+                                responsivePriority: 2,
+                                "data": "Id", "name": "Id", "orderable": false, "visible": true, "render": function (data, type, full, meta) {
+                                    return '<div class="btn-group"><a href="javascript:void(0)" class="btn btn-small btn-facebook" id="button-edit" onclick="ViewDisclaimer(' + full.ProspekId + ')" style="margin-right:5px;" data-toggle="tooltip" title="View"><i class="fa fa-eye btnView"></i></a>'
+                                        + '</div>'
+                                }
+                            },
+                            { responsivePriority: 3, "data": "Deskripsi", "name": "Deskripsi" },
+                            {
+                                responsivePriority: 4, "data": "Soal", "name": "Soal"
+                            }
+                        ],
+                        "order": [[1, "desc"]]
+                    });
+
+
+
+                    TableDisclaimer.columns.adjust().responsive.recalc();
+                }
+                else {
+                    window.location.href = "../Login/Login?a=true";
+                }
+            }
+        });
+    }
+
+    function LoadDataRiwayatKomentar(data) {
+        @*if (TableRiwayatKomentar != undefined) {
+            TableRiwayatKomentar.DataTable.destroy();
+        }*@
+        debugger;
+        $.ajax({
+            type: 'GET',
+            url: '../Login/CekSession',
+            success: function (hasil) {
+                if (hasil == true) {
+                    TableRiwayatKomentar = $('#TableRiwayatKomentar').DataTable({
+                        fixedHeader: {
+                            header: true
+                        },
+                        pageLength: 10,
+                        destroy: true,
+                        orderCellsTop: true,
+                        responsive: true,
+                        processing: true, // untuk menampilkan bar prosessing
+                        serverSide: true, // untuk proses server side datatable harus diset true
+                        orderMulti: false, // untuk disable multi order column
+                        retrieve: true,
+                        //autoWidth: true,
+                        dom: '<"top"i>rt<"bottom"lp><"clear">', // untuk menghilangkan search global
+                        //data: data,
+                        ajax: {
+                            "url": '../Inbox/LoadDataRiwayatKomentar',
+                            "type": "POST",
+                            "datatype": "json",
+                            "data": { "Id": data },
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                window.location.href = "../Error/HttpStatusErrorLayout?statusCode=500"
+                            }
+                        },
+                        language: {
+                            processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> ',
+                            info: "Menampilkan _START_ Sampai _END_ Dari _TOTAL_ Data",
+                            paginate: {
+                                first: "Halaman Awal",
+                                last: "Halaman Akhir",
+                                previous: "Halaman Sebelumnya",
+                                next: "Halaman Selanjutnya",
+                            },
+                            lengthMenu: "Menampilkan _MENU_ Data",
+                            emptyTable: "Data tidak ditemukan",
+                            infoEmpty: "Menampilkan 0 Sampai 0 Dari 0 Data",
+                            zeroRecords: "Data tidak ditemukan"
+                        },
+                        columns: [
+                            { responsivePriority: 1, "data": "Number", "name": "Number" },
+                            { responsivePriority: 2, "data": "ActionName", "name": "ActionName" },
+                            { responsivePriority: 3, "data": "Komentar", "name": "Komentar" },
+                            {
+                                responsivePriority: 4, "data": "Role", "name": "Role"
+                            }
+                        ],
+                        "order": [[1, "desc"]]
+                    });
+
+
+
+                    TableRiwayatKomentar.columns.adjust().responsive.recalc();
+                }
+                else {
+                    window.location.href = "../Login/Login?a=true";
+                }
+            }
+        });
+    }
+
+    function LoadHistory_Tracking(id) {
+        @*if (TableTracking != undefined) {
+            TableTracking.DataTable.destroy();
+        }*@
+        debugger;
+        $.ajax({
+            type: 'GET',
+            url: '../Login/CekSession',
+            success: function (hasil) {
+                if (hasil == true) {
+                    TableTracking = $('#TableTracking').DataTable({
+                        fixedHeader: {
+                            header: true
+                        },
+                        pageLength: 10,
+                        destroy: true,
+                        orderCellsTop: true,
+                        responsive: true,
+                        processing: true, // untuk menampilkan bar prosessing
+                        serverSide: true, // untuk proses server side datatable harus diset true
+                        orderMulti: false, // untuk disable multi order column
+                        retrieve: true,
+                        //autoWidth: true,
+                        dom: '<"top"i>rt<"bottom"lp><"clear">', // untuk menghilangkan search global
+                        //data: data,
+                        ajax: {
+                            "url": '../Inbox/Tracking',
+                            "type": "POST",
+                            "datatype": "json",
+                            "data": { "Id": id },
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                window.location.href = "../Error/HttpStatusErrorLayout?statusCode=500"
+                            }
+                        },
+                        language: {
+                            processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> ',
+                            info: "Menampilkan _START_ Sampai _END_ Dari _TOTAL_ Data",
+                            paginate: {
+                                first: "Halaman Awal",
+                                last: "Halaman Akhir",
+                                previous: "Halaman Sebelumnya",
+                                next: "Halaman Selanjutnya",
+                            },
+                            lengthMenu: "Menampilkan _MENU_ Data",
+                            emptyTable: "Data tidak ditemukan",
+                            infoEmpty: "Menampilkan 0 Sampai 0 Dari 0 Data",
+                            zeroRecords: "Data tidak ditemukan"
+                        },
+                        columns: [
+                            { responsivePriority: 1, "data": "Status", "name": "Status" },
+                            { responsivePriority: 2, "data": "StartStepTime", "name": "StartStepTime" },
+                            { responsivePriority: 3, "data": "EndStepTime", "name": "EndStepTime" },
+                            {
+                                responsivePriority: 4, "data": "NamaRM", "name": "NamaRM"
+                            }
+                        ],
+                        "order": [[1, "desc"]]
+                    });
+
+
+
+                    TableTracking.columns.adjust().responsive.recalc();
+                }
+                else {
+                    window.location.href = "../Login/Login?a=true";
+                }
+            }
+        });
+
+        @*$.ajax({
+
+            url: '../Inbox/Tracking',
+            type: 'POST',
+            /**********************************/
+            data: { "id": id },
+            datatype:"json",
+            /***************************************************************************************************************************************/
+            success: function (d) {
+                debugger;
+                var isi = d
+                if (isi != null) {
+                    $.each(isi, function (index, value) {
+                        debugger;
+                        //var RejectStep = '<path fill="#b82717" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"></path>'
+                        //var ApproveStep = '<path fill="#17a2b8" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"></path>'
+                        console.log(value)
+                        /*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+
+                        $('#DivListTracking').append('<div class="tracking-item">' +
+                            '<div class="tracking-icon status-intransit">' +
+                            '<svg class="svg-inline--fa fa-circle fa-w-16" aria-hidden="true" data-prefix="fas" data-icon="circle" role="img" viewBox="0 0 512 512" data-fa-i2svg="">' +
+                            '<path fill="currentColor" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"></path>' +
+                            '</svg>' +
+                            '<!-- <i class="fas fa-circle"></i> -->' +
+                            '</div>' +
+                            '<div class="tracking-date">' + 'tes' + '<span>' + 'tes' + '</span></div>' +
+                            '<div class="tracking-content">' + 'tes' + ' - ( ' + 'tes' + ' )<span>' + 'tes' + '</span> <span>' + 'tes' + '</span></div>' +
+                            '</div>');
+                    });
+                } else {
+                    $('#DivListTracking').append('<div class="text-center"><h6> Data Tracking Kosong </h6></div>')
+                }
+            }
+        });*@
+    }
+
+
+
+    //--***************************************START EDIT ******************************************//
+    function Edit(Id) {
+        ShowModal('bd-example-modal-lg');
+
+        $.ajax({
+            type: 'GET',
+            url: '../Login/CekSession',
+            success: function (hasil) {
+                if (hasil == true) {
+                    //ShowModal('bd-example-modal-lg');
+
+                    State = "edit";
+                    SearchData = { "Id": Id }
+                    UrlPartialView = '../Inbox/EditFasilitasKredit';
+                    LoadPartialViewData(UrlPartialView, function (data) {
+                        var modalbody = $('#LoadContent');
+                        modalbody.html(data);
+                        $('#ModalForm').modal({
+                            backdrop: 'static',
+                            keyboard: false
+                        });
+
+                        InputNominalUang("MaksimumKredit");
+
+                        /*********************************************************************************************************************************************************/
+                        ValidationForm("","");
+                    }, SearchData);
+                }
+                else {
+                    window.location.href = "../Login/Login?a=true";
+                }
+            }
+        });
+
+    }
+    //--***************************************END EDIT ******************************************//
+
+    //--***************************************START VIEW ******************************************//
+    function ViewDisclaimer(Id) {
+        ShowModal('bd-example-modal-lg');
+
+        $.ajax({
+            type: 'GET',
+            url: '../Login/CekSession',
+            success: function (hasil) {
+                if (hasil == true) {
+                    //ShowModal('bd-example-modal-lg');
+
+                    State = "edit";
+                    SearchData = { "Id": Id }
+                    UrlPartialView = '../Inbox/ViewDisclaimer';
+                    LoadPartialViewData(UrlPartialView, function (data) {
+                        var modalbody = $('#LoadContent');
+                        modalbody.html(data);
+                        $('#ModalForm').modal({
+                            backdrop: 'static',
+                            keyboard: false
+                        });
+                        LoadDataTableFile(Id);
+                    }, SearchData);
+                }
+                else {
+                    window.location.href = "../Login/Login?a=true";
+                }
+            }
+        });
+
+    }
+
+    function View(LeadsId, KategoriLeadsId, ProspekId, Id, NoPengajuan) {
+        debugger;
+        ShowModal('bd-example-modal-lg');
+
+        $.ajax({
+            type: 'GET',
+            url: '../Login/CekSession',
+            success: function (hasil) {
+                if (hasil == true) {
+                    //ShowModal('bd-example-modal-lg');
+
+                    State = "view";
+                    SearchData = { "LeadsId": LeadsId, "KategoriLeadsId": KategoriLeadsId, "NoPengajuan": NoPengajuan }
+                    UrlPartialView = '../Inbox/View';
+                    LoadPartialViewData(UrlPartialView, function (data) {
+
+                        $('#DivContentBody').hide();
+                        document.getElementById("DivFormBody").innerHTML = data;
+
+                        $("#FormData :input").prop("disabled", true);
+
+                        $('#catatan').summernote({
+                            height: 400,   //set editable area's height
+                            codemirror: { // codemirror options
+                                theme: 'monokai'
+                            },
+                            toolbar: [
+                                ['style', ['style']],
+                                ['font', ['bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear']],
+                                ['fontname', ['fontname']],
+                                ['fontsize', ['fontsize']],
+                                ['color', ['color']],
+                                ['para', ['ol', 'ul', 'paragraph', 'height']],
+                                ['table', ['table']],
+                                ['insert', ['link']],
+                                ['view', ['undo', 'redo', 'fullscreen', 'codeview', 'help']]
+                            ]
+                        });
+                        var text =  /*************************************/
+
+                            $("#catatan").summernote("code", text);
+                        LoadDataTableFasilitasKredit(NoPengajuan);
+                        LoadDataChecking(ProspekId);
+                        LoadDataDisclaimer(ProspekId);
+                        LoadDataRiwayatKomentar(Id);
+                        LoadHistory_Tracking(ProspekId);
+                        ValidationForm(Id, ProspekId);
+                    }, SearchData);
+                }
+                else {
+                    window.location.href = "../Login/Login?a=true";
+                }
+            }
+        });
+
+    }
+    //--***************************************END VIEW ******************************************//
+
+
+    //Untuk Validasi Form data Pinjaman
+    function ValidationForm(Id, ProspekId) {
+        //Untuk validasi form
+        var $validator = $("#FormData").validate({
+            ignore: [],
+            rules: {
+                MaksimumKredit: {
+                    required: true
+                },
+                catatan: {
+                    required: true
+                },
+                OrderBy: {
+                    required: true
+                },
+                Visible: {
+                    required: true
+                },
+            },
+            messages: {
+
+            },
+
+            highlight: function (element) {
+                $(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+            },
+            unhighlight: function (element) {
+                $(element).closest('.form-group').removeClass('has-error').addClass('has-success');
+            },
+            errorElement: 'span',
+            errorClass: 'help-block',
+            errorPlacement: function (error, element) {
+                if (element.is('textarea')) {
+                    element.next().css('border', '1px solid red');
+                    error.insertAfter(element.parent());
+                } else if (element.is(':radio')) {
+                    element.next().css('border', '1px solid red');
+                    error.insertAfter(element.parent());
+                }
+                else if (element.parent('.input-group').length) {
+                    error.insertAfter(element.parent());
+                }
+                else {
+                    error.insertAfter(element);
+                }
+            }
+        });
+        $.validator.messages.required = "Harap isi field ini terlebih dahulu!";
+
+        //check apakah form sudah valid atau belum
+
+        $('#BtnSubmitFasilitas').click(function () {
+            var url = '';
+            var $valid = $("#FormData").valid();
+            if (!$valid) {
+                //alert("False");
+                $validator.focusInvalid();
+                return false;
+            } else {
+                //Cek session terlebih dahulu
+                $.ajax({
+                    type: 'GET',
+                    url: '../Login/CekSession',
+                    success: function (hasil) {
+                        if (hasil == true) {
+                            $.ajax({
+                                url: '../Inbox/SubmitEdit',
+                                type: 'POST',
+                                data: $('#FormData').serialize() + "&idprospek=" + ProspekId,
+                                success: function (d) {
+                                    //Tampilkan alert status
+                                    if (d == "") {
+                                        /**************/
+
+                                        $('#ModalForm').modal('hide');
+                                        NotifikasiSukses("Sukses", "Data berhasil disimpan!");
+                                        Table.draw();
+                                    } else {
+                                        NotifikasiError("Error", d)
+                                    }
+                                }
+                            });
+                            return false;
+                        }
+                        else {
+                            window.location.href = "../Login/Login?a=true";
+                        }
+                    }
+                });
+            }
+        });
+
+        $('#BtnApprove').click(function () {
+            debugger;
+            var catatan = $('#catatan').summernote('code');
+            var id = $('#Id').val();
+            var $valid = $("#FormData").valid();
+            if (!$valid) {
+                //alert("False");
+                $validator.focusInvalid();
+                return false;
+            } else {
+                //Cek session terlebih dahulu
+                $.ajax({
+                    type: 'GET',
+                    url: '../Login/CekSession',
+                    success: function (hasil) {
+                        if (hasil == true) {
+                            $.ajax({
+                                url: '../Inbox/Approve?catatan=' + catatan + '&id=' + Id,
+                                type: 'POST',
+                                data: $('#FormData').serialize(),
+                                success: function (d) {
+                                    //Tampilkan alert status
+                                    if (d == "") {
+                                         BackDraft();
+
+                                        NotifikasiSukses("Sukses", "Data berhasil disimpan!");
+                                        Table.draw();
+                                        TableFasilitasKredit.draw()
+                                    } else {
+                                        NotifikasiError("Error", d)
+                                    }
+                                }
+                            });
+                            return false;
+                        }
+                        else {
+                            window.location.href = "../Login/Login?a=true";
+                        }
+                    }
+                });
+            }
+
+        });
+
+        $('#BtnReject').click(function () {
+            debugger;
+            var catatan = $('#catatan').summernote('code');
+            var id = $('#Id').val();
+            var $valid = $("#FormData").valid();
+            if (!$valid) {
+                //alert("False");
+                $validator.focusInvalid();
+                return false;
+            } else {
+                //Cek session terlebih dahulu
+                $.ajax({
+                    type: 'GET',
+                    url: '../Login/CekSession',
+                    success: function (hasil) {
+                        if (hasil == true) {
+                            $.ajax({
+                                url: '../Inbox/Reject?catatan=' + catatan + '&id=' + Id,
+                                type: 'POST',
+                                data: $('#FormData').serialize(),
+                                success: function (d) {
+                                    //Tampilkan alert status
+                                    if (d == "") {
+                                        BackDraft();
+
+                                        NotifikasiSukses("Sukses", "Data berhasil disimpan!");
+                                        Table.draw();
+                                        TableFasilitasKredit.draw()
+                                    } else {
+                                        NotifikasiError("Error", d)
+                                    }
+                                }
+                            });
+                            return false;
+                        }
+                        else {
+                            window.location.href = "../Login/Login?a=true";
+                        }
+                    }
+                });
+            }
+
+        });
+
+        $('#BtnPending').click(function () {
+            debugger;
+            var catatan = $('#catatan').summernote('code');
+            var id = $('#Id').val();
+            var $valid = $("#FormData").valid();
+            if (!$valid) {
+                //alert("False");
+                $validator.focusInvalid();
+                return false;
+            } else {
+                //Cek session terlebih dahulu
+                $.ajax({
+                    type: 'GET',
+                    url: '../Login/CekSession',
+                    success: function (hasil) {
+                        if (hasil == true) {
+                            $.ajax({
+                                url: '../Inbox/Pending?catatan=' + catatan + '&id=' + Id,
+                                type: 'POST',
+                                data: $('#FormData').serialize(),
+                                success: function (d) {
+                                    //Tampilkan alert status
+                                    if (d == "") {
+                                        BackDraft();
+
+                                        NotifikasiSukses("Sukses", "Data berhasil disimpan!");
+                                        Table.draw();
+                                        TableFasilitasKredit.draw()
+                                    } else {
+                                        NotifikasiError("Error", d)
+                                    }
+                                }
+                            });
+                            return false;
+                        }
+                        else {
+                            window.location.href = "../Login/Login?a=true";
+                        }
+                    }
+                });
+            }
+
+        });
+
+
+    }
+
+    function ShowDetailDataInbox(elementIdBtnShow, elementIdBtnHide,elementId) {
+        $("#" + elementIdBtnShow).show();
+        $("#" + elementIdBtnHide).hide();
+        $("#" + elementId).show();
+    }
+
+    function HideDetailDataInbox(elementIdBtnShow, elementIdBtnHide, elementId) {
+        $("#" + elementIdBtnShow).show();
+        $("#" + elementIdBtnHide).hide();
+        $("#" + elementId).show();
+    }
+
+</script>

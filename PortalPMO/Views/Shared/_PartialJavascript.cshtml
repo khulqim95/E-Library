@@ -1,0 +1,2285 @@
+﻿<script>
+    var KebijakanUmumDireksiName = "";
+    var KebijakanUmumDireksiName = "";
+
+    var popupBlockerChecker = {check:function(b) {
+        var a = this;
+        b ? /chrome/.test(navigator.userAgent.toLowerCase()) ? setTimeout(function()      {
+        a._is_popup_blocked(a, b);
+        }, 200) : b.onload = function() {
+        a._is_popup_blocked(a, b);
+        } : a._displayError();
+        }, _is_popup_blocked:function(b, a) {
+        0 == 0 < a.innerHeight && b._displayError();
+        }, _displayError:function() {
+        alert("Popup Blocker is enabled! Please add this site to your exception list.");
+     }};
+
+    function ConvertMonthNameToDate(monthname) {
+        //alert(monthname);
+        var months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+        var month = months.indexOf(monthname) + 1;
+        //alert(month);
+        if (month < 10) {
+            month = '0' + month;
+        }
+        return month;
+    }
+
+    //Untuk input hanya number
+    function InputOnlyNumber(elementId) {
+        $("#" + elementId).keypress(validateNumber);
+    }
+
+    //Untuk input nominal mata uang dengan menggunakan separator
+    function InputNominalUang(elementId) {
+        debugger;
+        var inputan = document.getElementById(elementId);
+        inputan.addEventListener('keyup', function (e) {
+            inputan.value = formatRupiah(this.value);
+        });
+        //$("#" + elementId).keypress(validateNumber);
+        
+    }
+
+    function getColorRandom() {
+        var messages = ["#16a085", "#2980b9", "#8e44ad", "#2c3e50", "#e67e22", "#c0392b", "#7f8c8d"];
+        return messages[Math.floor(Math.random() * messages.length)];
+    }
+
+    function GetTwoFirstCharFromWord(value) {
+        var abbr = "";
+        value = value.split(' ');
+        if (value.length < 2) {
+            return value[0].substr(0, 1).toUpperCase();
+        }
+        else {
+            for (i = 0; i < 2; i++) {
+                abbr += value[i].substr(0, 1);
+            }
+        }
+        return abbr;
+    }
+
+
+      //--***************************************START SHOW PARAMETER SEARCH ******************************************//
+    //function untuk togle parameter
+    function ShowParameter(Collapse, ShowParameter, HideParameter) {
+        //var paramSearch = document.getElementById(FullParameter);
+        var showParameter = document.getElementById(ShowParameter);
+        var hideParameter = document.getElementById(HideParameter);
+        var divCollapse = document.getElementById(Collapse);
+
+        divCollapse.style.display = 'block';
+        //$("#" + Collapse).collapse('show');
+        //paramSearch.style.display = 'block';
+        showParameter.style.display = 'none';
+        hideParameter.style.display = 'block';
+
+        $('html, body').animate({ scrollTop: $('#' + Collapse).offset().top }, 'slow');
+
+    }
+    //--***************************************END SHOW PARAMETER SEARCH ******************************************//
+
+    //--***************************************START HIDE PARAMETER SEARCH ******************************************//
+
+    function HideParameter(Collapse, ShowParameter, HideParameter) {
+        var showParameter = document.getElementById(ShowParameter);
+        var hideParameter = document.getElementById(HideParameter);
+        var divCollapse = document.getElementById(Collapse);
+        divCollapse.style.display = 'none';
+        hideParameter.style.display = 'none';
+        showParameter.style.display = 'block';
+        $('html, body').animate({ scrollTop: $('#' + ShowParameter).offset().top }, 'slow');
+
+    }
+
+    //--***************************************END HIDE PARAMETER SEARCH ******************************************//
+
+
+
+     //Get Notification
+        function getAllNotification() {
+            UrlPartialView = '@Url.Content("~/Utility/GetAllDataNotification")';
+            LoadPartialViewData(UrlPartialView, function (data) {
+                //console.log(data);
+                $('#divContentNotif').html('');
+
+                if (data.Jumlah > 0) {
+                    $('#divContentJumlahNotif').append('<span class="label" style="background-color:darkorange">'
+                        + '<text id="txtJmlInbox">' + data.Jumlah + '</text>'
+                        + '</span>')
+
+                    $('#divContentNotif').append('<li class="dropdown-header">'
+                        + ' <div id="divContentJumlahInbox">'
+                        + '<text>Jumlah Inbox (' + data.Jumlah + ')</text>'
+                        + ' </div>'
+                        + '</li>')
+                    //$('#DropdownRolePegawai').empty();
+                    $.each(data.ListData, function (index, value) {
+                        console.log(value)
+                        $('#divContentNotif').append('<li class="media">'
+
+                            + '<div class="media-left" style="margin:10px;">'
+                            + '<h5 class="InitialContentInboxNotif" style="background-color:' + value.Warna + '">4.61</h5>'
+                            + '</div>'
+                            + '<div class="media-body">'
+                            + '<h6 class="media-heading">' + value.Npp + ' - ' + value.Nama_Pegawai + ' </h6>'
+                            + '<p>' + value.Komentar + '</p>'
+                            + '<div class="text-muted f-s-11">CIF: ' + value.CIF + '</div>'
+                            + '<div class="text-muted f-s-11">Nama Debitur: ' + value.Nama_Debitur + '</div>'
+                            + '<div class="text-muted f-s-11">Skor EWS: 4,67</div>'
+                            + '<div class="text-muted f-s-11">Merah</div>'
+                            + '</div>'
+
+                            + '</li>');
+                    });
+                    $('#divContentNotif').append(' <li class="dropdown-footer text-center">'
+                        + '<a href="../Inbox/Index">Lihat Semua Kotak Surat</a>'
+                        + '</li>')
+                }
+                else {
+                    $('#divContentJumlahNotif').html('');
+
+                    $('#divContentNotif').append('<li class="dropdown-header">'
+                        + ' <div id="divContentJumlahInbox">'
+                        + '<text>Tidak ada daftar tugas</text>'
+                        + ' </div>'
+                        + '</li>')
+                }
+            });
+        }
+
+
+
+    //-------------------------------Only Number------------------------//
+    function validateNumber(event) {
+        var key = window.event ? event.keyCode : event.which;
+        if (event.keyCode === 8 || event.keyCode === 46) {
+            return true;
+        } else if (key < 48 || key > 57) {
+            return false;
+        } else {
+            return true;
+        }
+    };
+
+    //Format Rupiah
+    function formatRupiah(angka, prefix) {
+        var number_string = angka.replace(/[^,\d]/g, '').toString(),
+            split = number_string.split(','),
+            sisa = split[0].length % 3,
+            rupiah = split[0].substr(0, sisa),
+            ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+        if (ribuan) {
+            separator = sisa ? '.' : '';
+            rupiah += separator + ribuan.join('.');
+        }
+
+        return rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+        @*return prefix == undefined ? rupiah : (rupiah ? '' + rupiah : '');*@
+    }
+
+    //--***************************************START NOTIFIKASI SUKSES ******************************************//
+    function NotifikasiSukses(title, text) {
+        swal({
+            title: title,
+            text: text,
+            icon: 'success',
+            timer: 2000,
+            buttons: false
+        });
+    }
+    //--***************************************END NOTIFIKASI SUKSES ******************************************//
+
+     //--***************************************START NOTIFIKASI GAGAL ******************************************//
+    function NotifikasiError(title, text) {
+        swal({
+            title: title,
+            text: text,
+            icon: 'error',
+            showCloseButton: true
+            //buttons: false
+        });
+    }
+     //--***************************************END NOTIFIKASI GAGAL ******************************************//
+
+    //--***************************************START NOTIFIKASI GAGAL ******************************************//
+    function NotifikasiAlert(title, text) {
+        swal({
+            title: title,
+            text: text,
+            icon: 'warning',
+            showCloseButton: true
+            //buttons: false
+        });
+    }
+     //--***************************************END NOTIFIKASI GAGAL ******************************************//
+
+
+    //--***************************************START SHOW PARAMETER SEARCH ******************************************//
+    //function untuk togle parameter
+    function ShowParameter(Collapse, ShowParameter, HideParameter) {
+        //var paramSearch = document.getElementById(FullParameter);
+        var showParameter = document.getElementById(ShowParameter);
+        var hideParameter = document.getElementById(HideParameter);
+        var divCollapse = document.getElementById(Collapse);
+
+        divCollapse.style.display = 'block';
+        //$("#" + Collapse).collapse('show');
+        //paramSearch.style.display = 'block';
+        showParameter.style.display = 'none';
+        hideParameter.style.display = 'block';
+
+        $('html, body').animate({ scrollTop: $('#' + Collapse).offset().top }, 'slow');
+
+    }
+    //--***************************************END SHOW PARAMETER SEARCH ******************************************//
+
+    //--***************************************START HIDE PARAMETER SEARCH ******************************************//
+
+    function HideParameter(Collapse, ShowParameter, HideParameter) {
+        var showParameter = document.getElementById(ShowParameter);
+        var hideParameter = document.getElementById(HideParameter);
+        var divCollapse = document.getElementById(Collapse);
+        divCollapse.style.display = 'none';
+        hideParameter.style.display = 'none';
+        showParameter.style.display = 'block';
+        $('html, body').animate({ scrollTop: $('#' + ShowParameter).offset().top }, 'slow');
+
+    }
+
+
+
+    //--***************************************START CLEAR DROPDOWN SELECT2 ******************************************//
+    function ClearDropdown(elementId) {
+        $('#' + elementId).val(null).trigger('change');
+    }
+    //--***************************************END CLEAR DROPDOWN SELECT2 ******************************************//
+
+    //--***************************************START GET TEXT FOR DROPDOWN ******************************************//
+    function GetTextForDropdown(elementDropdown,elementId) {
+        var x = elementDropdown.options[elementDropdown.selectedIndex].text;
+        $('#' + elementId).val(x);
+    }
+    //--***************************************END GET TEXT FOR DROPDOWN ******************************************//
+
+    //--***************************************START RANGE DATE DEFAULT ******************************************//
+    function RangeDateDefault(elementId,minDate,maxDate)
+    {
+         $('#'+elementId).daterangepicker({
+            opens: 'right',
+            locale: { format: 'DD/MM/YYYY' },
+            separator: ' to ',
+            //startDate: moment().subtract('days', 29),
+            //endDate: moment(),
+             showDropdowns: false,
+             showWeekNumbers: true,
+             minDate: minDate,
+             maxDate: maxDate,
+             //minDate: '01/01/2018',
+             //maxDate: '03/12/2018'
+        },
+        function (start, end) {
+            $('#' + elementId + ' input').val(start.format('DD/MM/YYYY') + ' - ' + end.format('DD/MM/YYYY'));
+            });
+
+        $('#' + elementId).val('')
+    }
+    //--***************************************END RANGE DATE DEFAULT ******************************************//
+
+    function RangeDateDefaultDefaultValue(elementId, minDate, maxDate) {
+        $('#' + elementId).daterangepicker({
+            opens: 'right',
+            locale: { format: 'DD/MM/YYYY' },
+            separator: ' to ',
+            //startDate: moment().subtract('days', 29),
+            //endDate: moment(),
+            minDate: minDate,
+            maxDate: maxDate,
+        },
+            function (start, end) {
+                $('#' + elementId + ' input').val(start.format('DD/MM/YYYY') + ' - ' + end.format('DD/MM/YYYY'));
+            });
+
+    }
+
+    //--***************************************START RANGE DATE ADVANCE ******************************************//
+    function AdvanceDateRangePicker(elementId) {
+        $('#' + elementId +' span').html(moment().subtract('days', 29).format('D MMMM, YYYY') + ' - ' + moment().format('D MMMM, YYYY'));
+
+        $('#' + elementId).daterangepicker({
+            format: 'DD/MM/YYYY',
+            //startDate: moment().subtract(29, 'days'),
+            //endDate: moment(),
+            //minDate: '01/01/2012',
+            //maxDate: '12/31/2020',
+            //dateLimit: { days: 60 },
+            showDropdowns: true,
+            showWeekNumbers: true,
+            timePicker: false,
+            timePickerIncrement: 1,
+            timePicker12Hour: true,
+            ranges: {
+                'Today': [moment(), moment()],
+                'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                'This Month': [moment().startOf('month'), moment().endOf('month')],
+                'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+            },
+            opens: 'right',
+            drops: 'down',
+            buttonClasses: ['btn', 'btn-sm'],
+            applyClass: 'btn-primary',
+            cancelClass: 'btn-default',
+            separator: ' to ',
+            locale: {
+                applyLabel: 'Submit',
+                cancelLabel: 'Cancel',
+                fromLabel: 'From',
+                toLabel: 'To',
+                customRangeLabel: 'Custom',
+                daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+                monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                firstDay: 1
+            }
+        }, function (start, end, label) {
+            $('#' + elementId+' span').html(start.format('D MMMM, YYYY') + ' - ' + end.format('D MMMM, YYYY'));
+        });
+    }
+    //--***************************************END RANGE DATE ADVANCE ******************************************//
+
+
+     //--***************************************START RANGE DATE ADVANCE ******************************************//
+    function AdvanceDateRangePicker(elementId) {
+        $('#' + elementId +' span').html(moment().subtract('days', 29).format('D MMMM, YYYY') + ' - ' + moment().format('D MMMM, YYYY'));
+
+        $('#' + elementId).daterangepicker({
+            format: 'DD/MM/YYYY',
+            //startDate: moment().subtract(29, 'days'),
+            //endDate: moment(),
+            //minDate: '01/01/2012',
+            //maxDate: '12/31/2020',
+            //dateLimit: { days: 60 },
+            showDropdowns: true,
+            showWeekNumbers: true,
+            timePicker: false,
+            timePickerIncrement: 1,
+            timePicker12Hour: true,
+            ranges: {
+                'Today': [moment(), moment()],
+                'This Month': [moment().startOf('month'), moment().endOf('month')]
+            },
+            opens: 'right',
+            drops: 'down',
+            buttonClasses: ['btn', 'btn-sm'],
+            applyClass: 'btn-primary',
+            cancelClass: 'btn-default',
+            separator: ' to ',
+            locale: {
+                applyLabel: 'Submit',
+                cancelLabel: 'Cancel',
+                fromLabel: 'From',
+                toLabel: 'To',
+                customRangeLabel: 'Custom',
+                daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+                monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                //firstDay: 1
+            }
+        }, function (start, end, label) {
+            $('#' + elementId+' span').html(start.format('D MMMM, YYYY') + ' - ' + end.format('D MMMM, YYYY'));
+        });
+    }
+    //--***************************************END RANGE DATE ADVANCE ******************************************//
+
+
+       //--***************************************START DROPDOWN SERVER SIDE MASTER FORM******************************************//
+    function DropdownPegawayByRoleAndUnitServerSide(elementId, jumlahRowPerPage, isMultiple, RoleId, IsManajemenKelolaanPegawai, IsSearchMyKelolaan) {
+        var dropdown = $("#" + elementId).select2({
+            dropdownParent: $('#ModalForm .modal-content'),
+                    ajax: {
+                        url: '@Url.Action("GetAllDataPegawaiByUnitAndRole", "Utility")',
+                        dataType: 'json',
+                        delay: 250,
+                        multiple: isMultiple,
+                        allowClear: true,
+                        data: function (params) {
+                            return {
+                                q: params.term, // search term
+                                page: params.page || 1,
+                                rowPerPage: jumlahRowPerPage,
+                                Role_Id: RoleId,
+                                IsManajemenKelolaanPegawai: IsManajemenKelolaanPegawai,
+                                IsSearchMyKelolaan: IsSearchMyKelolaan
+                            };
+                        },
+                        processResults: function (data, params) {
+                            //debugger
+                            params.page = params.page || 1;
+
+                            return {
+                                results: data.items,
+                                pagination: {
+                                    more: (params.page * jumlahRowPerPage) < data.total_count
+                                }
+                            };
+                        },
+                        cache: true
+                  },
+                  placeholder: {
+                      id: '', // or whatever the placeholder value is
+                      text: '-Silahkan pilih-' // the text to display as the placeholder
+                  },
+                    //placeholder: 'Silahkan pilih',
+                    escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+                    minimumInputLength: 0
+                     //templateResult: formatRepoPegawai
+            });
+            var select2Instance = $('#' + elementId).data('select2');
+            select2Instance.on('results:message', function (params) {
+                this.dropdown._resizeDropdown();
+                this.dropdown._positionDropdown();
+            });
+        }
+
+    //--***************************************END DROPDOWN SERVER SIDE MASER FORM******************************************//
+
+     //--***************************************START DROPDOWN SERVER SIDE UNIT******************************************//
+    function DropdownUnitServerSide(elementId, jumlahRowPerPage, isMultiple, typeUnit) {
+        var dropdownPegawai = $("#" + elementId).select2({
+                    ajax: {
+                        url: '@Url.Action("GetAllDataUnit", "Utility")',
+                        dataType: 'json',
+                        delay: 250,
+                        multiple: isMultiple,
+                        allowClear: true,
+                        data: function (params) {
+                            return {
+                                q: params.term, // search term
+                                TypeUnit: typeUnit,
+                                page: params.page || 1,
+                                rowPerPage: jumlahRowPerPage
+                            };
+                        },
+                        processResults: function (data, params) {
+                            //debugger
+                            params.page = params.page || 1;
+
+                            return {
+                                results: data.items,
+                                pagination: {
+                                    more: (params.page * jumlahRowPerPage) < data.total_count
+                                }
+                            };
+                        },
+                        cache: true
+                     },
+                    placeholder: '-Silahkan pilih-',
+                    escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+                    minimumInputLength: 0
+                     //templateResult: formatRepoPegawai
+            });
+            var select2Instance = $('#' + elementId).data('select2');
+            select2Instance.on('results:message', function (params) {
+                this.dropdown._resizeDropdown();
+                this.dropdown._positionDropdown();
+            });
+        }
+
+    //--***************************************END DROPDOWN SERVER SIDE UNIT ******************************************//
+
+      //--***************************************START DROPDOWN SERVER SIDE UNIT******************************************//
+    function DropdownUnitModalServerSide(elementId, jumlahRowPerPage, isMultiple, typeUnit) {
+        var dropdownPegawai = $("#" + elementId).select2({
+            dropdownParent: $('#ModalForm .modal-content'),
+                    ajax: {
+                        url: '@Url.Action("GetAllDataUnit", "Utility")',
+                        dataType: 'json',
+                        delay: 250,
+                        multiple: isMultiple,
+                        allowClear: true,
+                        data: function (params) {
+                            return {
+                                q: params.term, // search term
+                                TypeUnit: typeUnit,
+                                page: params.page || 1,
+                                rowPerPage: jumlahRowPerPage
+                            };
+                        },
+                        processResults: function (data, params) {
+                            //debugger
+                            params.page = params.page || 1;
+
+                            return {
+                                results: data.items,
+                                pagination: {
+                                    more: (params.page * jumlahRowPerPage) < data.total_count
+                                }
+                            };
+                        },
+                        cache: true
+                     },
+                    placeholder: '-Silahkan pilih-',
+                    escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+                    minimumInputLength: 0
+                     //templateResult: formatRepoPegawai
+            });
+            var select2Instance = $('#' + elementId).data('select2');
+            select2Instance.on('results:message', function (params) {
+                this.dropdown._resizeDropdown();
+                this.dropdown._positionDropdown();
+            });
+        }
+
+    //--***************************************END DROPDOWN SERVER SIDE UNIT ******************************************//
+
+
+      //--***************************************START DROPDOWN SERVER SIDE SISTEM******************************************//
+    function DropdownMasterSistemServerSide(elementId, jumlahRowPerPage, isMultiple) {
+        var dropdownSistem = $("#" + elementId).select2({
+                    ajax: {
+                        url: '@Url.Action("GetAllDataSistem", "Utility")',
+                        dataType: 'json',
+                        delay: 250,
+                        multiple: isMultiple,
+                        allowClear: true,
+                        data: function (params) {
+                            return {
+                                q: params.term, // search term
+                                page: params.page || 1,
+                                rowPerPage: jumlahRowPerPage
+                            };
+                        },
+                        processResults: function (data, params) {
+                            //debugger
+                            params.page = params.page || 1;
+
+                            return {
+                                results: data.items,
+                                pagination: {
+                                    more: (params.page * jumlahRowPerPage) < data.total_count
+                                }
+                            };
+                        },
+                        cache: true
+                     },
+                    placeholder: '-Silahkan pilih-',
+                    escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+                    minimumInputLength: 0
+                     //templateResult: formatRepoPegawai
+            });
+            var select2Instance = $('#' + elementId).data('select2');
+            select2Instance.on('results:message', function (params) {
+                this.dropdown._resizeDropdown();
+                this.dropdown._positionDropdown();
+            });
+        }
+    function DropdownMasterSistemModalServerSide(elementId, jumlahRowPerPage, isMultiple) {
+        var dropdownSistem = $("#" + elementId).select2({
+            dropdownParent: $('#ModalForm .modal-content'),
+                    ajax: {
+                        url: '@Url.Action("GetAllDataSistem", "Utility")',
+                        dataType: 'json',
+                        delay: 250,
+                        multiple: isMultiple,
+                        allowClear: true,
+                        data: function (params) {
+                            return {
+                                q: params.term, // search term
+                                page: params.page || 1,
+                                rowPerPage: jumlahRowPerPage
+                            };
+                        },
+                        processResults: function (data, params) {
+                            //debugger
+                            params.page = params.page || 1;
+
+                            return {
+                                results: data.items,
+                                pagination: {
+                                    more: (params.page * jumlahRowPerPage) < data.total_count
+                                }
+                            };
+                        },
+                        cache: true
+                     },
+                    placeholder: '-Silahkan pilih-',
+                    escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+                    minimumInputLength: 0
+                     //templateResult: formatRepoPegawai
+            });
+            var select2Instance = $('#' + elementId).data('select2');
+            select2Instance.on('results:message', function (params) {
+                this.dropdown._resizeDropdown();
+                this.dropdown._positionDropdown();
+            });
+        }
+
+    //--***************************************END DROPDOWN SERVER SIDE SISTEM ******************************************//
+
+
+      //--***************************************START DROPDOWN SERVER SIDE KATEGORI PROJECT******************************************//
+    function DropdownKategoriProjectServerSide(elementId, jumlahRowPerPage, isMultiple) {
+        var dropdownKategoriProject = $("#" + elementId).select2({
+                    ajax: {
+                        url: '@Url.Action("GetAllDataKategoriProject", "Utility")',
+                        dataType: 'json',
+                        delay: 250,
+                        multiple: isMultiple,
+                        allowClear: true,
+                        data: function (params) {
+                            return {
+                                q: params.term, // search term
+                                page: params.page || 1,
+                                rowPerPage: jumlahRowPerPage
+                            };
+                        },
+                        processResults: function (data, params) {
+                            //debugger
+                            params.page = params.page || 1;
+
+                            return {
+                                results: data.items,
+                                pagination: {
+                                    more: (params.page * jumlahRowPerPage) < data.total_count
+                                }
+                            };
+                        },
+                        cache: true
+                     },
+                    placeholder: '-Silahkan pilih-',
+                    escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+                    minimumInputLength: 0
+                     //templateResult: formatRepoPegawai
+            });
+            var select2Instance = $('#' + elementId).data('select2');
+            select2Instance.on('results:message', function (params) {
+                this.dropdown._resizeDropdown();
+                this.dropdown._positionDropdown();
+            });
+        }
+     function DropdownKategoriProjectModalServerSide(elementId, jumlahRowPerPage, isMultiple) {
+        var dropdownKategoriProject = $("#" + elementId).select2({
+            dropdownParent: $('#ModalForm .modal-content'),
+                    ajax: {
+                        url: '@Url.Action("GetAllDataKategoriProject", "Utility")',
+                        dataType: 'json',
+                        delay: 250,
+                        multiple: isMultiple,
+                        allowClear: true,
+                        data: function (params) {
+                            return {
+                                q: params.term, // search term
+                                page: params.page || 1,
+                                rowPerPage: jumlahRowPerPage
+                            };
+                        },
+                        processResults: function (data, params) {
+                            //debugger
+                            params.page = params.page || 1;
+
+                            return {
+                                results: data.items,
+                                pagination: {
+                                    more: (params.page * jumlahRowPerPage) < data.total_count
+                                }
+                            };
+                        },
+                        cache: true
+                     },
+                    placeholder: '-Silahkan pilih-',
+                    escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+                    minimumInputLength: 0
+                     //templateResult: formatRepoPegawai
+            });
+            var select2Instance = $('#' + elementId).data('select2');
+            select2Instance.on('results:message', function (params) {
+                this.dropdown._resizeDropdown();
+                this.dropdown._positionDropdown();
+            });
+        }
+
+    //--***************************************END DROPDOWN SERVER SIDE KATEGORI PROJECT ******************************************//
+
+      //--***************************************START DROPDOWN SERVER SIDE SUB KATEGORI PROJECT******************************************//
+    function DropdownSubKategoriProjectServerSide(elementId, jumlahRowPerPage, isMultiple, kategoriProjectId) {
+        var dropdownSubKategori = $("#" + elementId).select2({
+                    ajax: {
+                        url: '@Url.Action("GetAllDataSubKategoriProject", "Utility")',
+                        dataType: 'json',
+                        delay: 250,
+                        multiple: isMultiple,
+                        allowClear: true,
+                        data: function (params) {
+                            return {
+                                q: params.term, // search term
+                                page: params.page || 1,
+                                KategoriProjectId : kategoriProjectId,
+                                rowPerPage: jumlahRowPerPage
+                            };
+                        },
+                        processResults: function (data, params) {
+                            //debugger
+                            params.page = params.page || 1;
+
+                            return {
+                                results: data.items,
+                                pagination: {
+                                    more: (params.page * jumlahRowPerPage) < data.total_count
+                                }
+                            };
+                        },
+                        cache: true
+                     },
+                    placeholder: '-Silahkan pilih-',
+                    escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+                    minimumInputLength: 0
+                     //templateResult: formatRepoPegawai
+            });
+            var select2Instance = $('#' + elementId).data('select2');
+            select2Instance.on('results:message', function (params) {
+                this.dropdown._resizeDropdown();
+                this.dropdown._positionDropdown();
+            });
+        }
+
+     function DropdownSubKategoriProjectModalServerSide(elementId, jumlahRowPerPage, isMultiple, kategoriProjectId) {
+        var dropdownSubKategori = $("#" + elementId).select2({
+            dropdownParent: $('#ModalForm .modal-content'),
+                    ajax: {
+                        url: '@Url.Action("GetAllDataSubKategoriProject", "Utility")',
+                        dataType: 'json',
+                        delay: 250,
+                        multiple: isMultiple,
+                        allowClear: true,
+                        data: function (params) {
+                            return {
+                                q: params.term, // search term
+                                page: params.page || 1,
+                                KategoriProjectId : kategoriProjectId,
+                                rowPerPage: jumlahRowPerPage
+                            };
+                        },
+                        processResults: function (data, params) {
+                            //debugger
+                            params.page = params.page || 1;
+
+                            return {
+                                results: data.items,
+                                pagination: {
+                                    more: (params.page * jumlahRowPerPage) < data.total_count
+                                }
+                            };
+                        },
+                        cache: true
+                     },
+                    placeholder: '-Silahkan pilih-',
+                    escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+                    minimumInputLength: 0
+                     //templateResult: formatRepoPegawai
+            });
+            var select2Instance = $('#' + elementId).data('select2');
+            select2Instance.on('results:message', function (params) {
+                this.dropdown._resizeDropdown();
+                this.dropdown._positionDropdown();
+            });
+        }
+
+    //--***************************************END DROPDOWN SERVER SIDE SUB KATEGORI PROJECT ******************************************//
+
+       //--***************************************START DROPDOWN SERVER SIDE KOMPLEKSITAS PROJECT******************************************//
+    function DropdownKompleksitasProjectServerSide(elementId, jumlahRowPerPage, isMultiple) {
+        var dropdown = $("#" + elementId).select2({
+                    ajax: {
+                        url: '@Url.Action("GetAllDataKompleksitasProject", "Utility")',
+                        dataType: 'json',
+                        delay: 250,
+                        multiple: isMultiple,
+                        allowClear: true,
+                        data: function (params) {
+                            return {
+                                q: params.term, // search term
+                                page: params.page || 1,
+                                rowPerPage: jumlahRowPerPage
+                            };
+                        },
+                        processResults: function (data, params) {
+                            //debugger
+                            params.page = params.page || 1;
+
+                            return {
+                                results: data.items,
+                                pagination: {
+                                    more: (params.page * jumlahRowPerPage) < data.total_count
+                                }
+                            };
+                        },
+                        cache: true
+                     },
+                    placeholder: '-Silahkan pilih-',
+                    escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+                    minimumInputLength: 0
+                     //templateResult: formatRepoPegawai
+            });
+            var select2Instance = $('#' + elementId).data('select2');
+            select2Instance.on('results:message', function (params) {
+                this.dropdown._resizeDropdown();
+                this.dropdown._positionDropdown();
+            });
+        }
+
+    function DropdownKompleksitasProjectModalServerSide(elementId, jumlahRowPerPage, isMultiple) {
+        var dropdown = $("#" + elementId).select2({
+            dropdownParent: $('#ModalForm .modal-content'),
+                    ajax: {
+                        url: '@Url.Action("GetAllDataKompleksitasProject", "Utility")',
+                        dataType: 'json',
+                        delay: 250,
+                        multiple: isMultiple,
+                        allowClear: true,
+                        data: function (params) {
+                            return {
+                                q: params.term, // search term
+                                page: params.page || 1,
+                                rowPerPage: jumlahRowPerPage
+                            };
+                        },
+                        processResults: function (data, params) {
+                            //debugger
+                            params.page = params.page || 1;
+
+                            return {
+                                results: data.items,
+                                pagination: {
+                                    more: (params.page * jumlahRowPerPage) < data.total_count
+                                }
+                            };
+                        },
+                        cache: true
+                     },
+                    placeholder: '-Silahkan pilih-',
+                    escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+                    minimumInputLength: 0
+                     //templateResult: formatRepoPegawai
+            });
+            var select2Instance = $('#' + elementId).data('select2');
+            select2Instance.on('results:message', function (params) {
+                this.dropdown._resizeDropdown();
+                this.dropdown._positionDropdown();
+            });
+        }
+
+    //--***************************************END DROPDOWN SERVER SIDE KOMPLEKSITAS PROJECT ******************************************//
+
+
+        //--***************************************START DROPDOWN SERVER SIDE KLASIFIKASI PROJECT******************************************//
+    function DropdownKlasifikasiProjectServerSide(elementId, jumlahRowPerPage, isMultiple) {
+        var dropdownKlasifikasiProject = $("#" + elementId).select2({
+                    ajax: {
+                        url: '@Url.Action("GetAllDataKlasifikasiProject", "Utility")',
+                        dataType: 'json',
+                        delay: 250,
+                        multiple: isMultiple,
+                        allowClear: true,
+                        data: function (params) {
+                            return {
+                                q: params.term, // search term
+                                page: params.page || 1,
+                                rowPerPage: jumlahRowPerPage
+                            };
+                        },
+                        processResults: function (data, params) {
+                            //debugger
+                            params.page = params.page || 1;
+
+                            return {
+                                results: data.items,
+                                pagination: {
+                                    more: (params.page * jumlahRowPerPage) < data.total_count
+                                }
+                            };
+                        },
+                        cache: true
+                     },
+                    placeholder: '-Silahkan pilih-',
+                    escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+                    minimumInputLength: 0
+                     //templateResult: formatRepoPegawai
+            });
+            var select2Instance = $('#' + elementId).data('select2');
+            select2Instance.on('results:message', function (params) {
+                this.dropdown._resizeDropdown();
+                this.dropdown._positionDropdown();
+            });
+    }
+
+    //Untuk Nominal Angka
+    function Nominal(angka) {
+        var rev = parseInt(angka, 10).toString().split('').reverse().join('');
+        var rev2 = '';
+        for (var i = 0; i < rev.length; i++) {
+            rev2 += rev[i];
+            if ((i + 1) % 3 === 0 && i !== (rev.length - 1)) {
+                rev2 += '.';
+            }
+        }
+        if (angka == "" || angka == null) {
+            return "0"
+        } else {
+            return rev2.split('').reverse().join('');
+        }
+    }
+
+       //--***************************************START DROPDOWN SERVER SIDE KLASIFIKASI PROJECT******************************************//
+    function DropdownKlasifikasiProjectModalServerSide(elementId, jumlahRowPerPage, isMultiple) {
+        var dropdownKlasifikasiProject = $("#" + elementId).select2({
+            dropdownParent: $('#ModalForm .modal-content'),
+                    ajax: {
+                        url: '@Url.Action("GetAllDataKlasifikasiProject", "Utility")',
+                        dataType: 'json',
+                        delay: 250,
+                        multiple: isMultiple,
+                        allowClear: true,
+                        data: function (params) {
+                            return {
+                                q: params.term, // search term
+                                page: params.page || 1,
+                                rowPerPage: jumlahRowPerPage
+                            };
+                        },
+                        processResults: function (data, params) {
+                            //debugger
+                            params.page = params.page || 1;
+
+                            return {
+                                results: data.items,
+                                pagination: {
+                                    more: (params.page * jumlahRowPerPage) < data.total_count
+                                }
+                            };
+                        },
+                        cache: true
+                     },
+                    placeholder: '-Silahkan pilih-',
+                    escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+                    minimumInputLength: 0
+                     //templateResult: formatRepoPegawai
+            });
+            var select2Instance = $('#' + elementId).data('select2');
+            select2Instance.on('results:message', function (params) {
+                this.dropdown._resizeDropdown();
+                this.dropdown._positionDropdown();
+            });
+        }
+
+    //--***************************************END DROPDOWN SERVER SIDE KLASIFIKASI PROJECT ******************************************//
+
+           //--***************************************START DROPDOWN SERVER SIDE SKO PROJECT******************************************//
+    function DropdownSkorProjectServerSide(elementId, jumlahRowPerPage, isMultiple) {
+        var dropdown = $("#" + elementId).select2({
+                    ajax: {
+                        url: '@Url.Action("GetAllDataSkorProject", "Utility")',
+                        dataType: 'json',
+                        delay: 250,
+                        multiple: isMultiple,
+                        allowClear: true,
+                        data: function (params) {
+                            return {
+                                q: params.term, // search term
+                                page: params.page || 1,
+                                rowPerPage: jumlahRowPerPage
+                            };
+                        },
+                        processResults: function (data, params) {
+                            //debugger
+                            params.page = params.page || 1;
+
+                            return {
+                                results: data.items,
+                                pagination: {
+                                    more: (params.page * jumlahRowPerPage) < data.total_count
+                                }
+                            };
+                        },
+                        cache: true
+                     },
+                    placeholder: '-Silahkan pilih-',
+                    escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+                    minimumInputLength: 0
+                     //templateResult: formatRepoPegawai
+            });
+            var select2Instance = $('#' + elementId).data('select2');
+            select2Instance.on('results:message', function (params) {
+                this.dropdown._resizeDropdown();
+                this.dropdown._positionDropdown();
+            });
+        }
+
+     function DropdownSkorProjectModalServerSide(elementId, jumlahRowPerPage, isMultiple) {
+        var dropdown = $("#" + elementId).select2({
+            dropdownParent: $('#ModalForm .modal-content'),
+                    ajax: {
+                        url: '@Url.Action("GetAllDataSkorProject", "Utility")',
+                        dataType: 'json',
+                        delay: 250,
+                        multiple: isMultiple,
+                        allowClear: true,
+                        data: function (params) {
+                            return {
+                                q: params.term, // search term
+                                page: params.page || 1,
+                                rowPerPage: jumlahRowPerPage
+                            };
+                        },
+                        processResults: function (data, params) {
+                            //debugger
+                            params.page = params.page || 1;
+
+                            return {
+                                results: data.items,
+                                pagination: {
+                                    more: (params.page * jumlahRowPerPage) < data.total_count
+                                }
+                            };
+                        },
+                        cache: true
+                     },
+                    placeholder: '-Silahkan pilih-',
+                    escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+                    minimumInputLength: 0
+                     //templateResult: formatRepoPegawai
+            });
+            var select2Instance = $('#' + elementId).data('select2');
+            select2Instance.on('results:message', function (params) {
+                this.dropdown._resizeDropdown();
+                this.dropdown._positionDropdown();
+            });
+        }
+
+    //--***************************************END DROPDOWN SERVER SIDE SKOR PROJECT ******************************************//
+
+       //--***************************************START DROPDOWN SERVER SIDE TYPE CLIENT******************************************//
+    function DropdownTypeClietnServerSide(elementId, jumlahRowPerPage, isMultiple) {
+        var dropdownTypeClient = $("#" + elementId).select2({
+                    ajax: {
+                        url: '@Url.Action("GetAllDataTypeClient", "Utility")',
+                        dataType: 'json',
+                        delay: 250,
+                        multiple: isMultiple,
+                        allowClear: true,
+                        data: function (params) {
+                            return {
+                                q: params.term, // search term
+                                page: params.page || 1,
+                                rowPerPage: jumlahRowPerPage
+                            };
+                        },
+                        processResults: function (data, params) {
+                            //debugger
+                            params.page = params.page || 1;
+
+                            return {
+                                results: data.items,
+                                pagination: {
+                                    more: (params.page * jumlahRowPerPage) < data.total_count
+                                }
+                            };
+                        },
+                        cache: true
+                     },
+                    placeholder: '-Silahkan pilih-',
+                    escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+                    minimumInputLength: 0
+                     //templateResult: formatRepoPegawai
+            });
+            var select2Instance = $('#' + elementId).data('select2');
+            select2Instance.on('results:message', function (params) {
+                this.dropdown._resizeDropdown();
+                this.dropdown._positionDropdown();
+            });
+    }
+
+     function DropdownTypeClietnModalServerSide(elementId, jumlahRowPerPage, isMultiple) {
+        var dropdownTypeClient = $("#" + elementId).select2({
+            dropdownParent: $('#ModalForm .modal-content'),
+                    ajax: {
+                        url: '@Url.Action("GetAllDataTypeClient", "Utility")',
+                        dataType: 'json',
+                        delay: 250,
+                        multiple: isMultiple,
+                        allowClear: true,
+                        data: function (params) {
+                            return {
+                                q: params.term, // search term
+                                page: params.page || 1,
+                                rowPerPage: jumlahRowPerPage
+                            };
+                        },
+                        processResults: function (data, params) {
+                            //debugger
+                            params.page = params.page || 1;
+
+                            return {
+                                results: data.items,
+                                pagination: {
+                                    more: (params.page * jumlahRowPerPage) < data.total_count
+                                }
+                            };
+                        },
+                        cache: true
+                     },
+                    placeholder: '-Silahkan pilih-',
+                    escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+                    minimumInputLength: 0
+                     //templateResult: formatRepoPegawai
+            });
+            var select2Instance = $('#' + elementId).data('select2');
+            select2Instance.on('results:message', function (params) {
+                this.dropdown._resizeDropdown();
+                this.dropdown._positionDropdown();
+            });
+        }
+
+    //--***************************************END DROPDOWN SERVER SIDE TYPE CLIENT ******************************************//
+
+
+         //--***************************************START DROPDOWN SERVER SIDE CLIENT******************************************//
+    function DropdownClientServerSide(elementId, jumlahRowPerPage, isMultiple) {
+        var dropdownClient = $("#" + elementId).select2({
+                    ajax: {
+                        url: '@Url.Action("GetAllDataClient", "Utility")',
+                        dataType: 'json',
+                        delay: 250,
+                        multiple: isMultiple,
+                        allowClear: true,
+                        data: function (params) {
+                            return {
+                                q: params.term, // search term
+                                page: params.page || 1,
+                                rowPerPage: jumlahRowPerPage
+                            };
+                        },
+                        processResults: function (data, params) {
+                            //debugger
+                            params.page = params.page || 1;
+
+                            return {
+                                results: data.items,
+                                pagination: {
+                                    more: (params.page * jumlahRowPerPage) < data.total_count
+                                }
+                            };
+                        },
+                        cache: true
+                     },
+                    placeholder: '-Silahkan pilih-',
+                    escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+                    minimumInputLength: 0
+                     //templateResult: formatRepoPegawai
+            });
+            var select2Instance = $('#' + elementId).data('select2');
+            select2Instance.on('results:message', function (params) {
+                this.dropdown._resizeDropdown();
+                this.dropdown._positionDropdown();
+            });
+    }
+
+    function DropdownClientModalServerSide(elementId, jumlahRowPerPage, isMultiple) {
+        var dropdownClient = $("#" + elementId).select2({
+            dropdownParent: $('#ModalForm .modal-content'),
+                    ajax: {
+                        url: '@Url.Action("GetAllDataClient", "Utility")',
+                        dataType: 'json',
+                        delay: 250,
+                        multiple: isMultiple,
+                        allowClear: true,
+                        data: function (params) {
+                            return {
+                                q: params.term, // search term
+                                page: params.page || 1,
+                                rowPerPage: jumlahRowPerPage
+                            };
+                        },
+                        processResults: function (data, params) {
+                            //debugger
+                            params.page = params.page || 1;
+
+                            return {
+                                results: data.items,
+                                pagination: {
+                                    more: (params.page * jumlahRowPerPage) < data.total_count
+                                }
+                            };
+                        },
+                        cache: true
+                     },
+                    placeholder: '-Silahkan pilih-',
+                    escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+                    minimumInputLength: 0
+                     //templateResult: formatRepoPegawai
+            });
+            var select2Instance = $('#' + elementId).data('select2');
+            select2Instance.on('results:message', function (params) {
+                this.dropdown._resizeDropdown();
+                this.dropdown._positionDropdown();
+            });
+        }
+
+    //--***************************************END DROPDOWN SERVER SIDE CLIENT ******************************************//
+
+            //--***************************************START DROPDOWN SERVER SIDE LIST PROJECT******************************************//
+    function DropdownAllProjectServerSide(elementId, jumlahRowPerPage, isMultiple) {
+        var dropdown = $("#" + elementId).select2({
+                    ajax: {
+                        url: '@Url.Action("GetAllDataProject", "Utility")',
+                        dataType: 'json',
+                        delay: 250,
+                        multiple: isMultiple,
+                        allowClear: true,
+                        data: function (params) {
+                            return {
+                                q: params.term, // search term
+                                page: params.page || 1,
+                                rowPerPage: jumlahRowPerPage
+                            };
+                        },
+                        processResults: function (data, params) {
+                            //debugger
+                            params.page = params.page || 1;
+
+                            return {
+                                results: data.items,
+                                pagination: {
+                                    more: (params.page * jumlahRowPerPage) < data.total_count
+                                }
+                            };
+                        },
+                        cache: true
+                     },
+                    placeholder: '-Silahkan pilih-',
+                    escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+                    minimumInputLength: 0
+                     //templateResult: formatRepoPegawai
+            });
+            var select2Instance = $('#' + elementId).data('select2');
+            select2Instance.on('results:message', function (params) {
+                this.dropdown._resizeDropdown();
+                this.dropdown._positionDropdown();
+            });
+    }
+
+    function DropdownAllProjectModalServerSide(elementId, jumlahRowPerPage, isMultiple) {
+        var dropdown = $("#" + elementId).select2({
+            dropdownParent: $('#ModalForm .modal-content'),
+                    ajax: {
+                        url: '@Url.Action("GetAllDataProject", "Utility")',
+                        dataType: 'json',
+                        delay: 250,
+                        multiple: isMultiple,
+                        allowClear: true,
+                        data: function (params) {
+                            return {
+                                q: params.term, // search term
+                                page: params.page || 1,
+                                rowPerPage: jumlahRowPerPage
+                            };
+                        },
+                        processResults: function (data, params) {
+                            //debugger
+                            params.page = params.page || 1;
+
+                            return {
+                                results: data.items,
+                                pagination: {
+                                    more: (params.page * jumlahRowPerPage) < data.total_count
+                                }
+                            };
+                        },
+                        cache: true
+                     },
+                    placeholder: '-Silahkan pilih-',
+                    escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+                    minimumInputLength: 0
+                     //templateResult: formatRepoPegawai
+            });
+            var select2Instance = $('#' + elementId).data('select2');
+            select2Instance.on('results:message', function (params) {
+                this.dropdown._resizeDropdown();
+                this.dropdown._positionDropdown();
+            });
+        }
+
+    //--***************************************END DROPDOWN SERVER SIDE LIST PROJECT ******************************************//
+
+          //--***************************************START DROPDOWN SERVER SIDE TYPE DOKUMEN******************************************//
+    function DropdownKlasifikasiProjectServerSide(elementId, jumlahRowPerPage, isMultiple) {
+        var dropdownKlasifikasiProject = $("#" + elementId).select2({
+                    ajax: {
+                        url: '@Url.Action("GetAllDataKlasifikasiProject", "Utility")',
+                        dataType: 'json',
+                        delay: 250,
+                        multiple: isMultiple,
+                        allowClear: true,
+                        data: function (params) {
+                            return {
+                                q: params.term, // search term
+                                page: params.page || 1,
+                                rowPerPage: jumlahRowPerPage
+                            };
+                        },
+                        processResults: function (data, params) {
+                            //debugger
+                            params.page = params.page || 1;
+
+                            return {
+                                results: data.items,
+                                pagination: {
+                                    more: (params.page * jumlahRowPerPage) < data.total_count
+                                }
+                            };
+                        },
+                        cache: true
+                     },
+                    placeholder: '-Silahkan pilih-',
+                    escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+                    minimumInputLength: 0
+                     //templateResult: formatRepoPegawai
+            });
+            var select2Instance = $('#' + elementId).data('select2');
+            select2Instance.on('results:message', function (params) {
+                this.dropdown._resizeDropdown();
+                this.dropdown._positionDropdown();
+            });
+        }
+
+    function DropdownKlasifikasiProjectModalServerSide(elementId, jumlahRowPerPage, isMultiple) {
+        var dropdownKlasifikasiProject = $("#" + elementId).select2({
+            dropdownParent: $('#ModalForm .modal-content'),
+                    ajax: {
+                        url: '@Url.Action("GetAllDataKlasifikasiProject", "Utility")',
+                        dataType: 'json',
+                        delay: 250,
+                        multiple: isMultiple,
+                        allowClear: true,
+                        data: function (params) {
+                            return {
+                                q: params.term, // search term
+                                page: params.page || 1,
+                                rowPerPage: jumlahRowPerPage
+                            };
+                        },
+                        processResults: function (data, params) {
+                            //debugger
+                            params.page = params.page || 1;
+
+                            return {
+                                results: data.items,
+                                pagination: {
+                                    more: (params.page * jumlahRowPerPage) < data.total_count
+                                }
+                            };
+                        },
+                        cache: true
+                     },
+                    placeholder: '-Silahkan pilih-',
+                    escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+                    minimumInputLength: 0
+                     //templateResult: formatRepoPegawai
+            });
+            var select2Instance = $('#' + elementId).data('select2');
+            select2Instance.on('results:message', function (params) {
+                this.dropdown._resizeDropdown();
+                this.dropdown._positionDropdown();
+            });
+        }
+
+    //--***************************************END DROPDOWN SERVER SIDE TYPE DOKUMEN ******************************************//
+
+
+             //--***************************************START DROPDOWN SERVER SIDE JOB POSITION*****************************************//
+    function DropdownDataJobPositionServerSide(elementId, jumlahRowPerPage, isMultiple) {
+        var dropdown = $("#" + elementId).select2({
+                    ajax: {
+                        url: '@Url.Action("GetAllDataJobPosition", "Utility")',
+                        dataType: 'json',
+                        delay: 250,
+                        multiple: isMultiple,
+                        allowClear: true,
+                        data: function (params) {
+                            return {
+                                q: params.term, // search term
+                                page: params.page || 1,
+                                rowPerPage: jumlahRowPerPage
+                            };
+                        },
+                        processResults: function (data, params) {
+                            //debugger
+                            params.page = params.page || 1;
+
+                            return {
+                                results: data.items,
+                                pagination: {
+                                    more: (params.page * jumlahRowPerPage) < data.total_count
+                                }
+                            };
+                        },
+                        cache: true
+                     },
+                    placeholder: '-Silahkan pilih-',
+                    escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+                    minimumInputLength: 0
+                     //templateResult: formatRepoPegawai
+            });
+            var select2Instance = $('#' + elementId).data('select2');
+            select2Instance.on('results:message', function (params) {
+                this.dropdown._resizeDropdown();
+                this.dropdown._positionDropdown();
+            });
+        }
+
+    //--***************************************END DROPDOWN SERVER SIDE JOB POSITION ******************************************//
+
+              //--***************************************START DROPDOWN SERVER SIDE JOB POSITION*****************************************//
+    function DropdownDataJobPositionServerSideModal(elementId, jumlahRowPerPage, isMultiple) {
+        var dropdown = $("#" + elementId).select2({
+            dropdownParent: $('#ModalForm .modal-content'),
+                    ajax: {
+                        url: '@Url.Action("GetAllDataJobPosition", "Utility")',
+                        dataType: 'json',
+                        delay: 250,
+                        multiple: isMultiple,
+                        allowClear: true,
+                        data: function (params) {
+                            return {
+                                q: params.term, // search term
+                                page: params.page || 1,
+                                rowPerPage: jumlahRowPerPage
+                            };
+                        },
+                        processResults: function (data, params) {
+                            //debugger
+                            params.page = params.page || 1;
+
+                            return {
+                                results: data.items,
+                                pagination: {
+                                    more: (params.page * jumlahRowPerPage) < data.total_count
+                                }
+                            };
+                        },
+                        cache: true
+                     },
+                    placeholder: '-Silahkan pilih-',
+                    escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+                    minimumInputLength: 0
+                     //templateResult: formatRepoPegawai
+            });
+            var select2Instance = $('#' + elementId).data('select2');
+            select2Instance.on('results:message', function (params) {
+                this.dropdown._resizeDropdown();
+                this.dropdown._positionDropdown();
+            });
+        }
+
+    //--***************************************END DROPDOWN SERVER SIDE JOB POSITION ******************************************//
+
+
+            //--***************************************START DROPDOWN SERVER SIDE PROJECT STATUS******************************************//
+    function DropdownProjectStatusServerSide(elementId, jumlahRowPerPage, isMultiple) {
+        var dropdown = $("#" + elementId).select2({
+                    ajax: {
+                        url: '@Url.Action("GetDataProjectStatus", "Utility")',
+                        dataType: 'json',
+                        delay: 250,
+                        multiple: isMultiple,
+                        allowClear: true,
+                        data: function (params) {
+                            return {
+                                q: params.term, // search term
+                                page: params.page || 1,
+                                rowPerPage: jumlahRowPerPage
+                            };
+                        },
+                        processResults: function (data, params) {
+                            //debugger
+                            params.page = params.page || 1;
+
+                            return {
+                                results: data.items,
+                                pagination: {
+                                    more: (params.page * jumlahRowPerPage) < data.total_count
+                                }
+                            };
+                        },
+                        cache: true
+                     },
+                    placeholder: '-Silahkan pilih-',
+                    escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+                    minimumInputLength: 0
+                     //templateResult: formatRepoPegawai
+            });
+            var select2Instance = $('#' + elementId).data('select2');
+            select2Instance.on('results:message', function (params) {
+                this.dropdown._resizeDropdown();
+                this.dropdown._positionDropdown();
+            });
+        }
+
+    function DropdownProjectStatusModalServerSide(elementId, jumlahRowPerPage, isMultiple) {
+        var dropdown = $("#" + elementId).select2({
+            dropdownParent: $('#ModalForm .modal-content'),
+                    ajax: {
+                        url: '@Url.Action("GetDataProjectStatus", "Utility")',
+                        dataType: 'json',
+                        delay: 250,
+                        multiple: isMultiple,
+                        allowClear: true,
+                        data: function (params) {
+                            return {
+                                q: params.term, // search term
+                                page: params.page || 1,
+                                rowPerPage: jumlahRowPerPage
+                            };
+                        },
+                        processResults: function (data, params) {
+                            //debugger
+                            params.page = params.page || 1;
+
+                            return {
+                                results: data.items,
+                                pagination: {
+                                    more: (params.page * jumlahRowPerPage) < data.total_count
+                                }
+                            };
+                        },
+                        cache: true
+                     },
+                    placeholder: '-Silahkan pilih-',
+                    escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+                    minimumInputLength: 0
+                     //templateResult: formatRepoPegawai
+            });
+            var select2Instance = $('#' + elementId).data('select2');
+            select2Instance.on('results:message', function (params) {
+                this.dropdown._resizeDropdown();
+                this.dropdown._positionDropdown();
+            });
+        }
+
+
+    //--***************************************END DROPDOWN SERVER SIDE PROJECT STATUS ******************************************//
+
+             //--***************************************START DROPDOWN SERVER SIDE PEGAWAI*****************************************//
+    function DropdownDataAllPegawaiServerSide(elementId, jumlahRowPerPage, isMultiple) {
+        var dropdown = $("#" + elementId).select2({
+                    ajax: {
+                        url: '@Url.Action("GetAllDataPegawai", "Utility")',
+                        dataType: 'json',
+                        delay: 250,
+                        multiple: isMultiple,
+                        allowClear: true,
+                        data: function (params) {
+                            return {
+                                q: params.term, // search term
+                                page: params.page || 1,
+                                rowPerPage: jumlahRowPerPage
+                            };
+                        },
+                        processResults: function (data, params) {
+                            //debugger
+                            params.page = params.page || 1;
+
+                            return {
+                                results: data.items,
+                                pagination: {
+                                    more: (params.page * jumlahRowPerPage) < data.total_count
+                                }
+                            };
+                        },
+                        cache: true
+                     },
+                    placeholder: '-Silahkan pilih-',
+                    escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+                    minimumInputLength: 0
+                     //templateResult: formatRepoPegawai
+            });
+            var select2Instance = $('#' + elementId).data('select2');
+            select2Instance.on('results:message', function (params) {
+                this.dropdown._resizeDropdown();
+                this.dropdown._positionDropdown();
+            });
+        }
+
+     function DropdownDataAllPegawaiModalServerSide(elementId, jumlahRowPerPage, isMultiple) {
+         var dropdown = $("#" + elementId).select2({
+             dropdownParent: $('#ModalForm .modal-content'),
+                    ajax: {
+                        url: '@Url.Action("GetAllDataPegawai", "Utility")',
+                        dataType: 'json',
+                        delay: 250,
+                        multiple: isMultiple,
+                        allowClear: true,
+                        data: function (params) {
+                            return {
+                                q: params.term, // search term
+                                page: params.page || 1,
+                                rowPerPage: jumlahRowPerPage
+                            };
+                        },
+                        processResults: function (data, params) {
+                            //debugger
+                            params.page = params.page || 1;
+
+                            return {
+                                results: data.items,
+                                pagination: {
+                                    more: (params.page * jumlahRowPerPage) < data.total_count
+                                }
+                            };
+                        },
+                        cache: true
+                     },
+                    placeholder: '-Silahkan pilih-',
+                    escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+                    minimumInputLength: 0
+                     //templateResult: formatRepoPegawai
+            });
+            var select2Instance = $('#' + elementId).data('select2');
+            select2Instance.on('results:message', function (params) {
+                this.dropdown._resizeDropdown();
+                this.dropdown._positionDropdown();
+            });
+        }
+
+    //--***************************************END DROPDOWN SERVER SIDE PEGAWAI ******************************************//
+
+             //--***************************************START DROPDOWN SERVER SIDE PEGAWAI*****************************************//
+    function DropdownDataAllPegawaiServerSideModal(elementId, jumlahRowPerPage, isMultiple) {
+        var dropdown = $("#" + elementId).select2({
+            dropdownParent: $('#ModalForm .modal-content'),
+                    ajax: {
+                        url: '@Url.Action("GetAllDataPegawai", "Utility")',
+                        dataType: 'json',
+                        delay: 250,
+                        multiple: isMultiple,
+                        allowClear: true,
+                        data: function (params) {
+                            return {
+                                q: params.term, // search term
+                                page: params.page || 1,
+                                rowPerPage: jumlahRowPerPage
+                            };
+                        },
+                        processResults: function (data, params) {
+                            //debugger
+                            params.page = params.page || 1;
+
+                            return {
+                                results: data.items,
+                                pagination: {
+                                    more: (params.page * jumlahRowPerPage) < data.total_count
+                                }
+                            };
+                        },
+                        cache: true
+                     },
+                    placeholder: '-Silahkan pilih-',
+                    escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+                    minimumInputLength: 0
+                     //templateResult: formatRepoPegawai
+            });
+            var select2Instance = $('#' + elementId).data('select2');
+            select2Instance.on('results:message', function (params) {
+                this.dropdown._resizeDropdown();
+                this.dropdown._positionDropdown();
+            });
+        }
+
+    //--***************************************END DROPDOWN SERVER SIDE PEGAWAI ******************************************//
+
+    function DropdownDataAllPegawaiServerSide(elementId, jumlahRowPerPage, isMultiple) {
+        var dropdown = $("#" + elementId).select2({
+                    ajax: {
+                        url: '@Url.Action("GetAllDataPegawai", "Utility")',
+                        dataType: 'json',
+                        delay: 250,
+                        multiple: isMultiple,
+                        allowClear: true,
+                        data: function (params) {
+                            return {
+                                q: params.term, // search term
+                                page: params.page || 1,
+                                rowPerPage: jumlahRowPerPage
+                            };
+                        },
+                        processResults: function (data, params) {
+                            //debugger
+                            params.page = params.page || 1;
+
+                            return {
+                                results: data.items,
+                                pagination: {
+                                    more: (params.page * jumlahRowPerPage) < data.total_count
+                                }
+                            };
+                        },
+                        cache: true
+                     },
+                    placeholder: '-Silahkan pilih-',
+                    escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+                    minimumInputLength: 0
+                     //templateResult: formatRepoPegawai
+            });
+            var select2Instance = $('#' + elementId).data('select2');
+            select2Instance.on('results:message', function (params) {
+                this.dropdown._resizeDropdown();
+                this.dropdown._positionDropdown();
+            });
+    }
+
+    //--***************************************START DROPDOWN SERVER Data RM Server Side*****************************************//
+
+    function DropdownDataRMServerSide(elementId, jumlahRowPerPage, isMultiple, UnitId) {
+
+          var dropdownMGroup = $("#" + elementId).select2({
+                    ajax: {
+                        url: '@Url.Action("GetAllRMByUnit", "Utility")',
+                        dataType: 'json',
+                        delay: 250,
+                        multiple: isMultiple,
+                        allowClear: true,
+                  data: function (params) {
+                         return {
+                                q: params.term, // search term
+                                page: params.page || 1,
+                                rowPerPage: jumlahRowPerPage,
+                                UnitId: $("#UnitId").val()
+                            };
+                        },
+                        processResults: function (data, params) {
+                            //debugger
+                            params.page = params.page || 1;
+
+                            return {
+                                results: data.items,
+                                pagination: {
+                                    more: (params.page * jumlahRowPerPage) < data.total_count
+                                }
+                            };
+                        },
+                        cache: true
+                     },
+                    placeholder: '-Silahkan pilih-',
+                    escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+                    minimumInputLength: 0
+                     //templateResult: formatRepoPegawai
+            });
+            var select2Instance = $('#' + elementId).data('select2');
+            select2Instance.on('results:message', function (params) {
+                this.dropdown._resizeDropdown();
+                this.dropdown._positionDropdown();
+            });
+        }
+
+    //--***************************************END DROPDOWN SERVER Data RM Server Side ******************************************//
+
+
+    //--***************************************START DROPDOWN SERVER Data RM Server Side*****************************************//
+
+    function DropdownDataWilayahServerSide(elementId, jumlahRowPerPage, isMultiple, UnitId) {
+
+          var dropdownMGroup = $("#" + elementId).select2({
+                    ajax: {
+                        url: '@Url.Action("GetAllDataUnitByWilayah", "Utility")',
+                        dataType: 'json',
+                        delay: 250,
+                        multiple: isMultiple,
+                        allowClear: true,
+                  data: function (params) {
+                         return {
+                                q: params.term, // search term
+                                page: params.page || 1,
+                                rowPerPage: jumlahRowPerPage
+                            };
+                        },
+                        processResults: function (data, params) {
+                            //debugger
+                            params.page = params.page || 1;
+
+                            return {
+                                results: data.items,
+                                pagination: {
+                                    more: (params.page * jumlahRowPerPage) < data.total_count
+                                }
+                            };
+                        },
+                        cache: true
+                     },
+                    placeholder: '-Silahkan pilih-',
+                    escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+                    minimumInputLength: 0
+                     //templateResult: formatRepoPegawai
+            });
+            var select2Instance = $('#' + elementId).data('select2');
+            select2Instance.on('results:message', function (params) {
+                this.dropdown._resizeDropdown();
+                this.dropdown._positionDropdown();
+            });
+    }
+
+    function DropdownDataWilayah2ServerSide(elementId, jumlahRowPerPage, isMultiple, UnitId) {
+
+          var dropdownMGroup = $("#" + elementId).select2({
+                    ajax: {
+                        url: '@Url.Action("GetAllDataWilayah", "Utility")',
+                        dataType: 'json',
+                        delay: 250,
+                        multiple: isMultiple,
+                        allowClear: true,
+                  data: function (params) {
+                         return {
+                                q: params.term, // search term
+                                page: params.page || 1,
+                                rowPerPage: jumlahRowPerPage
+                            };
+                        },
+                        processResults: function (data, params) {
+                            //debugger
+                            params.page = params.page || 1;
+
+                            return {
+                                results: data.items,
+                                pagination: {
+                                    more: (params.page * jumlahRowPerPage) < data.total_count
+                                }
+                            };
+                        },
+                        cache: true
+                     },
+                    placeholder: '-Silahkan pilih-',
+                    escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+                    minimumInputLength: 0
+                     //templateResult: formatRepoPegawai
+            });
+            var select2Instance = $('#' + elementId).data('select2');
+            select2Instance.on('results:message', function (params) {
+                this.dropdown._resizeDropdown();
+                this.dropdown._positionDropdown();
+            });
+    }
+
+    function DropdownDataSRMandRMServerSide(elementId, jumlahRowPerPage, isMultiple, UnitId) {
+
+          var dropdownMGroup = $("#" + elementId).select2({
+                    ajax: {
+                        url: '@Url.Action("GetAllDataSRMandRM", "Utility")',
+                        dataType: 'json',
+                        delay: 250,
+                        multiple: isMultiple,
+                        allowClear: true,
+                  data: function (params) {
+                         return {
+                                q: params.term, // search term
+                                page: params.page || 1,
+                                rowPerPage: jumlahRowPerPage
+                            };
+                        },
+                        processResults: function (data, params) {
+                            //debugger
+                            params.page = params.page || 1;
+
+                            return {
+                                results: data.items,
+                                pagination: {
+                                    more: (params.page * jumlahRowPerPage) < data.total_count
+                                }
+                            };
+                        },
+                        cache: true
+                     },
+                    placeholder: '-Silahkan pilih-',
+                    escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+                    minimumInputLength: 0
+                     //templateResult: formatRepoPegawai
+            });
+            var select2Instance = $('#' + elementId).data('select2');
+            select2Instance.on('results:message', function (params) {
+                this.dropdown._resizeDropdown();
+                this.dropdown._positionDropdown();
+            });
+    }
+
+    function DropdownDataSegmenServerSide(elementId, jumlahRowPerPage, isMultiple) {
+          var dropdownMGroup = $("#" + elementId).select2({
+                    ajax: {
+                        url: '@Url.Action("GetAllDataSegmen", "Utility")',
+                        dataType: 'json',
+                        delay: 250,
+                        multiple: isMultiple,
+                        allowClear: true,
+                  data: function (params) {
+                         return {
+                                q: params.term, // search term
+                                page: params.page || 1,
+                                rowPerPage: jumlahRowPerPage
+                            };
+                        },
+                        processResults: function (data, params) {
+                            //debugger
+                            params.page = params.page || 1;
+
+                            return {
+                                results: data.items,
+                                pagination: {
+                                    more: (params.page * jumlahRowPerPage) < data.total_count
+                                }
+                            };
+                        },
+                        cache: true
+                     },
+                    placeholder: '-Silahkan pilih-',
+                    escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+                    minimumInputLength: 0
+                     //templateResult: formatRepoPegawai
+            });
+            var select2Instance = $('#' + elementId).data('select2');
+            select2Instance.on('results:message', function (params) {
+                this.dropdown._resizeDropdown();
+                this.dropdown._positionDropdown();
+            });
+    }
+    //--***************************************END DROPDOWN SERVER Data RM Server Side ******************************************//
+
+
+    function DropdownJabatanServerSide(elementId, jumlahRowPerPage, isMultiple) {
+          var dropdwon = $("#" + elementId).select2({
+                    ajax: {
+                        url: '@Url.Action("GetAllDataJabatan", "Utility")',
+                        dataType: 'json',
+                        delay: 250,
+                        multiple: isMultiple,
+                        allowClear: true,
+                        data: function (params) {
+                            return {
+                                q: params.term, // search term
+                                page: params.page || 1,
+                                rowPerPage: jumlahRowPerPage,
+                            };
+                        },
+                        processResults: function (data, params) {
+                            //debugger
+                            params.page = params.page || 1;
+
+                            return {
+                                results: data,
+                                pagination: {
+                                    more: (params.page * jumlahRowPerPage) < data.total_count
+                                }
+                            };
+                        },
+                        cache: true
+                     },
+                    placeholder: '-Silahkan pilih-',
+                    escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+                    minimumInputLength: 0
+                     //templateResult: formatRepoPegawai
+            });
+            var select2Instance = $('#' + elementId).data('select2');
+            select2Instance.on('results:message', function (params) {
+                this.dropdown._resizeDropdown();
+                this.dropdown._positionDropdown();
+            });
+        }
+
+
+
+    //--***************************************START CONVERT DATERANGE PICKER******************************************//
+
+    function convertDateRange(value, elementId) {
+        var splitDate = value.replace(/\s+/g, "").split("-");
+        var convertDate1 = splitDate[0].split("/");
+        var newdate1 = convertDate1[1] + '/' + convertDate1[0] + '/' + convertDate1[2];
+        var convertDate2 = splitDate[1].split("/");
+        var newdate2 = convertDate2[1] + '/' + convertDate2[0] + '/' + convertDate2[2];
+
+        var newdateRange = newdate1 + ' - ' + newdate2
+        $('#' + elementId).val(newdateRange)
+    }
+     //--***************************************END CONVERT DATERANGE PICKER******************************************//
+
+    function getColorRandom() {
+        var messages = ["#16a085", "#2980b9", "#8e44ad", "#2c3e50", "#e67e22", "#c0392b","#7f8c8d" ];
+        return messages[Math.floor(Math.random() * messages.length)];
+    }
+
+    function GetTwoFirstCharFromWord(value) {
+        var abbr = "";
+        value = value.split(' ');
+        if (value.length < 2) {
+            return value[0].substr(0, 1).toUpperCase();
+        }
+        else {
+            for (i = 0; i < 2; i++) {
+                abbr += value[i].substr(0, 1);
+            }
+        }
+        return abbr;
+    }
+
+
+    //function
+    function generateDatatable(elementId)
+    {
+        $('#'+elementId).DataTable({
+
+        });
+    }
+
+    function CreateContentTanggaDefaultValuel(elementId) {
+        var value = $('#' + elementId).val();
+        $('#' + elementId).datepicker({
+
+            // inline mode
+            inline: false,
+
+            // language
+            language: 'en',
+
+            // start date
+            startDate: new Date(),
+
+            // array of day's indexes
+            weekends: [6, 0],
+
+            // custom date format
+            dateFormat: 'dd/mm/yyyy',
+
+            // Alternative text input. Use altFieldDateFormat for date formatting.
+            altField: '',
+
+            // remove selection when clicking on selected cell
+            toggleSelected: true,
+
+            // keyboard navigation
+            keyboardNav: true,
+
+            // position
+            position: 'bottom left',
+            offset: 12,
+
+            // days, months or years
+            view: 'days',
+            minView: 'days',
+
+            showOtherMonths: true,
+            selectOtherMonths: true,
+            moveToOtherMonthsOnSelect: true,
+
+            showOtherYears: true,
+            selectOtherYears: true,
+            moveToOtherYearsOnSelect: true,
+
+            minDate: '',
+            maxDate: '',
+            disableNavWhenOutOfRange: true,
+
+            multipleDates: false, // Boolean or Number
+            multipleDatesSeparator: ',',
+            range: false,
+
+            // display today button
+            todayButton: false,
+
+            // display clear button
+            clearButton: true,
+
+            // Event type
+            showEvent: 'focus',
+
+            // auto close after date selection
+            autoClose: true,
+
+            // navigation
+            monthsFiled: 'monthsShort',
+            prevHtml: '<svg><path d="M 17,12 l -5,5 l 5,5"></path></svg>',
+            nextHtml: '<svg><path d="M 14,12 l 5,5 l -5,5"></path></svg>',
+            navTitles: {
+                days: 'MM, <i>yyyy</i>',
+                months: 'yyyy',
+                years: 'yyyy1 - yyyy2'
+            },
+
+            // timepicker
+            timepicker: false,
+            onlyTimepicker: false,
+            dateTimeSeparator: ' ',
+            timeFormat: '',
+            minHours: 0,
+            maxHours: 24,
+            minMinutes: 0,
+            maxMinutes: 59,
+            hoursStep: 1,
+            minutesStep: 1,
+
+            // callback events
+            onSelect: '',
+            onShow: '',
+            onHide: '',
+            onChangeMonth: '',
+            onChangeYear: '',
+            onChangeDecade: '',
+            onChangeView: '',
+            onRenderCell: ''
+
+        })
+        $('#' + elementId).val(value);
+    }
+
+
+
+    function CreateContentTanggal(elementId)
+    {
+        $('#' + elementId).datepicker({
+
+            // inline mode
+            inline: false,
+
+            // language
+            language: 'en',
+
+            // start date
+            startDate: new Date(),
+
+            // array of day's indexes
+            weekends: [6, 0],
+
+            // custom date format
+            dateFormat: 'dd/mm/yyyy',
+
+            // Alternative text input. Use altFieldDateFormat for date formatting.
+            altField: '',
+
+            // remove selection when clicking on selected cell
+            toggleSelected: true,
+
+            // keyboard navigation
+            keyboardNav: true,
+
+            // position
+            position: 'bottom left',
+            offset: 12,
+
+            // days, months or years
+            view: 'days',
+            minView: 'days',
+
+            showOtherMonths: true,
+            selectOtherMonths: true,
+            moveToOtherMonthsOnSelect: true,
+
+            showOtherYears: true,
+            selectOtherYears: true,
+            moveToOtherYearsOnSelect: true,
+
+            minDate: '',
+            maxDate: '',
+            disableNavWhenOutOfRange: true,
+
+            multipleDates: false, // Boolean or Number
+            multipleDatesSeparator: ',',
+            range: false,
+
+            // display today button
+            todayButton: false,
+
+            // display clear button
+            clearButton: true,
+
+            // Event type
+            showEvent: 'focus',
+
+            // auto close after date selection
+            autoClose: true,
+
+            // navigation
+            monthsFiled: 'monthsShort',
+            prevHtml: '<svg><path d="M 17,12 l -5,5 l 5,5"></path></svg>',
+            nextHtml: '<svg><path d="M 14,12 l 5,5 l -5,5"></path></svg>',
+            navTitles: {
+                days: 'MM, <i>yyyy</i>',
+                months: 'yyyy',
+                years: 'yyyy1 - yyyy2'
+            },
+
+            // timepicker
+            timepicker: false,
+            onlyTimepicker: false,
+            dateTimeSeparator: ' ',
+            timeFormat: '',
+            minHours: 0,
+            maxHours: 24,
+            minMinutes: 0,
+            maxMinutes: 59,
+            hoursStep: 1,
+            minutesStep: 1,
+
+            // callback events
+            onSelect: '',
+            onShow: '',
+            onHide: '',
+            onChangeMonth: '',
+            onChangeYear: '',
+            onChangeDecade: '',
+            onChangeView: '',
+            onRenderCell: ''
+
+        })
+    }
+
+    function CreateContentTanggalMonthYear(elementId) {
+        $('#' + elementId).datepicker({
+
+            // inline mode
+            inline: false,
+
+            // additional CSS class
+            classes: '',
+
+            // language
+            language: 'en',
+
+            // start date
+            //startDate: new Date(),
+
+            // custom date format
+            dateFormat: 'M yyyy',
+
+            // remove selection when clicking on selected cell
+            toggleSelected: true,
+
+            // keyboard navigation
+            keyboardNav: true,
+
+            // position
+            position: 'bottom left',
+            offset: 12,
+
+            // days, months or years
+            view: 'years',
+            minView: 'months',
+
+            // display today button
+            todayButton: false,
+
+            // display clear button
+            clearButton: true,
+
+            // auto close after date selection
+            autoClose: true,
+
+        })
+    }
+
+</script>

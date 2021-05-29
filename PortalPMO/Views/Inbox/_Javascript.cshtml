@@ -1,0 +1,55 @@
+﻿<script>
+
+    $('#TextAreaPengaturan').summernote({
+        height: 400,   //set editable area's height
+        codemirror: { // codemirror options
+            theme: 'monokai'
+        },
+        toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear']],
+            ['fontname', ['fontname']],
+            ['fontsize', ['fontsize']],
+            ['color', ['color']],
+            ['para', ['ol', 'ul', 'paragraph', 'height']],
+            ['table', ['table']],
+            ['insert', ['link']],
+            ['view', ['undo', 'redo', 'fullscreen', 'codeview', 'help']]
+        ]
+    });
+    var text =  @Html.Raw(Json.Serialize(ViewBag.Text))
+
+    $("#TextAreaPengaturan").summernote("code", text);
+      //check apakah form sudah valid atau belum
+    $('#BtnSubmit').click(function () {
+        var textareaValue = $('#TextAreaPengaturan').summernote('code');
+        //alert(textareaValue);
+            var url = '';
+            var $valid = $("#FormControl").valid();
+            if (!$valid) {
+                //alert("False");
+                $validator.focusInvalid();
+                return false;
+            } else {
+                $.ajax({
+                    url: '../PengaturanBeranda/Sumbit?text=' + textareaValue,
+                    type: 'POST',
+                    data: $('#FormControl').serialize(),
+                    success: function (d) {
+                        if (d=="") {
+                            NotifikasiSukses("Sukses", "Data berhasil disimpan!");
+                        }
+                        else {
+                            NotifikasiError("Erro", "Data gagal disimpan!");
+                        }
+                        }
+                    });
+                    return false;
+                }
+         });
+
+    function UndoPage() {
+        window.history.back();
+    }
+
+</script>

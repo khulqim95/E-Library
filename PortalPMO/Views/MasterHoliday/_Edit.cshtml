@@ -1,0 +1,58 @@
+﻿@model PortalPMO.ViewModels.DataMasterHoliday_ViewModels
+
+<div class="row" style="padding-top:20px;">
+    <div class="col-lg-12">
+        <div class="main-card mb-3 card">
+            <div class="card-body">
+                <form id="FormData" style="padding-top:20px;">
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(m => m.Id)
+                    @Html.HiddenFor(m => m.Keterangan)
+
+                    <div class="form-group row m-b-15">
+                        <label class="col-md-3 col-form-label">Nama <span class="labelMandatory">*</span></label>
+                        <div class="col-md-9">
+                            <div class="input-group">
+                                @Html.TextBoxFor(m => m.Nama, new { @class = "form-control", @value = "", @autocomplete = "off" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row m-b-15">
+                        <label class="col-md-3 col-form-label">Tanggal Libur </label>
+                        <div class="col-md-9">
+                            <div class="input-group">
+                                <div class="input-group-prepend datepicker-trigger" id="TanggalSearch" data-date-format="dd/mm/yyyy">
+                                    <div class="input-group-text">
+                                        <i class="fa fa-calendar-alt"></i>
+                                    </div>
+                                </div>
+                                @Html.TextBoxFor(m => m.Tanggal, new { @class = "datepicker-here form-control", @value = "", @autocomplete = "off" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row m-b-15">
+                        <label class="col-md-3 col-form-label">Keterangan </label>
+                        <div class="col-md-9">
+                            <div class="input-group">
+                                <textarea id="KeteranganSummernote" class="form-control" style="width:100%"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row m-b-15">
+                        <label class="col-md-3 col-form-label">Status <span class="labelMandatory">*</span></label>
+                        <div class="col-md-9">
+                            <div class="input-group">
+                                @Html.RadioButtonFor(model => model.IsActive, true, new { })&nbsp; Aktif &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                @Html.RadioButtonFor(model => model.IsActive, false, new { })&nbsp; Tidak Aktif &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <a href="javascript:;" class="btn btn-sm btn-white" onclick="BackDraft()">Tutup</a>
+                <a href="javascript:;" class="btn btn-sm btn-primary" id="BtnSubmit">Simpan</a>
+            </div>
+        </div>
+    </div>
+</div>

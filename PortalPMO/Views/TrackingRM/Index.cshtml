@@ -1,0 +1,439 @@
+﻿@model TwoTierTemplate.ViewModels.Dashboard_ViewModels
+
+@using PortalPMO.Component;
+@using PortalPMO.ViewModels;
+@using Microsoft.AspNetCore.Http;
+
+@{ var RoleUser = Context.Session.GetString(SessionConstan.Session_Role_Id); }
+
+@{ ViewData["Title"] = "Home";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+@section styles{
+    <link href="@Url.Content("~/plugin/DataTables-1.10.20/media/css/datatables.min.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/plugin/DataTables-1.10.20/media/css/responsive.dataTables.min.css")" rel="stylesheet" />
+    <link href="~/plugin/select2/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="~/plugin/daterangepicker/daterangepicker.css" rel="stylesheet" />
+    <style>
+
+        .fab {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            clip-path: circle();
+            height: 40px;
+            width: 40px;
+            z-index: 999;
+            box-shadow: 0 0.46875rem 2.1875rem rgba(4,9,20,0.03), 0 0.9375rem 1.40625rem rgba(4,9,20,0.03), 0 0.25rem 0.53125rem rgba(4,9,20,0.05), 0 0.125rem 0.1875rem rgba(4,9,20,0.03);
+        }
+
+        .addButton {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+        }
+
+        .select2 {
+            height: 30px;
+        }
+
+        .dataTables_wrapper {
+            zoom: 0.9 !important;
+        }
+
+        table.dataTable.dtr-inline.collapsed > tbody > tr[role="row"] > td:first-child:before, table.dataTable.dtr-inline.collapsed > tbody > tr[role="row"] > th:first-child:before {
+            background-color: #3f6ad8;
+        }
+
+
+        .select2-container .select2-selection--single {
+            height: 35px;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            padding-top: 5px;
+            color: #495057;
+            /*border: 1px solid #ced4da;*/
+        }
+
+
+        select[name=Table_length] {
+            height: 35px;
+        }
+
+        .select2-container--default .select2-selection--multiple .select2-selection__choice {
+            background-color: white;
+            border: 1px solid teal;
+            border-radius: 4px;
+            cursor: default;
+            float: left;
+            margin-right: 5px;
+            margin-top: 5px;
+            padding: 0 5px;
+            height: 22px;
+        }
+
+        .odd {
+            background-color: white !important;
+        }
+
+        /*.hoverParent:hover {
+            background-color: #00bfbf;
+        }*/
+
+        .clickParent1 {
+            background-color: #00bfbf;
+        }
+
+        .modal {
+            opacity: 1 !important;
+        }
+
+        .modal-content {
+            margin-top: 30%;
+        }
+    </style>
+}
+
+<div class="app-main__outer">
+    <div class="app-main__inner">
+        <div class="row" style="padding-bottom:15px;">
+            <h5><b>Dashboard RM</b></h5>
+            <hr />
+        </div>
+
+        @if(RoleUser !="6")
+        {
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="main-card mb-3 card" id="cardParameterSearch">
+                        <div class="card-body">
+                            <form class="">
+                                <div class="form-row">
+                                    <div class="col-md-12">
+                                        <div class="position-relative form-group">
+                                            <label class="">Nama RM</label>
+                                            @*@Html.DropDownList("UnitIdSearchParam", (IEnumerable<SelectListItem>)ViewBag.DropwdownUnit, "--Silahkan pilih--", new { @class = "form-control js-example-placeholder-multiple js-states", @style = "width:100%", @id = "UnitId" })*@
+                                            <select class="js-example-placeholder-multiple js-states form-control" id="SRMandRMId" name="SRMandRMId" style="width:100%;" placeholder="--Silahkan pilih--"></select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="javascript:void(0)" class="mt-2 btn btn-success pull-right" style="margin-left:10px;" id="BtnSearch" onclick="LoadDataBeranda()">Cari</a>
+                                <a href="javascript:void(0)" class="mt-2 btn btn-danger pull-right" id="BtnClearSearch" onclick="ClearSearchParameter()">Bersihkan</a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @*TRIO*@
+        <div class="row">
+            <div class="col-4">
+                @{ if (Model == null)
+                    {
+                        <div class="card mb-3 widget-content">
+                            <div class="widget-content-wrapper">
+                                <div class="widget-content-left" style="width: 100%">
+                                    <div class="widget-heading">Total Debitur Usulan</div>
+                                    <div class="widget-subheading">Total Debitur Usulan</div>
+                                    <div class="widget-numbers"><text style="float: right" id="BerandaTotalDebiturUsulan">-</text></div>
+                                    <br />
+                                    <br />
+                                    <div class="widget-heading">Maksimum Kredit Usulan</div>
+                                    <div class="widget-subheading">Maksimum Kredit Usulan</div>
+                                    <div class="widget-numbers"><text style="float: right" id="BerandaTotalMaksimumKreditUsulan">-</text></div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="card mb-3 widget-content">
+                            <div class="widget-content-wrapper">
+                                <div class="widget-content-left" style="width: 100%">
+                                    <div class="widget-heading">Total Debitur Usulan</div>
+                                    <div class="widget-subheading">Total Debitur Usulan</div>
+                                    <div class="widget-numbers"><text style="float: right" id="BerandaTotalDebiturUsulan">@Model.ExecutiveSummary[0].TotalUsulan</text></div>
+                                    <br />
+                                    <br />
+                                    <div class="widget-heading">Maksimum Kredit Usulan</div>
+                                    <div class="widget-subheading">Maksimum Kredit Usulan</div>
+                                    <div class="widget-numbers"><text style="float: right" id="BerandaTotalMaksimumKreditUsulan">@Model.ExecutiveSummary[0].MaksimumKreditUsulan</text></div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+            <div class="col-4">
+                @{ if (Model == null)
+                    {
+                        <div class="card mb-3 widget-content">
+                            <div class="widget-content-wrapper">
+                                <div class="widget-content-left" style="width: 100%">
+                                    <div class="widget-heading">Total Debitur Di Setujui</div>
+                                    <div class="widget-subheading">Total Debitur Di Setujui</div>
+                                    <div class="widget-numbers"><text style="float: right" id="BerandaTotalDebiturDiSetujui">-</text></div>
+                                    <br />
+                                    <br />
+                                    <div class="widget-heading">Maksimum Kredit Di Setujui</div>
+                                    <div class="widget-subheading">Maksimum Kredit Di Setujui</div>
+                                    <div class="widget-numbers"><text style="float: right" id="BerandaTotalMaksimumKreditDiSetujui">-</text></div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="card mb-3 widget-content">
+                            <div class="widget-content-wrapper">
+                                <div class="widget-content-left" style="width: 100%">
+                                    <div class="widget-heading">Total Debitur Di Setujui</div>
+                                    <div class="widget-subheading">Total Debitur Di Setujui</div>
+                                    <div class="widget-numbers"><text style="float: right" id="BerandaTotalDebiturDiSetujui">@Model.ExecutiveSummary[0].TotalSetujui</text></div>
+                                    <br />
+                                    <br />
+                                    <div class="widget-heading">Maksimum Kredit Di Setujui</div>
+                                    <div class="widget-subheading">Maksimum Kredit Di Setujui</div>
+                                    <div class="widget-numbers"><text style="float: right" id="BerandaTotalMaksimumKreditDiSetujui">@Model.ExecutiveSummary[0].MaksimumKreditSetujui</text></div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+            <div class="col-4">
+                @{ if (Model == null)
+                    {
+                        <div class="card mb-3 widget-content">
+                            <div class="widget-content-wrapper">
+                                <div class="widget-content-left" style="width: 100%">
+                                    <div class="widget-heading">Gap Total Debitur</div>
+                                    <div class="widget-subheading">Gap Total Debitur</div>
+                                    <div class="widget-numbers"><text style="float: right" id="BerandaTotalGapDebitur">-</text></div>
+                                    <br />
+                                    <br />
+                                    <div class="widget-heading">Gap Maksimum Kredit</div>
+                                    <div class="widget-subheading">Gap Maksimum Kredit</div>
+                                    <div class="widget-numbers"><text style="float: right" id="BerandaTotalGapMaksimumKredit">-</text></div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="card mb-3 widget-content">
+                            <div class="widget-content-wrapper">
+                                <div class="widget-content-left" style="width: 100%">
+                                    <div class="widget-heading">Gap Total Debitur</div>
+                                    <div class="widget-subheading">Gap Total Debitur</div>
+                                    <div class="widget-numbers"><text style="float: right" id="BerandaTotalGapDebitur">@Model.ExecutiveSummary[0].GapDebitur</text></div>
+                                    <br />
+                                    <br />
+                                    <div class="widget-heading">Gap Maksimum Kredit</div>
+                                    <div class="widget-subheading">Gap Maksimum Kredit</div>
+                                    <div class="widget-numbers"><text style="float: right" id="BerandaTotalGapMaksimumKredit">@Model.ExecutiveSummary[0].GapMaksimumKredit</text></div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+
+        <div id="DivContentBeranda">
+            <div class="row">
+                <div class="col-md-4">
+                    <div id="divChart" style="display:inline;float:left">
+                        <center><h4><b>Persentase Solicite, Prospek dan Pipeline</b></h4></center>
+                        <div id="divChart2" style="padding-top: 40%">
+                            <center><h4>Data Tidak Ditemukan</h4></center>
+                        </div>
+                        <div id="chartContainer1" style="height: 370px; max-width: 920px; margin: 5% auto;"></div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <ul class="body-tabs body-tabs-layout tabs-animated body-tabs-animated nav" style="width: 100%; cursor: pointer;" >
+                        <li class="nav-item" style="width: 33.33%; cursor: pointer;">
+                            <div class="col-md-6 col-xl-4 active show" role="tab" id="tab-0" data-toggle="tab" href="#tab-content-0" aria-selected="true" style="max-width: 100% !important" onclick="Parent1()">
+                                <div class="card mb-3 widget-content hoverParent clickParent1">
+                                    @{ if (Model == null)
+                                        {
+                                            <div class="widget-content-wrapper">
+                                                <div class="widget-content-left">
+                                                    <div class="widget-heading">Total Solicite</div>
+                                                    <div class="widget-subheading">Total keseluruhan solicite</div>
+                                                </div>
+                                                <div class="widget-content-right">
+                                                    <div class="widget-numbers"><text id="BerandaTotalSolicite">-</text></div>
+                                                </div>
+                                            </div> }
+                                        else
+                                        {
+                                            <div class="widget-content-wrapper">
+                                                <div class="widget-content-left">
+                                                    <div class="widget-heading">Total Solicite</div>
+                                                    <div class="widget-subheading">Total keseluruhan solicite</div>
+                                                </div>
+                                                <div class="widget-content-right">
+                                                    <div class="widget-numbers"><text id="BerandaTotalSolicite">@Model.tblSolicite[0].Total_Solicite</text></div>
+                                                </div>
+                                            </div> } }
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nav-item" style="width: 33.33%; cursor: pointer; ">
+                            <div class="col-md-6 col-xl-4 show" role="tab" id="tab-1" data-toggle="tab" href="#tab-content-1" aria-selected="true" style="max-width: 100% !important" onclick="Parent2()">
+                                <div class="card mb-3 widget-content hoverParent clickParent2">
+                                    @{ if (Model == null)
+                                        {
+                                            <div class="widget-content-wrapper">
+                                                <div class="widget-content-left">
+                                                    <div class="widget-heading">Total Prospek</div>
+                                                    <div class="widget-subheading">Total keseluruhan prospek</div>
+                                                </div>
+                                                <div class="widget-content-right">
+                                                    <div class="widget-numbers"><text id="BerandaTotalProspek">-</text></div>
+                                                </div>
+                                            </div> }
+                                        else
+                                        {
+                                            <div class="widget-content-wrapper">
+                                                <div class="widget-content-left">
+                                                    <div class="widget-heading">Total Prospek</div>
+                                                    <div class="widget-subheading">Total keseluruhan prospek</div>
+                                                </div>
+                                                <div class="widget-content-right">
+                                                    <div class="widget-numbers"><text id="BerandaTotalProspek">@Model.tblProspek[0].Total_Prospek</text></div>
+                                                </div>
+                                            </div> } }
+                                </div>
+                                
+                            </div>
+                        </li>
+                        <li class="nav-item" style="width: 33.33%; cursor: pointer; ">
+                            <div class="col-md-6 col-xl-4 show" role="tab" id="tab-2" data-toggle="tab" href="#tab-content-2" aria-selected="true" style="max-width: 100% !important" onclick="Parent3()">
+                                <div class="card mb-3 widget-content hoverParent clickParent3">
+                                    @{ if (Model == null)
+                                        {
+                                            <div class="widget-content-wrapper">
+                                                <div class="widget-content-left">
+                                                    <div class="widget-heading">Total Pipeline</div>
+                                                    <div class="widget-subheading">Total keseluruhan pipeline</div>
+                                                </div>
+                                                <div class="widget-content-right">
+                                                    <div class="widget-numbers"><text id="BerandaTotalPipeline">-</text></div>
+                                                </div>
+                                            </div> }
+                                        else
+                                        {
+                                            <div class="widget-content-wrapper">
+                                                <div class="widget-content-left">
+                                                    <div class="widget-heading">Total Pipeline</div>
+                                                    <div class="widget-subheading">Total keseluruhan pipeline</div>
+                                                </div>
+                                                <div class="widget-content-right">
+                                                    <div class="widget-numbers"><text id="BerandaTotalPipeline">@Model.tblPipeline[0].Total_Pipeline</text></div>
+                                                </div>
+                                            </div> } }
+                                </div>
+                                
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="tab-content" style="width: 100%">
+                        <div class="tab-pane tabs-animation fade active show tab-content-0" id="tab-content-0" role="tabpanel">
+                            <div class="col-lg-12">
+                                <div class="main-card mb-3 card">
+                                    <div class="card-header-tab card-header">
+                                        <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+                                            <i class="header-icon lnr-database icon-gradient bg-malibu-beach"> </i><b>Data Solicite</b>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <table id="TableSolicite" class="display nowrap" style="width:100%;">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 1px">No</th>
+                                                    <th style="width: 1px">Aksi</th>
+                                                    <th>Nama Pegawai</th>
+                                                    <th>Npp</th>
+                                                    <th>Maksimum Kredit</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane tabs-animation fade tab-content-1" id="tab-content-1" role="tabpanel">
+                            <div class="col-lg-12">
+                                <div class="main-card mb-3 card">
+                                    <div class="card-header-tab card-header">
+                                        <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+                                            <i class="header-icon lnr-database icon-gradient bg-malibu-beach"> </i><b>Data Prospek</b>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <table id="TableProspek" class="display nowrap" style="width:100%;">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 1px">No</th>
+                                                    <th style="width: 1px">Aksi</th>
+                                                    <th>Nama Pegawai</th>
+                                                    <th>Npp</th>
+                                                    <th>Maksimum Kredit</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane tabs-animation fade" id="tab-content-2" role="tabpanel">
+                            <div class="col-lg-12">
+                                <div class="main-card mb-3 card">
+                                    <div class="card-header-tab card-header">
+                                        <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+                                            <i class="header-icon lnr-database icon-gradient bg-malibu-beach"> </i><b>Data Pipeline</b>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <table id="TablePipeline" class="display nowrap" style="width:100%;">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 1px">No</th>
+                                                    <th style="width: 1px">Aksi</th>
+                                                    <th>Nama Pegawai</th>
+                                                    <th>Npp</th>
+                                                    <th>Maksimum Kredit</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="@Url.Content("~/plugin/DataTables-1.10.20/media/js/jquery.dataTables.min.js")"></script>
+    <script src="@Url.Content("~/plugin/DataTables-1.10.20/media/js/dataTables.responsive.min.js")"></script>
+    <script src="@Url.Content("~/plugin/canvasjs/canvasjs.min.js")"></script>
+    <script src="~/plugin/javascript-fluid-meter-master/js/js-fluid-meter.js"></script>
+    <script src="~/plugin/select2/dist/js/select2.min.js"></script>
+    <script src="~/plugin/daterangepicker/moment.min.js"></script>
+    <script src="~/plugin/daterangepicker/daterangepicker.min.js"></script>
+    @Html.Partial("_Script")
+}
