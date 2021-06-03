@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "IrAjJvMLcdiwVh/bcMRYkDLNv3As/fn76GZf/eYDqJmgLZsEcTIIlaOJjfQCrV626wVPcLI1iA0yO+Nba4Ju9w==",
+  "dgSpecHash": "uAZ96w2fK1jhewrflN8zT1LaZzj7kQ3Kk8uPVm6sBY8uiGxmmg6qLhUC32g7vWxKdj5tcArx8qJwfxvyY3eqkA==",
   "success": true,
-  "projectFilePath": "C:\\work\\Portal PMO\\PortalPMO\\TwoTierTemplate.csproj",
+  "projectFilePath": "C:\\work\\E-Library\\E-Library\\PortalPMO\\TwoTierTemplate.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\khulq\\.nuget\\packages\\json.net\\1.0.25\\json.net.1.0.25.nupkg.sha512",
     "C:\\Users\\khulq\\.nuget\\packages\\mailkit\\2.5.1\\mailkit.2.5.1.nupkg.sha512",

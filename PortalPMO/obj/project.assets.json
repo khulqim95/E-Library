@@ -14127,11 +14127,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\work\\Portal PMO\\PortalPMO\\TwoTierTemplate.csproj",
+      "projectUniqueName": "C:\\work\\E-Library\\E-Library\\PortalPMO\\TwoTierTemplate.csproj",
       "projectName": "TwoTierTemplate",
-      "projectPath": "C:\\work\\Portal PMO\\PortalPMO\\TwoTierTemplate.csproj",
+      "projectPath": "C:\\work\\E-Library\\E-Library\\PortalPMO\\TwoTierTemplate.csproj",
       "packagesPath": "C:\\Users\\khulq\\.nuget\\packages\\",
-      "outputPath": "C:\\work\\Portal PMO\\PortalPMO\\obj\\",
+      "outputPath": "C:\\work\\E-Library\\E-Library\\PortalPMO\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
